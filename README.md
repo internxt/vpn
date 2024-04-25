@@ -1,30 +1,19 @@
-# React + TypeScript + Vite
+# Internxt VPN
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.com/internxt/vpn.git`.
 
-Currently, two official plugins are available:
+## Before using it
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Copy the `.env.example` file and rename it to `.env`, then add the values for the variables.
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- Run `yarn` or `yarn install` to install all necessary dependencies.
 
-- Configure the top-level `parserOptions` property like this:
+## Commands
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+- If you want to modify the UI, you must comment out the `chrome.` functions to test it, because you will not have access to the [Chrome API](https://developer.chrome.com/docs/extensions/reference/api) (we use proxy and storage) from the `webpage`.
+- If you want to test it as an extension in Chrome:
+  1. Run `yarn build`.
+  2. This command will create a `/dist`.
+  3. Now, once the `/dist` folder is created, we have to go to `Google Chrome > chrome://extensions > developer mode > load unpacked extension > load the /dist folder` that we got in the first step.
