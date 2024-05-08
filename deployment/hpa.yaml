@@ -10,6 +10,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: gost-dp
-  minReplicas: 3
-  maxReplicas: 9
+  minReplicas: 1
+  maxReplicas: 6
   targetCPUUtilizationPercentage: 80

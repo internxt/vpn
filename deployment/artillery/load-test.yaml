@@ -2,10 +2,17 @@ config:
   target: "http://<service-ip>"  # IP de tu VPN
   phases:
     - duration: 60
-      arrivalRate: 10
+      arrivalRate: 300 # 10 users every second for 60 seconds
+      name: low phase start 
+    # - duration: 60
+    #   arrivalRate: 10
+    #   rampTo: 100
+    # - duration: 60
+    #   arrivalRate: 300 # 300 users every 60 seconds
 scenarios:
   - flow:
       - get:
-          url: "/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+          url: "/favicon.ico"
+          timeout: 5
           headers:
             Host: "www.google.com"
