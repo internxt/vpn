@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gost-dp
+  namespace: vpn
+  labels:
+    app: gost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gost
+  template:
+    metadata:
+      namespace: vpn
+      labels:
+        app: gost
+    spec:
+      containers:
+      - name: gost
+        image: gogost/gost:latest
+        command: ['gost']
+        args: ['-L', 'http://:8080', '-D']
+        # resources:
+        #   requests: 
+        #     cpu: 200m
+        #     memory: 400Mi
+        #   limits:
+        #     cpu: 500m
+        #     memory: 1000Mi
+        # volumeMounts:
+        #   - mountPath: /certs/key.pem
+        #     subPath: key.pem
+        #     name: tls
+        #     readOnly: true
+        #   - mountPath: /certs/cert.pem
+        #     subPath: cert.pem
+        #     name: tls
+        #     readOnly: true
+        #   - mountPath: /bin/key.pem
+        #     subPath: key.pem
+        #     name: tls
+        #     readOnly: true
+        #   - mountPath: /bin/cert.pem
+        #     subPath: cert.pem
+        #     name: tls
+        #     readOnly: true
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+      # volumes:
+      #   - name: tls
+      #     secret:
+      #       secretName: vpn-tls-secret
+      #       items:
+      #       - key: tls.crt
+      #         path: cert.pem
+      #       - key: tls.key
+      #         path: key.pem
+            
