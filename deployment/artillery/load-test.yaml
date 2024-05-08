@@ -1,0 +1,11 @@
+config:
+  target: "http://<service-ip>"  # IP de tu VPN
+  phases:
+    - duration: 60
+      arrivalRate: 10
+scenarios:
+  - flow:
+      - get:
+          url: "/images/branding/googleg/1x/googleg_standard_color_128dp.png"
+          headers:
+            Host: "www.google.com"

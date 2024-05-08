@@ -20,14 +20,17 @@ spec:
       - name: gost
         image: gogost/gost:latest
         command: ['gost']
-        args: ['-L', 'http://:8080', '-D']
-        # resources:
-        #   requests: 
-        #     cpu: 200m
-        #     memory: 400Mi
-        #   limits:
-        #     cpu: 500m
-        #     memory: 1000Mi
+        env:
+        - name: GOST_LOGGER_LEVEL
+          value: warn
+        args: ['-L', 'http://:8080']
+        resources:
+          requests: 
+            cpu: 400m
+            memory: 500Mi
+          limits:
+            cpu: 700m
+            memory: 1000Mi
         # volumeMounts:
         #   - mountPath: /certs/key.pem
         #     subPath: key.pem

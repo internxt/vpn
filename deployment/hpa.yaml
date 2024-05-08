@@ -1,0 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: gost-hpa
+  namespace: vpn
+  labels:
+    app: gost
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: gost-dp
+  minReplicas: 3
+  maxReplicas: 9
+  targetCPUUtilizationPercentage: 80
