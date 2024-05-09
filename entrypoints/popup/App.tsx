@@ -1,22 +1,83 @@
 import { useEffect, useState } from 'react'
-import ToggleSwitch from './components/Switch'
 
-import {
-  CONNECTION_IMAGES,
-  STATUS,
-  STATUS_DESCRIPTION,
-  VPN_STATUS_SWITCH,
-} from './constants'
 import { Database, MapPin } from '@phosphor-icons/react'
-import { StatusComponent } from './components/StatusComponent'
-import {
-  clearProxySettings,
-  updateProxySettings,
-} from './services/proxy.service'
+
+import { StatusComponent } from '../components/StatusComponent'
+
+import ToggleSwitch from '../components/Switch'
 
 interface UserDataObj {
   location: string
   ip: string
+}
+
+type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
+
+const STATUS: Record<VPN_STATUS_SWITCH, string> = {
+  ON: 'On',
+  OFF: 'Off',
+  CONNECTING: 'Connecting',
+}
+
+const STATUS_DESCRIPTION: Record<VPN_STATUS_SWITCH, string> = {
+  ON: 'Your connection is secure.',
+  OFF: 'Connect for secure browsing.',
+  CONNECTING: 'Establishing secure connection.',
+}
+
+const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
+  ON: '../../images/vpn-connected.svg',
+  OFF: '../images/vpn-disconnected.svg',
+  CONNECTING: '../images/establishing-connection.svg',
+}
+
+const IP_API_URL = import.meta.env.VITE_IP_API_URL
+
+export const getUserIp = async () => {
+  const request = await fetch(`${IP_API_URL}/json`)
+  const data = await request.json()
+
+  const { ip, city, region, country } = data
+  const locationText = `${city}, ${region}, ${country}`
+
+  return {
+    location: locationText,
+    ip,
+  }
+}
+
+const VPN_CONFIG = {
+  host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
+  port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
+}
+
+export async function updateProxySettings() {
+  const proxyConfig = {
+    mode: 'fixed_servers',
+    rules: {
+      singleProxy: {
+        scheme: 'http',
+        host: VPN_CONFIG.host,
+        port: VPN_CONFIG.port,
+      },
+      bypassList: ['<local>'],
+    },
+  }
+
+  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+
+  const userData = await getUserIp()
+
+  return userData
+}
+
+export function clearProxySettings() {
+  browser.proxy.settings.clear({ scope: 'regular' })
+
+  return {
+    location: '-',
+    ip: '-',
+  }
 }
 
 export const App = () => {
@@ -146,7 +207,7 @@ export const App = () => {
         target="_blank"
         className="flex w-full items-center justify-center py-4"
       >
-        <img src="/icons/internxt-logo.svg" width={97} height={10} />
+        <img src="/icon/internxt-logo.svg" width={97} height={10} />
       </a>
     </div>
   )

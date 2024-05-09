@@ -1,4 +1,17 @@
-import { getUserIp } from './user.service'
+const IP_API_URL = import.meta.env.VITE_IP_API_URL
+
+export const getUserIp = async () => {
+  const request = await fetch(`${IP_API_URL}/json`)
+  const data = await request.json()
+
+  const { ip, city, region, country } = data
+  const locationText = `${city}, ${region}, ${country}`
+
+  return {
+    location: locationText,
+    ip,
+  }
+}
 
 const VPN_CONFIG = {
   host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
@@ -18,17 +31,7 @@ export async function updateProxySettings() {
     },
   }
 
-  chrome.proxy.settings.set(
-    { value: proxyConfig, scope: 'regular' },
-    function () {
-      if (chrome.runtime.lastError) {
-        console.error(
-          'Error en la configuración de proxy:',
-          chrome.runtime.lastError
-        )
-      }
-    }
-  )
+  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
 
   const userData = await getUserIp()
 
@@ -36,13 +39,7 @@ export async function updateProxySettings() {
 }
 
 export function clearProxySettings() {
-  chrome.proxy.settings.clear({ scope: 'regular' }, function () {
-    if (chrome.runtime.lastError) {
-      console.log(chrome.runtime.lastError)
-    } else {
-      console.log('VPN disabled')
-    }
-  })
+  browser.proxy.settings.clear({ scope: 'regular' })
 
   return {
     location: '-',
