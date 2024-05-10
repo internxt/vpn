@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
-
 import { Database, MapPin } from '@phosphor-icons/react'
 
 import { StatusComponent } from '../components/StatusComponent'
-
 import ToggleSwitch from '../components/Switch'
+import { clearProxySettings, updateProxySettings } from './proxy.service'
 
 interface UserDataObj {
   location: string
@@ -46,40 +45,6 @@ export const getUserIp = async () => {
   }
 }
 
-const VPN_CONFIG = {
-  host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
-  port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
-}
-
-export async function updateProxySettings() {
-  const proxyConfig = {
-    mode: 'fixed_servers',
-    rules: {
-      singleProxy: {
-        scheme: 'http',
-        host: VPN_CONFIG.host,
-        port: VPN_CONFIG.port,
-      },
-      bypassList: ['<local>'],
-    },
-  }
-
-  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
-
-  const userData = await getUserIp()
-
-  return userData
-}
-
-export function clearProxySettings() {
-  browser.proxy.settings.clear({ scope: 'regular' })
-
-  return {
-    location: '-',
-    ip: '-',
-  }
-}
-
 export const App = () => {
   const [userData, setUserData] = useState<UserDataObj>({
     location: '',
@@ -109,12 +74,28 @@ export const App = () => {
     const updatedUserData = await updateProxySettings()
     setUserData(updatedUserData)
     setStatus('ON')
+    chrome.storage.sync
+      .set({ isVPNEnabled: true })
+      .then((done) => {
+        console.log('STORAGE IS SAVED', done)
+      })
+      .catch(() => {
+        setStatus('CONNECTING')
+      })
   }
 
   const onDisconnectVpn = () => {
     const clearUserData = clearProxySettings()
     setUserData(clearUserData)
     setStatus('OFF')
+    chrome.storage.sync
+      .set({ isVPNEnabled: false })
+      .then((done) => {
+        console.log('STORAGE IS SAVED', done)
+      })
+      .catch(() => {
+        setStatus('CONNECTING')
+      })
   }
 
   async function onToggleClicked() {

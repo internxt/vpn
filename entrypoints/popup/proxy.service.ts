@@ -1,3 +1,5 @@
+import { browser } from 'wxt/browser'
+
 const IP_API_URL = import.meta.env.VITE_IP_API_URL
 
 export const getUserIp = async () => {

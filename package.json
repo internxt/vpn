@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.1.5",
+    "@webext-core/storage": "^1.2.0",
     "axios": "^1.6.8",
     "chrome-extension-async": "^3.4.1",
     "crypto-js": "^4.2.0",
@@ -22,7 +23,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.266",
+    "@types/chrome": "^0.0.267",
     "@types/crypto-js": "^4.2.2",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
@@ -37,7 +38,6 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
     "wxt": "^0.18.2"
   }
 }
