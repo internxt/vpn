@@ -45,39 +45,31 @@ export const getUserIp = async () => {
   }
 }
 
-export const App = () => {
-  const [userData, setUserData] = useState<UserDataObj>({
-    location: '',
-    ip: '',
-  })
+export const App = ({
+  storedUserData,
+}: {
+  storedUserData: Record<string, unknown>
+}) => {
+  const [userData, setUserData] = useState<UserDataObj>(
+    storedUserData.userData as UserDataObj
+  )
 
-  const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
+  const [status, setStatus] = useState<VPN_STATUS_SWITCH>(
+    storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
+  )
 
   useEffect(() => {
-    chrome.storage.sync.get('isVPNEnabled', function (data) {
-      const isVPNEnabled = data.isVPNEnabled === 'ON' || false
-      console.log('is vpn enabled', isVPNEnabled)
-
-      if (isVPNEnabled) {
-        onConnectVpn().then(() => {
-          console.log('Si o que')
-        })
-      }
-    })
+    storedUserData.isVPNEnabled === 'ON' ? onConnectVpn() : onDisconnectVpn()
   }, [])
-
-  useEffect(() => {
-    chrome.storage.sync.set({ isVPNEnabled: status }, function () {})
-  }, [status])
 
   const onConnectVpn = async () => {
     const updatedUserData = await updateProxySettings()
     setUserData(updatedUserData)
     setStatus('ON')
-    chrome.storage.sync
-      .set({ isVPNEnabled: true })
-      .then((done) => {
-        console.log('STORAGE IS SAVED', done)
+    chrome.storage.local
+      .set({ isVPNEnabled: 'ON', userData: updatedUserData })
+      .then(() => {
+        console.log('STORAGE IS SAVED', updatedUserData)
       })
       .catch(() => {
         setStatus('CONNECTING')
@@ -88,8 +80,8 @@ export const App = () => {
     const clearUserData = clearProxySettings()
     setUserData(clearUserData)
     setStatus('OFF')
-    chrome.storage.sync
-      .set({ isVPNEnabled: false })
+    chrome.storage.local
+      .set({ isVPNEnabled: 'OFF', userData: clearUserData })
       .then((done) => {
         console.log('STORAGE IS SAVED', done)
       })
