@@ -1,4 +1,4 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: gost-hpa
@@ -10,6 +10,49 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: gost-dp
-  minReplicas: 1
-  maxReplicas: 6
-  targetCPUUtilizationPercentage: 80
+  minReplicas: 22
+  maxReplicas: 32
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        averageUtilization: 80
+        type: Utilization
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        averageUtilization: 80
+        type: Utilization
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: gost-cpu-hpa
+#   namespace: vpn
+#   labels:
+#     app: gost
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: gost-dp
+#   minReplicas: 22
+#   maxReplicas: 32
+#   targetCPUUtilizationPercentage: 80 
+# ---
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: gost-memory-hpa
+#   namespace: vpn
+#   labels:
+#     app: gost
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: gost-dp
+#   minReplicas: 22
+#   maxReplicas: 32
+#   targetMemoryUtilizationPercentage: 80 
