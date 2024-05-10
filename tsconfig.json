@@ -14,11 +14,13 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    "types": ["vite/client", "chrome", "wxt"],
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "extends": "./.wxt/tsconfig.json"
 }
