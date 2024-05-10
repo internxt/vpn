@@ -22,8 +22,8 @@ spec:
         command: ['gost']
         env:
         - name: GOST_LOGGER_LEVEL
-          value: fatal
-        args: ['-L', 'http://:8080']
+          value: debug
+        args: ['-L', 'http://:8080?auth=aW50ZXJueHQ6dDNzdH5QYSQkCg==']
         resources:
           requests: 
             cpu: 350m
