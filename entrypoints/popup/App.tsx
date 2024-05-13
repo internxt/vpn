@@ -3,7 +3,11 @@ import { Database, MapPin } from '@phosphor-icons/react'
 
 import { StatusComponent } from '../components/StatusComponent'
 import ToggleSwitch from '../components/Switch'
-import { clearProxySettings, updateProxySettings } from './proxy.service'
+import {
+  clearProxySettings,
+  getUserIp,
+  updateProxySettings,
+} from './proxy.service'
 
 interface UserDataObj {
   location: string
@@ -30,19 +34,9 @@ const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
   CONNECTING: '../images/establishing-connection.svg',
 }
 
-const IP_API_URL = import.meta.env.VITE_IP_API_URL
-
-export const getUserIp = async () => {
-  const request = await fetch(`${IP_API_URL}/json`)
-  const data = await request.json()
-
-  const { ip, city, region, country } = data
-  const locationText = `${city}, ${region}, ${country}`
-
-  return {
-    location: locationText,
-    ip,
-  }
+const defaultUserDataInfo: UserDataObj = {
+  location: '-',
+  ip: '-',
 }
 
 export const App = ({
@@ -59,35 +53,35 @@ export const App = ({
   )
 
   useEffect(() => {
-    storedUserData.isVPNEnabled === 'ON' ? onConnectVpn() : onDisconnectVpn()
-  }, [])
+    getUserIp()
+      .then((userInfo) => {
+        const userData = status === 'ON' ? userInfo : defaultUserDataInfo
 
-  const onConnectVpn = async () => {
-    const updatedUserData = await updateProxySettings()
-    setUserData(updatedUserData)
-    setStatus('ON')
-    chrome.storage.local
-      .set({ isVPNEnabled: 'ON', userData: updatedUserData })
-      .then(() => {
-        console.log('STORAGE IS SAVED', updatedUserData)
+        setUserData(userData)
+
+        chrome.storage.local
+          .set({
+            isVPNEnabled: status,
+            userData: userData,
+          })
+          .catch(() => {
+            setStatus('CONNECTING')
+            setUserData(defaultUserDataInfo)
+          })
       })
       .catch(() => {
-        setStatus('CONNECTING')
+        setUserData(defaultUserDataInfo)
       })
+  }, [status])
+
+  const onConnectVpn = async () => {
+    await updateProxySettings()
+    setStatus('ON')
   }
 
   const onDisconnectVpn = () => {
-    const clearUserData = clearProxySettings()
-    setUserData(clearUserData)
+    clearProxySettings()
     setStatus('OFF')
-    chrome.storage.local
-      .set({ isVPNEnabled: 'OFF', userData: clearUserData })
-      .then((done) => {
-        console.log('STORAGE IS SAVED', done)
-      })
-      .catch(() => {
-        setStatus('CONNECTING')
-      })
   }
 
   async function onToggleClicked() {
@@ -100,8 +94,7 @@ export const App = ({
       }
     } catch (err) {
       const error = err as Error
-      const clearUserData = clearProxySettings()
-      setUserData(clearUserData)
+      clearProxySettings()
       setStatus('OFF')
       console.log('[ERROR]:', error.message)
     } finally {

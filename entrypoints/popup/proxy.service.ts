@@ -34,17 +34,8 @@ export async function updateProxySettings() {
   }
 
   browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
-
-  const userData = await getUserIp()
-
-  return userData
 }
 
 export function clearProxySettings() {
   browser.proxy.settings.clear({ scope: 'regular' })
-
-  return {
-    location: '-',
-    ip: '-',
-  }
 }
