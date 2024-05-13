@@ -19,11 +19,12 @@ spec:
       containers:
       - name: gost
         image: gogost/gost:latest
-        command: ['gost']
         env:
         - name: GOST_LOGGER_LEVEL
           value: debug
-        args: ['-L', 'http://:8080?auth=aW50ZXJueHQ6dDNzdH5QYSQkCg==']
+        command: ['gost']
+        # args: ['-L', 'http://:8080?auth=aW50ZXJueHQ6dDNzdH5QYSQkCg==']
+        args: ['-L', 'http://internxt:pass@:8080']
         resources:
           requests: 
             cpu: 350m

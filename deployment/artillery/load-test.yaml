@@ -12,7 +12,8 @@ config:
 scenarios:
   - flow:
       - get:
-          url: "/favicon.ico"
+          url: "/"
           timeout: 5
           headers:
-            Host: "www.google.com"
+            Host: "send.internxt.com"
+            Proxy-Authorization: "Basic aW50ZXJueHQ6cGFzcw=="
