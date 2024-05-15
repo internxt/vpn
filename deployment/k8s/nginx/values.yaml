@@ -1,6 +1,14 @@
 tcp: 
   8083: "vpn/gost-svc:80"
-# controller:
+
+controller:
+  autoscaling:
+    enabled: true
+    annotations: {}
+    minReplicas: 1
+    maxReplicas: 11
+    targetCPUUtilizationPercentage: 50
+    targetMemoryUtilizationPercentage: 50
 #   allowSnippetAnnotations: true
 #   service:
     # externalTrafficPolicy: "Local"
