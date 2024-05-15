@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vpn-cert
+  namespace: vpn
+spec:
+  dnsNames:
+  - dihgihw.internxt.com
+  secretName: vpn-tls-secret
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+    group: cert-manager.io

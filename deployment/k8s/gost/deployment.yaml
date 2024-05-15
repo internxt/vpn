@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gost-dp
+  namespace: vpn
+  labels:
+    app: gost
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gost
+  template:
+    metadata:
+      namespace: vpn
+      labels:
+        app: gost
+    spec:
+      containers:
+      - name: gost
+        image: gogost/gost:latest
+        env:
+        - name: GOST_LOGGER_LEVEL
+          value: debug
+        command: ['gost']
+        args: ['-L', 'https://internxt:pass@:8080?certFile=/certs/cert.pem&keyFile=/certs/key.pem']
+        resources:
+          requests: 
+            cpu: 350m
+            memory: 900Mi
+          limits:
+            cpu: 400m
+            memory: 1400Mi
+        volumeMounts:
+          - mountPath: /certs/key.pem
+            subPath: key.pem
+            name: tls
+            readOnly: true
+          - mountPath: /certs/cert.pem
+            subPath: cert.pem
+            name: tls
+            readOnly: true
+        ports:
+          - containerPort: 8080
+            protocol: TCP
+      volumes:
+        - name: tls
+          secret:
+            secretName: vpn-tls-secret
+            items:
+            - key: tls.crt
+              path: cert.pem
+            - key: tls.key
+              path: key.pem
+            

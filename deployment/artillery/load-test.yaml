@@ -1,8 +1,8 @@
 config:
-  target: "http://<service-ip>"  # IP de tu VPN
+  target: "http://dihgihw.internxt.com"  # IP de tu VPN
   phases:
     - duration: 60
-      arrivalRate: 300 # 10 users every second for 60 seconds
+      arrivalRate: 10 # 10 users every second for 60 seconds
       name: low phase start 
     # - duration: 60
     #   arrivalRate: 10

@@ -6,7 +6,7 @@ metadata:
   labels: 
     app: gost
 spec:
-  type: LoadBalancer
+  # type: LoadBalancer
   # externalTrafficPolicy: Local
   ports:
   - port: 80

@@ -1,0 +1,30 @@
+tcp: 
+  8083: "vpn/gost-svc:80"
+# controller:
+#   allowSnippetAnnotations: true
+#   service:
+    # externalTrafficPolicy: "Local"
+    # annotations:
+    #   service.beta.kubernetes.io/ovh-loadbalancer-proxy-protocol: "v2"
+    # ports:
+    #   # -- Port the external HTTP listener is published with.
+    #   http: 80
+    #   # -- Port the external HTTPS listener is published with.
+    #   https: 443
+    #   # -- Port the external TCP listener is published with.
+    #   # tcp: 8083
+    # targetPorts:
+    #   # -- Port of the ingress controller the external HTTP listener is mapped to.
+    #   http: http
+    #   # -- Port of the ingress controller the external HTTPS listener is mapped to.
+    #   https: https
+      # tcp: tcp
+  # customTemplate:
+  #   configMapName: "ingress-controller-custom-template"
+  #   configMapKey: "nginx.tmpl"
+  # extraArgs: 
+  #   tcp-services-configmap: "$(POD_NAMESPACE)/tcp-services"
+  # config:
+  #   use-proxy-protocol: "true"
+  #   real-ip-header: "proxy_protocol"
+  #   proxy-real-ip-cidr: "10.127.192.225/32,10.127.192.143/32,10.127.192.61/32,10.127.192.159/32"
