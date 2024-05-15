@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Database, MapPin } from '@phosphor-icons/react'
 
 import { StatusComponent } from '../components/StatusComponent'
@@ -48,28 +48,26 @@ export const App = ({
     storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
   )
 
-  useEffect(() => {
-    if (status === 'ON') {
-      chrome.runtime.sendMessage('GET_DATA').then((userData) => {
-        setUserData(userData)
-        chrome.storage.local.set({
-          isVPNEnabled: status,
-          userData: userData,
-        })
-      })
-    } else {
-      setUserData(defaultUserDataInfo)
-    }
-  }, [status])
-
   const onConnectVpn = async () => {
     await updateProxySettings()
+    chrome.runtime.sendMessage('GET_DATA').then((userData) => {
+      setUserData(userData)
+      chrome.storage.local.set({
+        isVPNEnabled: 'ON',
+        userData: userData,
+      })
+    })
     setStatus('ON')
   }
 
   const onDisconnectVpn = () => {
     clearProxySettings()
+    chrome.storage.local.set({
+      isVPNEnabled: 'OFF',
+      userData: defaultUserDataInfo,
+    })
     setStatus('OFF')
+    setUserData(defaultUserDataInfo)
   }
 
   async function onToggleClicked() {
