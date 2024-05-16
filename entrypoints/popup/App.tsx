@@ -50,12 +50,11 @@ export const App = ({
 
   const onConnectVpn = async () => {
     await updateProxySettings()
-    chrome.runtime.sendMessage('GET_DATA').then((userData) => {
-      setUserData(userData)
-      chrome.storage.local.set({
-        isVPNEnabled: 'ON',
-        userData: userData,
-      })
+    const userData = await chrome.runtime.sendMessage('GET_DATA')
+    setUserData(userData)
+    chrome.storage.local.set({
+      isVPNEnabled: 'ON',
+      userData: userData,
     })
     setStatus('ON')
   }
