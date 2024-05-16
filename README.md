@@ -2,7 +2,7 @@
 
 First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.com/internxt/vpn.git`.
 
-### 🛠️ Tools
+### Tools
 
 - [Typescript](https://www.typescriptlang.org/).
 
@@ -24,7 +24,7 @@ First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.c
 
 ## Commands
 
-### 👨🏽‍💻 Dev mode
+### Dev mode
 
 1. Execute `yarn dev` for development mode in your terminal.
 2. This command will compile the application > open Google Chrome (it is the default browser for development, if you want to use Firefox for example, run `yarn dev:firefox`) > add the extension automatically.
@@ -32,7 +32,7 @@ First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.c
 
 WXT has hot reload, so you will be able to see the changes in real time.
 
-### 🧪 Testing the VPN simulating production
+### Testing the VPN simulating production
 
 1. Execute `yarn build` in your terminal.
 2. This command will compile the extension in `.output/chrome-mv3`.
@@ -40,7 +40,7 @@ WXT has hot reload, so you will be able to see the changes in real time.
 
 And that's it, you can now use the VPN as if it were a published one.
 
-### 🗂️ Compressing the extension to publish
+### Compressing the extension to publish
 
 1. Execute `yarn zip` (or `yarn zip:firefox` in case you want to publish the VPN in Firefox) in your terminal.
 2. This command will generate a ZIP in the `.output` folder. This is the ZIP you have to use to publish the VPN.
