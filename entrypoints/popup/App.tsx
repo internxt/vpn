@@ -79,8 +79,7 @@ export const App = ({
         onDisconnectVpn()
       }
     } catch (err) {
-      clearProxySettings()
-      setStatus('OFF')
+      onDisconnectVpn()
     } finally {
       const newStatus = status === 'OFF' ? 'ON' : 'OFF'
       setStatus(newStatus)

@@ -17,6 +17,9 @@ export default defineBackground(() => {
             ip,
           })
         })
+        .catch(() => {
+          // NO OP
+        })
     }
     return true
   })
@@ -40,7 +43,7 @@ export default defineBackground(() => {
 
   browser.webRequest.onErrorOccurred.addListener(
     (error) => {
-      console.log('[ERROR OCURRED IN BROWSER]:', error)
+      console.log('[AN ERROR OCURRED]:', error)
     },
     { urls: ['<all_urls>'] }
   )
