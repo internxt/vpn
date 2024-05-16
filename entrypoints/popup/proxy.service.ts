@@ -27,7 +27,7 @@ export async function updateProxySettings() {
     mode: 'fixed_servers',
     rules: {
       singleProxy: {
-        scheme: 'http',
+        scheme: 'https',
         host: VPN_CONFIG.host,
         port: VPN_CONFIG.port,
       },
