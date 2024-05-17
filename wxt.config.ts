@@ -10,7 +10,8 @@ export default defineConfig({
     name: 'Internxt VPN: Free and Encrypted VPN',
     short_name: 'Internxt VPN',
     version: '1.0.0',
-    description: 'VPN Extension powered by Internxt',
+    description:
+      'Internxt free VPN for Chrome: an encrypted, secure VPN built to protect your privacy.',
     icons: {
       '16': '/icon/16.png',
       '48': '/icon/48.png',
