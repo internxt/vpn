@@ -39,5 +39,18 @@ export async function updateProxySettings() {
 }
 
 export function clearProxySettings() {
-  browser.proxy.settings.clear({ scope: 'regular' })
+  const proxyConfig = {
+    mode: 'system',
+  }
+
+  browser.proxy.settings
+    .set({ value: proxyConfig, scope: 'regular' })
+    .then(() => {
+      if (browser.runtime.lastError) {
+        console.error(
+          'ERROR ADDING THE DEFAULT PROXY CONFIG: ',
+          browser.runtime.lastError
+        )
+      }
+    })
 }
