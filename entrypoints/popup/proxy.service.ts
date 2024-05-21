@@ -38,7 +38,7 @@ export async function updateProxySettings() {
   browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
 }
 
-export function clearProxySettings() {
+export async function clearProxySettings() {
   const proxyConfig = {
     mode: 'system',
   }

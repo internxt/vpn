@@ -75,10 +75,10 @@ export const App = ({
       if (status === 'OFF') {
         await onConnectVpn()
       } else {
-        onDisconnectVpn()
+        await onDisconnectVpn()
       }
     } catch (err) {
-      onDisconnectVpn()
+      await onDisconnectVpn()
     } finally {
       const newStatus = status === 'OFF' ? 'ON' : 'OFF'
       setStatus(newStatus)
