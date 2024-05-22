@@ -59,8 +59,8 @@ export const App = ({
     setStatus('ON')
   }
 
-  const onDisconnectVpn = () => {
-    clearProxySettings()
+  const onDisconnectVpn = async () => {
+    await clearProxySettings()
     chrome.storage.local.set({
       isVPNEnabled: 'OFF',
       userData: defaultUserDataInfo,
