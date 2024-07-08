@@ -1,59 +1,72 @@
-import { useEffect, useState } from 'react'
-import ToggleSwitch from './components/Switch'
-
-import {
-  CONNECTION_IMAGES,
-  STATUS,
-  STATUS_DESCRIPTION,
-  VPN_STATUS_SWITCH,
-} from './constants'
+import { useState } from 'react'
 import { Database, MapPin } from '@phosphor-icons/react'
-import { StatusComponent } from './components/StatusComponent'
-import {
-  clearProxySettings,
-  updateProxySettings,
-} from './services/proxy.service'
+
+import { StatusComponent } from '../components/StatusComponent'
+import ToggleSwitch from '../components/Switch'
+import { clearProxySettings, updateProxySettings } from './proxy.service'
 
 interface UserDataObj {
   location: string
   ip: string
 }
 
-export const App = () => {
-  const [userData, setUserData] = useState<UserDataObj>({
-    location: '',
-    ip: '',
-  })
+type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
 
-  const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
+const STATUS: Record<VPN_STATUS_SWITCH, string> = {
+  ON: 'On',
+  OFF: 'Off',
+  CONNECTING: 'Connecting',
+}
 
-  useEffect(() => {
-    chrome.storage.sync.get('isVPNEnabled', function (data) {
-      const isVPNEnabled = data.isVPNEnabled === 'ON' || false
-      console.log('is vpn enabled', isVPNEnabled)
+const STATUS_DESCRIPTION: Record<VPN_STATUS_SWITCH, string> = {
+  ON: 'Your connection is secure.',
+  OFF: 'Connect for secure browsing.',
+  CONNECTING: 'Establishing secure connection.',
+}
 
-      if (isVPNEnabled) {
-        onConnectVpn().then(() => {
-          console.log('Si o que')
-        })
-      }
-    })
-  }, [])
+const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
+  ON: '../../images/vpn-connected.svg',
+  OFF: '../images/vpn-disconnected.svg',
+  CONNECTING: '../images/establishing-connection.svg',
+}
 
-  useEffect(() => {
-    chrome.storage.sync.set({ isVPNEnabled: status }, function () {})
-  }, [status])
+const defaultUserDataInfo: UserDataObj = {
+  location: '-',
+  ip: '-',
+}
+
+export const App = ({
+  storedUserData,
+}: {
+  storedUserData: Record<string, unknown>
+}) => {
+  const [userData, setUserData] = useState<UserDataObj>(
+    storedUserData.userData as UserDataObj
+  )
+
+  const [status, setStatus] = useState<VPN_STATUS_SWITCH>(
+    storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
+  )
 
   const onConnectVpn = async () => {
-    const updatedUserData = await updateProxySettings()
-    setUserData(updatedUserData)
+    await updateProxySettings()
+    const userData = await chrome.runtime.sendMessage('GET_DATA')
+    setUserData(userData)
+    chrome.storage.local.set({
+      isVPNEnabled: 'ON',
+      userData: userData,
+    })
     setStatus('ON')
   }
 
-  const onDisconnectVpn = () => {
-    const clearUserData = clearProxySettings()
-    setUserData(clearUserData)
+  const onDisconnectVpn = async () => {
+    await clearProxySettings()
+    chrome.storage.local.set({
+      isVPNEnabled: 'OFF',
+      userData: defaultUserDataInfo,
+    })
     setStatus('OFF')
+    setUserData(defaultUserDataInfo)
   }
 
   async function onToggleClicked() {
@@ -62,14 +75,10 @@ export const App = () => {
       if (status === 'OFF') {
         await onConnectVpn()
       } else {
-        onDisconnectVpn()
+        await onDisconnectVpn()
       }
     } catch (err) {
-      const error = err as Error
-      const clearUserData = clearProxySettings()
-      setUserData(clearUserData)
-      setStatus('OFF')
-      console.log('[ERROR]:', error.message)
+      await onDisconnectVpn()
     } finally {
       const newStatus = status === 'OFF' ? 'ON' : 'OFF'
       setStatus(newStatus)
@@ -146,7 +155,7 @@ export const App = () => {
         target="_blank"
         className="flex w-full items-center justify-center py-4"
       >
-        <img src="/icons/internxt-logo.svg" width={97} height={10} />
+        <img src="/icon/internxt-logo.svg" width={97} height={10} />
       </a>
     </div>
   )

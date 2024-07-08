@@ -1,30 +1,48 @@
-# React + TypeScript + Vite
+# Internxt VPN
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.com/internxt/vpn.git`.
 
-Currently, two official plugins are available:
+### Tools
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Typescript](https://www.typescriptlang.org/).
 
-## Expanding the ESLint configuration
+- [WXT](https://wxt.dev/): It is a framework for web extensions. We use this framework mainly because it allows us to develop the extension with React+Typescrip and to facilitate the packaging and deployment of the extension for all websites (mainly Firefox, Chrome and Safari).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- [React](https://react.dev/).
 
-- Configure the top-level `parserOptions` property like this:
+- [TailwindCSS](https://tailwindcss.com/).
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+## Before using it
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Configuring the project
+
+- Copy the `.env.example` file and rename it to `.env`, then add the values for the variables.
+
+## Installation
+
+- Execute `yarn` or `yarn install` to install all necessary dependencies.
+
+## Commands
+
+### Dev mode
+
+1. Execute `yarn dev` for development mode in your terminal.
+2. This command will compile the application > open Google Chrome (it is the default browser for development, if you want to use Firefox for example, run `yarn dev:firefox`) > add the extension automatically.
+3. Open the extensions dropdown and the VPN is ready to use.
+
+WXT has hot reload, so you will be able to see the changes in real time.
+
+### Testing the VPN simulating production
+
+1. Execute `yarn build` in your terminal.
+2. This command will compile the extension in `.output/chrome-mv3`.
+3. Now, go to `Google Chrome > chrome://extensions > activate the developer mode (right up corner) > load unpacked extension > load the /chrome-mv3 folder`.
+
+And that's it, you can now use the VPN as if it were a published one.
+
+### Compressing the extension to publish
+
+1. Execute `yarn zip` (or `yarn zip:firefox` in case you want to publish the VPN in Firefox) in your terminal.
+2. This command will generate a ZIP in the `.output` folder. This is the ZIP you have to use to publish the VPN.
+
+You can follow [these steps](https://developer.chrome.com/docs/webstore/publish) if you are not familiar with how to publish Extensions in Chrome.
