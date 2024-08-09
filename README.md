@@ -6,7 +6,7 @@ First, clone the repository using SSH or HTTPS, e.g. `git clone https://github.c
 
 - [Typescript](https://www.typescriptlang.org/).
 
-- [WXT](https://wxt.dev/): It is a framework for web extensions. We use this framework mainly because it allows us to develop the extension with React+Typescrip and to facilitate the packaging and deployment of the extension for all websites (mainly Firefox, Chrome and Safari).
+- [WXT](https://wxt.dev/): It is a framework for web extensions. We use this framework mainly because it allows us to develop the extension with React+Typescript and to facilitate the packaging and deployment of the extension for all websites (mainly Firefox, Chrome and Safari).
 
 - [React](https://react.dev/).
 
