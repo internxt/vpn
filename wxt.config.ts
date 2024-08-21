@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [react()],
   }),
   manifest: {
-    name: 'Internxt VPN: Free and Encrypted VPN',
+    name: 'Internxt VPN - Free, Encrypted & Unlimited VPN',
     short_name: 'Internxt VPN',
     version: '1.0.0',
     description:
