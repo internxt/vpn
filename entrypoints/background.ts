@@ -2,6 +2,13 @@ import { WebRequest } from 'wxt/browser'
 
 export default defineBackground(() => {
   const IP_API_URL = import.meta.env.VITE_IP_API_URL
+
+  chrome.runtime.onInstalled.addListener((details) => {
+    if (details.reason === 'install') {
+      chrome.tabs.create({ url: 'https://internxt.com/vpn' })
+    }
+  })
+
   chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
     if (message === 'GET_DATA') {
       fetch(`${IP_API_URL}/json`, {
