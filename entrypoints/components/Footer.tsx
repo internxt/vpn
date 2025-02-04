@@ -1,7 +1,5 @@
-const HOST_AUTH =
-  import.meta.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : import.meta.env.VITE_AUTH_HOST_URL
+const HOST_AUTH = 'http://localhost:3000'
+//  import.meta.env.VITE_AUTH_HOST_URL
 
 interface FooterProps {
   isAuthAvailable: boolean
@@ -32,7 +30,7 @@ const AuthButtons = ({
         </a>
         <div className="flex h-full border-gray-1" />
         <a
-          href={`${HOST_AUTH}/register?vpnAuth=true`}
+          href={`${HOST_AUTH}/new?vpnAuth=true`}
           target="_blank"
           className="flex hover:underline text-sm font-medium text-primary"
         >

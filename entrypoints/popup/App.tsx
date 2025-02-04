@@ -40,30 +40,34 @@ const defaultUserDataInfo: UserDataObj = {
   ip: '-',
 }
 
-export const App = ({
-  storedUserData,
-}: {
-  storedUserData: Record<StoredUserData, unknown>
-}) => {
-  const {
-    userData: userLocation,
-    isVPNEnabled,
-    authToken: userAuthToken,
-  } = storedUserData
-  const [userData, setUserData] = useState<UserDataObj>(
-    userLocation as UserDataObj
-  )
-  const [status, setStatus] = useState<VPN_STATUS_SWITCH>(
-    isVPNEnabled as VPN_STATUS_SWITCH
-  )
+export const App = () => {
+  const [userData, setUserData] = useState<UserDataObj>({
+    location: '-',
+    ip: '-',
+  })
+  const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
   const [authToken, setAuthToken] = useState<string>()
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
-    if (userAuthToken) {
-      setAuthToken(userAuthToken as string)
-      setIsAuthenticated(true)
-    }
+    chrome.storage.local
+      .get(['isVPNEnabled', 'userData', 'token'])
+      .then((data) => {
+        const userData = data.userData ?? {
+          location: '-',
+          ip: '-',
+        }
+        const isVPNEnabled = data.isVPNEnabled ?? 'OFF'
+        setUserData(userData)
+        setStatus(isVPNEnabled)
+        if (data.token) {
+          setAuthToken(data.token)
+          setIsAuthenticated(true)
+        }
+      })
+      .catch((error) => {
+        console.log('ERROR GETTING THE CACHED VALUES: ', error)
+      })
   }, [])
 
   const onConnectVpn = async () => {

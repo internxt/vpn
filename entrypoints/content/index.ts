@@ -6,18 +6,13 @@ export default defineContentScript({
     const worker = new MyWorker()
 
     window.addEventListener('message', (event) => {
-      if (event.origin !== 'https://drive.internxt.com') {
-        console.warn('ORIGIN NOT PERMITTED: ', event.origin)
-        return
-      }
-
+      console.log('MESSAGE RECEIVED: ', event)
       if (event.data && event.data.source === 'drive-web') {
         console.log('Content script got data from web app:', event.data.payload)
 
         chrome.storage.local.set({
-          token: event.data.payload.token,
+          token: event.data.payload,
         })
-
         worker.postMessage(event.data.payload)
       }
     })
