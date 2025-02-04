@@ -5,6 +5,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   vite: () => ({
     plugins: [react()],
+    server: {
+      port: 3001,
+    },
   }),
   manifest: {
     name: 'Internxt VPN - Free, Encrypted & Unlimited VPN',
@@ -17,14 +20,23 @@ export default defineConfig({
       '48': '/icon/48.png',
       '192': '/icon/192.png',
     },
-    permissions: ['storage', 'proxy', 'webRequest', 'webRequestAuthProvider'],
+    permissions: [
+      'storage',
+      'proxy',
+      'webRequest',
+      'webRequestAuthProvider',
+      'nativeMessaging',
+    ],
     web_accessible_resources: [
       {
         resources: ['index.html'],
         matches: ['<all_urls>'],
       },
     ],
-
+    externally_connectable: {
+      matches: ['http://127.0.0.1:3000/*', 'https://*.internxt.com/*'],
+      accepts_tls_channel_id: false,
+    },
     host_permissions: ['<all_urls>'],
     action: {
       default_popup: 'index.html',

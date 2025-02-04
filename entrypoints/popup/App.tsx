@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Database, MapPin } from '@phosphor-icons/react'
 
 import { StatusComponent } from '../components/StatusComponent'
 import ToggleSwitch from '../components/Switch'
 import { clearProxySettings, updateProxySettings } from './proxy.service'
+import { Footer } from '../components/Footer'
+
+type StoredUserData = 'isVPNEnabled' | 'userData' | 'authToken'
 
 interface UserDataObj {
   location: string
@@ -11,6 +14,8 @@ interface UserDataObj {
 }
 
 type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
+
+const IS_AUTH_AVAILABLE = true
 
 const STATUS: Record<VPN_STATUS_SWITCH, string> = {
   ON: 'On',
@@ -38,15 +43,28 @@ const defaultUserDataInfo: UserDataObj = {
 export const App = ({
   storedUserData,
 }: {
-  storedUserData: Record<string, unknown>
+  storedUserData: Record<StoredUserData, unknown>
 }) => {
+  const {
+    userData: userLocation,
+    isVPNEnabled,
+    authToken: userAuthToken,
+  } = storedUserData
   const [userData, setUserData] = useState<UserDataObj>(
-    storedUserData.userData as UserDataObj
+    userLocation as UserDataObj
   )
-
   const [status, setStatus] = useState<VPN_STATUS_SWITCH>(
-    storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
+    isVPNEnabled as VPN_STATUS_SWITCH
   )
+  const [authToken, setAuthToken] = useState<string>()
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+
+  useEffect(() => {
+    if (userAuthToken) {
+      setAuthToken(userAuthToken as string)
+      setIsAuthenticated(true)
+    }
+  }, [])
 
   const onConnectVpn = async () => {
     await updateProxySettings()
@@ -69,7 +87,7 @@ export const App = ({
     setUserData(defaultUserDataInfo)
   }
 
-  async function onToggleClicked() {
+  const onToggleClicked = async () => {
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -85,12 +103,24 @@ export const App = ({
     }
   }
 
+  //!TODO: set the free location
+  const onLogOut = async () => {
+    try {
+      await chrome.storage.local.remove('token')
+      setIsAuthenticated(false)
+    } catch (error) {
+      console.log('ERROR: ', error)
+    } finally {
+      setIsAuthenticated(false)
+    }
+  }
+
   return (
-    <div className="flex flex-col w-96 bg-white">
-      <div className="flex flex-col p-5 space-y-2">
+    <div className="flex flex-col w-96 h-screen bg-white">
+      <div className="flex flex-col p-5 gap-2">
         {/* Main section (logo, title, description) */}
-        <div className="flex flex-col space-y-6 items-center">
-          <div className="flex flex-col items-center space-y-4 text-center">
+        <div className="flex flex-col gap-6 items-center">
+          <div className="flex flex-col items-center gap-4 text-center">
             <img
               src={CONNECTION_IMAGES[status]}
               alt="VPN Status Icon"
@@ -150,13 +180,11 @@ export const App = ({
         </div>
       </div>
       <div className="border border-gray-10 w-full" />
-      <a
-        href={'https://internxt.com'}
-        target="_blank"
-        className="flex w-full items-center justify-center py-4"
-      >
-        <img src="/icon/internxt-logo.svg" width={97} height={10} />
-      </a>
+      <Footer
+        isAuthAvailable={IS_AUTH_AVAILABLE}
+        isAuthenticated={isAuthenticated}
+        onLogOut={onLogOut}
+      />
     </div>
   )
 }

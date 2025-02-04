@@ -1,4 +1,4 @@
-import { WebRequest } from 'wxt/browser'
+import { browser, WebRequest } from 'wxt/browser'
 
 export default defineBackground(() => {
   const IP_API_URL = import.meta.env.VITE_IP_API_URL
