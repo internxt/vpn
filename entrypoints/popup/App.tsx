@@ -4,6 +4,9 @@ import { Globe, Lock } from '@phosphor-icons/react'
 import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
+import { Footer } from '../components/Footer'
+
+const IS_AUTH_AVAILABLE = true
 
 interface UserDataObj {
   location: string
@@ -130,13 +133,11 @@ export const App = ({
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
       </div>
       <div className="border border-gray-10 w-full" />
-      <a
-        href={'https://internxt.com'}
-        target="_blank"
-        className="flex w-full items-center justify-center py-4"
-      >
-        <img src="/icon/internxt-logo.svg" width={97} height={10} />
-      </a>
+      <Footer
+        isAuthAvailable={IS_AUTH_AVAILABLE}
+        isAuthenticated={false}
+        onLogOut={() => {}}
+      />
     </div>
   )
 }
