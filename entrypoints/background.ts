@@ -31,21 +31,23 @@ export default defineBackground(() => {
     return true
   })
 
-  browser.webRequest.onAuthRequired.addListener(
-    function (details: WebRequest.OnAuthRequiredDetailsType) {
-      if (details.isProxy) {
-        return {
-          authCredentials: {
-            username: import.meta.env.VITE_VPN_USERNAME,
-            password: import.meta.env.VITE_VPN_PASSWORD,
-          },
-        }
-      }
+  browser.webRequest.onBeforeSendHeaders.addListener(
+    function (details: WebRequest.OnBeforeSendHeadersDetailsType) {
+      const headers = details.requestHeaders || []
+      chrome.storage.local.get('token')
+
+      headers.push({ name: 'Authorization', value: 'Bearer <your-token>' })
+      headers.push({
+        name: 'internxt-connection',
+        value: '<your-new-connection>',
+      })
+
+      return { requestHeaders: headers }
     },
     {
       urls: ['<all_urls>'],
     },
-    ['blocking']
+    ['blocking', 'requestHeaders']
   )
 
   browser.webRequest.onErrorOccurred.addListener(
