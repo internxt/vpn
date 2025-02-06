@@ -5,6 +5,7 @@ interface ConnectionDetailsProps {
   selectedLocation: string
   dropdownSection: DropdownSection[]
   userIp: string
+  isAuthenticated: boolean
   onSelectedLocation: (value: string) => void
 }
 
@@ -12,6 +13,7 @@ export const ConnectionDetails = ({
   selectedLocation,
   dropdownSection,
   userIp,
+  isAuthenticated,
   onSelectedLocation,
 }: ConnectionDetailsProps): JSX.Element => {
   return (
@@ -26,6 +28,7 @@ export const ConnectionDetails = ({
           <div className="flex w-full z-20 justify-end">
             <Dropdown
               selectedItem={selectedLocation}
+              isAuthenticated={isAuthenticated}
               buttonLabel={
                 dropdownSection
                   .flatMap((s) => s.items)

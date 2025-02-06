@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Globe, Lock } from '@phosphor-icons/react'
 
 import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
@@ -79,41 +78,38 @@ export const App = ({
         {
           label: 'France',
           value: 'FR',
-          icon: <Globe size={20} />,
           onClick: () => console.log('Go to globe'),
         },
       ],
     },
     {
       title: 'Premium',
+      isLocked: true,
       items: [
         {
           label: 'Germany',
           value: 'GE',
-          icon: <Lock size={20} />,
           onClick: () => console.log('Logging out...'),
         },
         {
           label: 'Poland',
           value: 'PO',
-          icon: <Lock size={20} />,
           onClick: () => console.log('Go to settings'),
         },
       ],
     },
     {
       title: 'Ultimate',
+      isLocked: true,
       items: [
         {
           label: 'Canada',
           value: 'CA',
-          icon: <Lock size={20} />,
           onClick: () => console.log('Logging out...'),
         },
         {
           label: 'United Kingdom',
           value: 'UK',
-          icon: <Lock size={20} />,
           onClick: () => console.log('Go to settings'),
         },
       ],
@@ -127,6 +123,7 @@ export const App = ({
         <ConnectionDetails
           dropdownSection={dropdownSection}
           selectedLocation={selectedLocation}
+          isAuthenticated={false}
           userIp={userData.ip}
           onSelectedLocation={setSelectedLocation}
         />

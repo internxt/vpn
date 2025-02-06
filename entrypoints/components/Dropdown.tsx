@@ -1,15 +1,15 @@
-import { CaretDown, CaretUp, Check } from '@phosphor-icons/react'
-import React, { useState, useRef, useEffect, ReactNode } from 'react'
+import { CaretDown, CaretUp, Check, Globe, Lock } from '@phosphor-icons/react'
+import React, { useState, useRef, useEffect } from 'react'
 
 interface DropdownItem {
   label: string
   value: string
-  icon?: ReactNode
   onClick?: () => void
 }
 
 export interface DropdownSection {
   title?: string
+  isLocked?: boolean
   items: DropdownItem[]
   separator?: boolean
 }
@@ -18,6 +18,7 @@ interface DropdownProps {
   sections: DropdownSection[]
   buttonLabel: string
   selectedItem: string
+  isAuthenticated: boolean
   onSelect: (value: string) => void
 }
 
@@ -25,6 +26,7 @@ export const Dropdown: React.FC<DropdownProps> = ({
   sections,
   buttonLabel,
   selectedItem,
+  isAuthenticated,
   onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -66,14 +68,21 @@ export const Dropdown: React.FC<DropdownProps> = ({
       {isOpen && (
         <div className="origin-top-right absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div className="py-1">
-            {sections.map((section, index) => (
+            {sections.map((section) => (
               <div
-                key={index}
+                key={section.title}
                 className={section.separator ? 'border-b border-gray-20' : ''}
               >
                 {section.title && (
-                  <div className="px-4 py-2 text-sm font-semibold text-gray-100">
-                    {section.title}
+                  <div className="px-4 flex flex-row justify-between py-2">
+                    <p className="text-sm font-semibold text-gray-100">
+                      {section.title}
+                    </p>
+                    {section.isLocked && isAuthenticated && (
+                      <button className="text-primary font-medium">
+                        Upgrade
+                      </button>
+                    )}
                   </div>
                 )}
                 {section.items.map((item) => (
@@ -84,14 +93,21 @@ export const Dropdown: React.FC<DropdownProps> = ({
                       setIsOpen(false)
                       item.onClick && item.onClick()
                     }}
-                    className={`flex items-center justify-between w-full text-left px-4 py-2 text-gray-100 hover:bg-gray-1`}
+                    disabled={section.isLocked}
+                    className={`flex items-center justify-between w-full text-left px-4 py-2 text-gray-100 ${
+                      !section.isLocked && 'hover:bg-gray-1'
+                    }`}
                   >
-                    <div className="flex items-center">
-                      {item.icon && <span className="mr-2">{item.icon}</span>}
-                      {item.label}
+                    <div className="flex gap-2 items-center">
+                      {section.isLocked ? (
+                        <Lock size={20} className="text-gray-50" />
+                      ) : (
+                        <Globe size={20} />
+                      )}
+                      <p>{item.label}</p>
                     </div>
                     {selectedItem === item.value && (
-                      <Check size={16} className="text-green-500" />
+                      <Check size={20} className="text-gray-100" />
                     )}
                   </button>
                 ))}
