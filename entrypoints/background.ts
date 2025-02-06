@@ -1,4 +1,4 @@
-import { WebRequest } from 'wxt/browser'
+import { browser, WebRequest } from 'wxt/browser'
 
 export default defineBackground(() => {
   const IP_API_URL = import.meta.env.VITE_IP_API_URL
@@ -31,23 +31,21 @@ export default defineBackground(() => {
     return true
   })
 
-  browser.webRequest.onBeforeSendHeaders.addListener(
-    function (details: WebRequest.OnBeforeSendHeadersDetailsType) {
-      const headers = details.requestHeaders || []
-      chrome.storage.local.get('token')
-
-      headers.push({ name: 'Authorization', value: 'Bearer <your-token>' })
-      headers.push({
-        name: 'internxt-connection',
-        value: '<your-new-connection>',
-      })
-
-      return { requestHeaders: headers }
+  browser.webRequest.onAuthRequired.addListener(
+    function (details: WebRequest.OnAuthRequiredDetailsType) {
+      if (details.isProxy) {
+        return {
+          authCredentials: {
+            username: import.meta.env.VITE_VPN_USERNAME,
+            password: import.meta.env.VITE_VPN_PASSWORD,
+          },
+        }
+      }
     },
     {
       urls: ['<all_urls>'],
     },
-    ['blocking', 'requestHeaders']
+    ['blocking']
   )
 
   browser.webRequest.onErrorOccurred.addListener(
