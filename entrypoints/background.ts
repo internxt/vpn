@@ -71,30 +71,10 @@ export default defineBackground(() => {
           // NO OP
         })
     }
-    // else if (message.type === 'SET_VPN_TOKEN') {
-    const newToken = message.value
     setDynamicRules('TOKEN', 'connection')
-    sendResponse({ status: 'OK' })
-    // }
 
     return true
   })
-
-  browser.webRequest.onBeforeSendHeaders.addListener(
-    (details: WebRequest.OnBeforeSendHeadersDetailsType) => {
-      const requestHeaders = details.requestHeaders ?? []
-      console.log('ON BEFORE SEND', details)
-      requestHeaders.push({ name: 'Authorization', value: 'Bearer <token>' })
-      requestHeaders.push({
-        name: 'internxt-connection',
-        value: '<connection>',
-      })
-
-      return { requestHeaders }
-    },
-    { urls: ['<all_urls>'] },
-    ['blocking', 'requestHeaders']
-  )
 
   browser.webRequest.onAuthRequired.addListener(
     function (details: WebRequest.OnAuthRequiredDetailsType) {
