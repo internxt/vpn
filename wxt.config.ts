@@ -5,9 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   vite: () => ({
     plugins: [react()],
-    server: {
-      port: 3001,
-    },
   }),
   manifest: {
     name: 'Internxt VPN - Free, Encrypted & Unlimited VPN',
