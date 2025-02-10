@@ -1,4 +1,5 @@
-const HOST_AUTH = 'http://localhost:3000'
+const HOST_AUTH = 'https://staging.drive.internxt.com'
+// const HOST_AUTH = 'http://localhost:3000'
 //  import.meta.env.VITE_AUTH_HOST_URL
 
 interface FooterProps {

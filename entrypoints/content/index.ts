@@ -2,16 +2,27 @@ export default defineContentScript({
   matches: ['*://*/*'],
   main() {
     const allowedOrigins = [
+      'https://staging.drive.internxt.com',
       'https://drive.internxt.com',
       'http://localhost:3000',
+      'http://localhost:3001',
     ]
 
     const abortController = new AbortController()
 
-    window.postMessage(
-      { source: 'drive-extension', payload: 'ready' },
-      'http://localhost:3000'
-    )
+    chrome.storage.local.get('token', (data) => {
+      if (data.token) {
+        window.postMessage(
+          { source: 'drive-extension', payload: 'token-exists' },
+          allowedOrigins[0]
+        )
+      } else {
+        window.postMessage(
+          { source: 'drive-extension', payload: 'ready' },
+          allowedOrigins[0]
+        )
+      }
+    })
 
     window.addEventListener(
       'message',
@@ -23,16 +34,12 @@ export default defineContentScript({
           return
         }
 
-        if (event.data && event.data.source === 'drive-web') {
-          console.log(
-            'Content script got data from web app:',
-            event.data.payload
-          )
+        if (event.data?.source === 'drive-web') {
+          const token = event.data.payload
+          console.log('TOKEN FETCHED FROM DRIVE WEB')
 
-          chrome.storage.local.set({ token: event.data.payload }, () => {
-            console.log('Token saved.')
-
-            abortController.abort()
+          chrome.storage.local.set({ token }, () => {
+            console.log('TOKEN STORED')
           })
         }
       },
