@@ -1,25 +1,42 @@
-import MyWorker from './worker?worker&inline'
-
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    const worker = new MyWorker()
+    const allowedOrigins = [
+      'https://drive.internxt.com',
+      'http://localhost:3000',
+    ]
 
-    window.addEventListener('message', (event) => {
-      console.log('MESSAGE RECEIVED: ', event)
-      if (event.data && event.data.source === 'drive-web') {
-        console.log('Content script got data from web app:', event.data.payload)
+    const abortController = new AbortController()
 
-        chrome.storage.local.set({
-          token: event.data.payload,
-        })
-        worker.postMessage(event.data.payload)
-      }
-    })
+    window.postMessage(
+      { source: 'drive-extension', payload: 'ready' },
+      'http://localhost:3000'
+    )
 
-    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-      worker.postMessage(request)
-      sendResponse({ status: 'MESSAGE SENT TO THE WORKER' })
-    })
+    window.addEventListener(
+      'message',
+      (event) => {
+        console.log('MESSAGE RECEIVED:', event)
+
+        if (!allowedOrigins.includes(event.origin)) {
+          console.warn('Origin not allowed:', event.origin)
+          return
+        }
+
+        if (event.data && event.data.source === 'drive-web') {
+          console.log(
+            'Content script got data from web app:',
+            event.data.payload
+          )
+
+          chrome.storage.local.set({ token: event.data.payload }, () => {
+            console.log('Token saved.')
+
+            abortController.abort()
+          })
+        }
+      },
+      { signal: abortController.signal }
+    )
   },
 })

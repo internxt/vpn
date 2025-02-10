@@ -6,8 +6,6 @@ import ToggleSwitch from '../components/Switch'
 import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { Footer } from '../components/Footer'
 
-type StoredUserData = 'isVPNEnabled' | 'userData' | 'authToken'
-
 interface UserDataObj {
   location: string
   ip: string
