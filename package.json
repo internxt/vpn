@@ -7,6 +7,7 @@
     "dev": "wxt -p 3001",
     "dev:firefox": "wxt -b firefox",
     "build": "wxt build",
+    "build:staging": "wxt build --mode staging",
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
