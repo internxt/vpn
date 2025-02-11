@@ -1,6 +1,6 @@
-const HOST_AUTH = 'https://staging.drive.internxt.com'
-// const HOST_AUTH = 'http://localhost:3000'
-//  import.meta.env.VITE_AUTH_HOST_URL
+import { getAppUrl } from '../utils/getAppUrl'
+
+const HOST_AUTH = getAppUrl(import.meta.env.MODE)
 
 interface FooterProps {
   isAuthAvailable: boolean

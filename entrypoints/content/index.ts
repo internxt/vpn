@@ -1,26 +1,31 @@
+import { getAppUrl } from '../utils/getAppUrl'
+
+const ALLOWED_DOMAINS = [
+  'https://staging.drive.internxt.com',
+  'https://drive.internxt.com',
+  'http://localhost:3000',
+]
+
 export default defineContentScript({
   matches: ['*://*/*'],
-  main(ctx) {
-    const allowedOrigins = [
-      'https://staging.drive.internxt.com',
-      'https://drive.internxt.com',
-      'http://localhost:3000',
-      'http://localhost:3001',
-    ]
+  main() {
+    const targetUrl = getAppUrl(import.meta.env.MODE)
+
     const abortController = new AbortController()
+    const { signal } = abortController
 
     chrome.storage.local.get('token', (data) => {
       if (data.token) {
         window.postMessage(
           { source: 'drive-extension', tokenStatus: 'token-exists' },
-          allowedOrigins[0]
+          targetUrl
         )
 
         abortController.abort()
       } else {
         window.postMessage(
           { source: 'drive-extension', tokenStatus: 'token-not-found' },
-          allowedOrigins[0]
+          targetUrl
         )
       }
     })
@@ -28,21 +33,21 @@ export default defineContentScript({
     window.addEventListener(
       'message',
       (event) => {
-        if (!allowedOrigins.includes(event.origin)) {
+        if (!ALLOWED_DOMAINS.includes(event.origin)) {
           console.warn('Origin not allowed:', event.origin)
           return
         }
 
-        if (event.data?.source === 'drive-web' && ctx.isValid) {
+        if (event.data?.source === 'drive-web') {
           const token = event.data.payload
           chrome.storage.local.set({ token }, () => {
-            console.log('The user has been authenticated in the extension')
+            console.log('The user has been authenticated in the VPN extension')
 
             abortController.abort()
           })
         }
       },
-      { signal: abortController.signal, once: true }
+      { signal }
     )
   },
 })
