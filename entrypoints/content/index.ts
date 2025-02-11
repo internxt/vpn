@@ -12,6 +12,10 @@ export default defineContentScript({
   main() {
     const targetUrl = getAppUrl(import.meta.env.MODE)
 
+    if (!targetUrl.includes(window.location.origin)) {
+      return
+    }
+
     const abortController = new AbortController()
     const { signal } = abortController
 
@@ -35,7 +39,6 @@ export default defineContentScript({
       'message',
       (event) => {
         if (!targetUrl.includes(event.origin)) {
-          console.warn('Origin not allowed:', event.origin)
           return
         }
 
