@@ -3,7 +3,6 @@ import { getAppUrl } from '../utils/getAppUrl'
 const HOST_AUTH = getAppUrl(import.meta.env.MODE)
 
 interface FooterProps {
-  isAuthAvailable: boolean
   isAuthenticated: boolean
   onLogOut: () => void
 }
@@ -42,15 +41,9 @@ const AuthButtons = ({
   </div>
 )
 
-export const Footer = ({
-  isAuthAvailable,
-  isAuthenticated,
-  onLogOut,
-}: FooterProps) => (
+export const Footer = ({ isAuthenticated, onLogOut }: FooterProps) => (
   <div className="flex h-full items-center p-5 flex-row w-full justify-between">
-    {isAuthAvailable && (
-      <AuthButtons isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
-    )}
+    <AuthButtons isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
     <div className="flex max-w-[100px] w-full flex-col">
       <a href={'https://internxt.com'} target="_blank">
         <img

@@ -17,19 +17,14 @@ export default defineConfig({
       '48': '/icon/48.png',
       '192': '/icon/192.png',
     },
-    permissions: [
-      'storage',
-      'proxy',
-      'webRequest',
-      'webRequestAuthProvider',
-      'nativeMessaging',
-    ],
+    permissions: ['storage', 'proxy', 'webRequest', 'webRequestAuthProvider'],
     web_accessible_resources: [
       {
         resources: ['index.html'],
         matches: ['<all_urls>'],
       },
     ],
+
     host_permissions: ['<all_urls>'],
     action: {
       default_popup: 'index.html',

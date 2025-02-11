@@ -13,8 +13,6 @@ interface UserDataObj {
 
 type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
 
-const IS_AUTH_AVAILABLE = true
-
 const STATUS: Record<VPN_STATUS_SWITCH, string> = {
   ON: 'On',
   OFF: 'Off',
@@ -182,11 +180,7 @@ export const App = () => {
         </div>
       </div>
       <div className="border border-gray-10 w-full" />
-      <Footer
-        isAuthAvailable={IS_AUTH_AVAILABLE}
-        isAuthenticated={isAuthenticated}
-        onLogOut={onLogOut}
-      />
+      <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
     </div>
   )
 }
