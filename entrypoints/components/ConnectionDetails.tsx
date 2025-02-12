@@ -1,17 +1,19 @@
 import { Database, MapPin } from '@phosphor-icons/react'
-import { Dropdown, DropdownSection } from './Dropdown'
+import { Dropdown, SectionProps } from './dropdown/Dropdown'
 
 interface ConnectionDetailsProps {
   selectedLocation: string
-  dropdownSection: DropdownSection[]
+  dropdownSections: SectionProps[]
   userIp: string
   isAuthenticated: boolean
   onSelectedLocation: (value: string) => void
 }
 
+const Divider = () => <div className="border border-gray-5 w-full" />
+
 export const ConnectionDetails = ({
   selectedLocation,
-  dropdownSection,
+  dropdownSections,
   userIp,
   isAuthenticated,
   onSelectedLocation,
@@ -30,24 +32,24 @@ export const ConnectionDetails = ({
               selectedItem={selectedLocation}
               isAuthenticated={isAuthenticated}
               buttonLabel={
-                dropdownSection
+                dropdownSections
                   .flatMap((s) => s.items)
                   .find((i) => i.value === selectedLocation)?.label ?? 'Select'
               }
-              sections={dropdownSection}
+              sections={dropdownSections}
               onSelect={onSelectedLocation}
             />
           </div>
         </div>
-        <div className="border border-gray-5 w-full" />
-        <div className="flex flex-row justify-between items-center text-white">
-          <div className="flex flex-row space-x-2 items-center text-gray-100">
+        <Divider />
+        <div className="flex flex-row justify-between items-center">
+          <div className="flex flex-row space-x-2 items-center">
             <MapPin size={16} />
-            <p className="text-sm font-semibold">IP Address</p>
+            <p className="text-sm text-gray-100 font-semibold">IP Address</p>
           </div>
-          <p className="txt-sm text-gray-60">{userIp}</p>
+          <p className="text-sm text-gray-60">{userIp}</p>
         </div>
-        <div className="border border-gray-5 w-full" />
+        <Divider />
       </div>
     </div>
   )

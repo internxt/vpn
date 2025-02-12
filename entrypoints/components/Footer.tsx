@@ -1,8 +1,6 @@
-const HOST_AUTH = 'http://localhost:3000'
-//  import.meta.env.VITE_AUTH_HOST_URL
+const HOST_AUTH = import.meta.env.VITE_AUTH_HOST_URL
 
 interface FooterProps {
-  isAuthAvailable: boolean
   isAuthenticated: boolean
   onLogOut: () => void
 }
@@ -24,6 +22,7 @@ const AuthButtons = ({
         <a
           href={`${HOST_AUTH}/login?vpnAuth=true`}
           target="_blank"
+          rel="noopener noreferrer"
           className="flex hover:underline text-sm font-medium text-primary"
         >
           Log in
@@ -32,6 +31,7 @@ const AuthButtons = ({
         <a
           href={`${HOST_AUTH}/new?vpnAuth=true`}
           target="_blank"
+          rel="noopener noreferrer"
           className="flex hover:underline text-sm font-medium text-primary"
         >
           Sign up
@@ -41,17 +41,15 @@ const AuthButtons = ({
   </div>
 )
 
-export const Footer = ({
-  isAuthAvailable,
-  isAuthenticated,
-  onLogOut,
-}: FooterProps) => (
+export const Footer = ({ isAuthenticated, onLogOut }: FooterProps) => (
   <div className="flex h-full items-center p-5 flex-row w-full justify-between">
-    {isAuthAvailable && (
-      <AuthButtons isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
-    )}
+    <AuthButtons isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
     <div className="flex max-w-[100px] w-full flex-col">
-      <a href={'https://internxt.com'} target="_blank">
+      <a
+        href={'https://internxt.com'}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <img
           src="/icon/internxt-logo.svg"
           width={97}

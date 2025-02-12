@@ -5,8 +5,6 @@ import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 
-const IS_AUTH_AVAILABLE = true
-
 interface UserDataObj {
   location: string
   ip: string
@@ -70,10 +68,11 @@ export const App = ({
     }
   }
 
-  const dropdownSection = [
+  const dropdownSections = [
     {
       title: 'Current',
       separator: true,
+      isLocked: false,
       items: [
         {
           label: 'France',
@@ -84,7 +83,7 @@ export const App = ({
     },
     {
       title: 'Premium',
-      isLocked: true,
+      isLocked: false,
       items: [
         {
           label: 'Germany',
@@ -121,7 +120,7 @@ export const App = ({
       {/* Main section (logo, title, description) */}
       <div className="flex flex-col p-5 space-y-5">
         <ConnectionDetails
-          dropdownSection={dropdownSection}
+          dropdownSections={dropdownSections}
           selectedLocation={selectedLocation}
           isAuthenticated={false}
           userIp={userData.ip}
@@ -130,11 +129,7 @@ export const App = ({
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
       </div>
       <div className="border border-gray-10 w-full" />
-      <Footer
-        isAuthAvailable={IS_AUTH_AVAILABLE}
-        isAuthenticated={false}
-        onLogOut={() => {}}
-      />
+      <Footer isAuthenticated={false} onLogOut={() => {}} />
     </div>
   )
 }
