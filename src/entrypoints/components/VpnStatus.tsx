@@ -39,7 +39,6 @@ export const VpnStatus = ({ status, onToggleClicked }: VpnStatusProps) => {
         <div className="flex flex-col items-center">
           <p className="text-gray-100 font-medium text-base">
             {i18n.t('vpnStatus.vpnIs', [STATUS[status]])}
-            {/* VPN is {STATUS[status]} */}
           </p>
           <p className="text-sm text-center text-gray-60">
             {STATUS_DESCRIPTION[status]}
