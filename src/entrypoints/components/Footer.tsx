@@ -1,3 +1,5 @@
+import { translate } from '@/constants'
+
 const HOST_AUTH = import.meta.env.VITE_AUTH_HOST_URL
 
 interface FooterProps {
@@ -15,7 +17,7 @@ const AuthButtons = ({
         className="flex hover:underline bg-transparent text-sm font-medium text-primary"
         onClick={onLogOut}
       >
-        Log out
+        {translate('footer.logout')}
       </button>
     ) : (
       <>
@@ -25,7 +27,7 @@ const AuthButtons = ({
           rel="noopener noreferrer"
           className="flex hover:underline text-sm font-medium text-primary"
         >
-          Log in
+          {translate('footer.login')}
         </a>
         <div className="flex h-full border-gray-1" />
         <a
@@ -34,7 +36,7 @@ const AuthButtons = ({
           rel="noopener noreferrer"
           className="flex hover:underline text-sm font-medium text-primary"
         >
-          Sign up
+          {translate('footer.signup')}
         </a>
       </>
     )}

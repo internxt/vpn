@@ -31,5 +31,10 @@
       "status": "Off",
       "description": "Connect for secure browsing."
     }
+  },
+  "footer": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "logout": "Log out"
   }
 }
