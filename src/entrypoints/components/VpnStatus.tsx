@@ -1,3 +1,4 @@
+import { translate } from '@/constants'
 import { VPN_STATUS_SWITCH } from '../popup/App'
 import { StatusComponent } from './StatusComponent'
 import ToggleSwitch from './Switch'

@@ -1,3 +1,4 @@
+import { translate } from '@/constants'
 import { SectionItemProps, SectionProps } from '../Dropdown'
 import { DropdownItem } from './DropdownItem'
 

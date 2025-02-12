@@ -1,5 +1,6 @@
 import { Database, MapPin } from '@phosphor-icons/react'
 import { Dropdown, SectionProps } from './dropdown/Dropdown'
+import { translate } from '@/constants'
 
 interface ConnectionDetailsProps {
   selectedLocation: string
