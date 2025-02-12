@@ -77,44 +77,44 @@ export const App = ({
 
   const dropdownSections = [
     {
-      title: i18n.t('plans.current'),
+      title: translate('plans.current'),
       separator: true,
       isLocked: false,
       items: [
         {
-          label: i18n.t('countryConnections.france'),
+          label: translate('countryConnections.france'),
           value: 'FR',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: i18n.t('plans.premium'),
+      title: translate('plans.premium'),
       isLocked: false,
       items: [
         {
-          label: i18n.t('countryConnections.germany'),
+          label: translate('countryConnections.germany'),
           value: 'GE',
           onClick: onChangeLocation,
         },
         {
-          label: i18n.t('countryConnections.poland'),
+          label: translate('countryConnections.poland'),
           value: 'PO',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: i18n.t('plans.ultimate'),
+      title: translate('plans.ultimate'),
       isLocked: true,
       items: [
         {
-          label: i18n.t('countryConnections.canada'),
+          label: translate('countryConnections.canada'),
           value: 'CA',
           onClick: onChangeLocation,
         },
         {
-          label: i18n.t('countryConnections.unitedKingdom'),
+          label: translate('countryConnections.unitedKingdom'),
           value: 'UK',
           onClick: onChangeLocation,
         },

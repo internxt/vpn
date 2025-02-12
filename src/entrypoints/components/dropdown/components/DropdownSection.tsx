@@ -23,7 +23,9 @@ export const DropdownSection = ({
         <div className="px-4 flex flex-row justify-between py-2">
           <p className="text-sm font-semibold text-gray-100">{section.title}</p>
           {section.isLocked && isAuthenticated && (
-            <button className="text-primary font-medium">Upgrade</button>
+            <button className="text-primary font-medium">
+              {translate('upgrade')}
+            </button>
           )}
         </div>
       )}

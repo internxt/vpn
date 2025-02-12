@@ -8,15 +8,15 @@ interface VpnStatusProps {
 }
 
 const STATUS: Record<VPN_STATUS_SWITCH, string> = {
-  ON: i18n.t('vpnStatus.connected.status'),
-  OFF: i18n.t('vpnStatus.disconnected.status'),
-  CONNECTING: i18n.t('vpnStatus.connecting.status'),
+  ON: translate('vpnStatus.connected.status'),
+  OFF: translate('vpnStatus.disconnected.status'),
+  CONNECTING: translate('vpnStatus.connecting.status'),
 }
 
 const STATUS_DESCRIPTION: Record<VPN_STATUS_SWITCH, string> = {
-  ON: i18n.t('vpnStatus.connected.description'),
-  OFF: i18n.t('vpnStatus.disconnected.description'),
-  CONNECTING: i18n.t('vpnStatus.connecting.description'),
+  ON: translate('vpnStatus.connected.description'),
+  OFF: translate('vpnStatus.disconnected.description'),
+  CONNECTING: translate('vpnStatus.connecting.description'),
 }
 
 const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
@@ -38,7 +38,7 @@ export const VpnStatus = ({ status, onToggleClicked }: VpnStatusProps) => {
         />
         <div className="flex flex-col items-center">
           <p className="text-gray-100 font-medium text-base">
-            {i18n.t('vpnStatus.vpnIs', [STATUS[status]])}
+            {translate('vpnStatus.vpnIs', [STATUS[status]])}
           </p>
           <p className="text-sm text-center text-gray-60">
             {STATUS_DESCRIPTION[status]}
@@ -47,7 +47,7 @@ export const VpnStatus = ({ status, onToggleClicked }: VpnStatusProps) => {
       </div>
       <div className="flex flex-row items-center justify-between w-full text-white">
         <p className="text-sm font-semibold text-gray-100">
-          {i18n.t('vpnStatus.title')}
+          {translate('vpnStatus.title')}
         </p>
         <div className="flex flex-row items-center space-x-3">
           <StatusComponent status={status} />
