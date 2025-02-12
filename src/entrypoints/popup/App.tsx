@@ -4,6 +4,7 @@ import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
+import { i18n } from '#i18n'
 
 interface UserDataObj {
   location: string
@@ -77,44 +78,44 @@ export const App = ({
 
   const dropdownSections = [
     {
-      title: 'Current',
+      title: i18n.t('plans.current'),
       separator: true,
       isLocked: false,
       items: [
         {
-          label: 'France',
+          label: i18n.t('countryConnections.france'),
           value: 'FR',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: 'Premium',
+      title: i18n.t('plans.premium'),
       isLocked: false,
       items: [
         {
-          label: 'Germany',
+          label: i18n.t('countryConnections.germany'),
           value: 'GE',
           onClick: onChangeLocation,
         },
         {
-          label: 'Poland',
+          label: i18n.t('countryConnections.poland'),
           value: 'PO',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: 'Ultimate',
+      title: i18n.t('plans.ultimate'),
       isLocked: true,
       items: [
         {
-          label: 'Canada',
+          label: i18n.t('countryConnections.canada'),
           value: 'CA',
           onClick: onChangeLocation,
         },
         {
-          label: 'United Kingdom',
+          label: i18n.t('countryConnections.unitedKingdom'),
           value: 'UK',
           onClick: onChangeLocation,
         },
