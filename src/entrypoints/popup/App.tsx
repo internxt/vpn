@@ -4,6 +4,7 @@ import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
+import { translate } from '@/constants'
 
 interface UserDataObj {
   location: string
@@ -77,44 +78,44 @@ export const App = ({
 
   const dropdownSections = [
     {
-      title: 'Current',
+      title: translate('plans.current'),
       separator: true,
       isLocked: false,
       items: [
         {
-          label: 'France',
+          label: translate('countryConnections.france'),
           value: 'FR',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: 'Premium',
+      title: translate('plans.premium'),
       isLocked: false,
       items: [
         {
-          label: 'Germany',
+          label: translate('countryConnections.germany'),
           value: 'GE',
           onClick: onChangeLocation,
         },
         {
-          label: 'Poland',
+          label: translate('countryConnections.poland'),
           value: 'PO',
           onClick: onChangeLocation,
         },
       ],
     },
     {
-      title: 'Ultimate',
+      title: translate('plans.ultimate'),
       isLocked: true,
       items: [
         {
-          label: 'Canada',
+          label: translate('countryConnections.canada'),
           value: 'CA',
           onClick: onChangeLocation,
         },
         {
-          label: 'United Kingdom',
+          label: translate('countryConnections.unitedKingdom'),
           value: 'UK',
           onClick: onChangeLocation,
         },

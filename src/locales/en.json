@@ -1,0 +1,40 @@
+{
+  "connectionDetails": "Connection details",
+  "location": "Location",
+  "select": "Select",
+  "ipAddress": "IP Address",
+  "upgrade": "Upgrade",
+  "plans": {
+    "current": "Current",
+    "premium": "Premium",
+    "ultimate": "Ultimate"
+  },
+  "countryConnections": {
+    "france": "France",
+    "germany": "Germany",
+    "poland": "Poland",
+    "canada": "Canada",
+    "unitedKingdom": "United Kingdom"
+  },
+  "vpnStatus": {
+    "title": "VPN Protection",
+    "vpnIs": "VPN is $1",
+    "connected": {
+      "status": "On",
+      "description": "Your connection is secure."
+    },
+    "connecting": {
+      "status": "Connecting",
+      "description": "Establishing secure connection."
+    },
+    "disconnected": {
+      "status": "Off",
+      "description": "Connect for secure browsing."
+    }
+  },
+  "footer": {
+    "login": "Log in",
+    "signup": "Sign up",
+    "logout": "Log out"
+  }
+}

@@ -1,3 +1,4 @@
+import { translate } from '@/constants'
 import { VPN_STATUS_SWITCH } from '../popup/App'
 import { StatusComponent } from './StatusComponent'
 import ToggleSwitch from './Switch'
@@ -8,15 +9,15 @@ interface VpnStatusProps {
 }
 
 const STATUS: Record<VPN_STATUS_SWITCH, string> = {
-  ON: 'On',
-  OFF: 'Off',
-  CONNECTING: 'Connecting',
+  ON: translate('vpnStatus.connected.status'),
+  OFF: translate('vpnStatus.disconnected.status'),
+  CONNECTING: translate('vpnStatus.connecting.status'),
 }
 
 const STATUS_DESCRIPTION: Record<VPN_STATUS_SWITCH, string> = {
-  ON: 'Your connection is secure.',
-  OFF: 'Connect for secure browsing.',
-  CONNECTING: 'Establishing secure connection.',
+  ON: translate('vpnStatus.connected.description'),
+  OFF: translate('vpnStatus.disconnected.description'),
+  CONNECTING: translate('vpnStatus.connecting.description'),
 }
 
 const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
@@ -38,7 +39,7 @@ export const VpnStatus = ({ status, onToggleClicked }: VpnStatusProps) => {
         />
         <div className="flex flex-col items-center">
           <p className="text-gray-100 font-medium text-base">
-            VPN is {STATUS[status]}
+            {translate('vpnStatus.vpnIs', [STATUS[status]])}
           </p>
           <p className="text-sm text-center text-gray-60">
             {STATUS_DESCRIPTION[status]}
@@ -46,7 +47,9 @@ export const VpnStatus = ({ status, onToggleClicked }: VpnStatusProps) => {
         </div>
       </div>
       <div className="flex flex-row items-center justify-between w-full text-white">
-        <p className="text-sm font-semibold text-gray-100">VPN Protection</p>
+        <p className="text-sm font-semibold text-gray-100">
+          {translate('vpnStatus.title')}
+        </p>
         <div className="flex flex-row items-center space-x-3">
           <StatusComponent status={status} />
           <ToggleSwitch
