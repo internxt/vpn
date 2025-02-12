@@ -4,7 +4,6 @@ import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
-import { i18n } from '#i18n'
 
 interface UserDataObj {
   location: string
