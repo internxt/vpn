@@ -6,7 +6,6 @@ interface ConnectionDetailsProps {
   dropdownSections: SectionProps[]
   userIp: string
   isAuthenticated: boolean
-  onSelectedLocation: (value: string) => void
 }
 
 const Divider = () => <div className="border border-gray-5 w-full" />
@@ -16,8 +15,12 @@ export const ConnectionDetails = ({
   dropdownSections,
   userIp,
   isAuthenticated,
-  onSelectedLocation,
 }: ConnectionDetailsProps): JSX.Element => {
+  const buttonLabel =
+    dropdownSections
+      .flatMap((s) => s.items)
+      .find((i) => i.value === selectedLocation)?.label ?? 'Select'
+
   return (
     <div className="flex flex-col space-y-3">
       <p className="text-sm text-gray-60">Connection Details</p>
@@ -31,13 +34,8 @@ export const ConnectionDetails = ({
             <Dropdown
               selectedItem={selectedLocation}
               isAuthenticated={isAuthenticated}
-              buttonLabel={
-                dropdownSections
-                  .flatMap((s) => s.items)
-                  .find((i) => i.value === selectedLocation)?.label ?? 'Select'
-              }
+              buttonLabel={buttonLabel}
               sections={dropdownSections}
-              onSelect={onSelectedLocation}
             />
           </div>
         </div>

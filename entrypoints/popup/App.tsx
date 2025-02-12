@@ -68,6 +68,13 @@ export const App = ({
     }
   }
 
+  const onChangeLocation = (newLocation: string) => {
+    setSelectedLocation(newLocation)
+    chrome.storage.local.set({
+      connection: newLocation,
+    })
+  }
+
   const dropdownSections = [
     {
       title: 'Current',
@@ -77,7 +84,7 @@ export const App = ({
         {
           label: 'France',
           value: 'FR',
-          onClick: () => console.log('Go to globe'),
+          onClick: onChangeLocation,
         },
       ],
     },
@@ -88,12 +95,12 @@ export const App = ({
         {
           label: 'Germany',
           value: 'GE',
-          onClick: () => console.log('Logging out...'),
+          onClick: onChangeLocation,
         },
         {
           label: 'Poland',
           value: 'PO',
-          onClick: () => console.log('Go to settings'),
+          onClick: onChangeLocation,
         },
       ],
     },
@@ -104,12 +111,12 @@ export const App = ({
         {
           label: 'Canada',
           value: 'CA',
-          onClick: () => console.log('Logging out...'),
+          onClick: onChangeLocation,
         },
         {
           label: 'United Kingdom',
           value: 'UK',
-          onClick: () => console.log('Go to settings'),
+          onClick: onChangeLocation,
         },
       ],
     },
@@ -124,7 +131,6 @@ export const App = ({
           selectedLocation={selectedLocation}
           isAuthenticated={false}
           userIp={userData.ip}
-          onSelectedLocation={setSelectedLocation}
         />
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
       </div>

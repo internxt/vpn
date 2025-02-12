@@ -5,7 +5,7 @@ import { DropdownSection } from './components/DropdownSection'
 export interface SectionItemProps {
   label: string
   value: string
-  onClick?: () => void
+  onClick: (newLocation: string) => void
 }
 
 export interface SectionProps {
@@ -20,7 +20,6 @@ interface DropdownProps {
   buttonLabel: string
   selectedItem: string
   isAuthenticated: boolean
-  onSelect: (value: string) => void
 }
 
 export const Dropdown: React.FC<DropdownProps> = ({
@@ -28,7 +27,6 @@ export const Dropdown: React.FC<DropdownProps> = ({
   buttonLabel,
   selectedItem,
   isAuthenticated,
-  onSelect,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
@@ -54,9 +52,8 @@ export const Dropdown: React.FC<DropdownProps> = ({
   }, [])
 
   const onItemClicked = (item: SectionItemProps) => {
-    onSelect(item.value)
+    item.onClick(item.value)
     setIsOpen(false)
-    item.onClick && item.onClick()
   }
 
   return (
