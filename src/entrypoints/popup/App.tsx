@@ -165,7 +165,7 @@ export const App = () => {
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
       </div>
       <div className="border border-gray-10 w-full" />
-      <Footer isAuthenticated={isAuthenticated} onLogOut={() => {}} />
+      <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
     </div>
   )
 }
