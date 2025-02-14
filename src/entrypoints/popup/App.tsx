@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
@@ -18,19 +18,36 @@ const defaultUserDataInfo: UserDataObj = {
   ip: '-',
 }
 
-export const App = ({
-  storedUserData,
-}: {
-  storedUserData: Record<string, unknown>
-}) => {
-  const [userData, setUserData] = useState<UserDataObj>(
-    storedUserData.userData as UserDataObj
-  )
+export const App = () => {
+  const [userData, setUserData] = useState<UserDataObj>({
+    location: '-',
+    ip: '-',
+  })
+  const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
+  const [authToken, setAuthToken] = useState<string>()
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [selectedLocation, setSelectedLocation] = useState<string>('FR')
 
-  const [status, setStatus] = useState<VPN_STATUS_SWITCH>(
-    storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
-  )
-  const [selectedLocation, setSelectedLocation] = useState('FR')
+  useEffect(() => {
+    chrome.storage.local
+      .get(['isVPNEnabled', 'userData', 'token'])
+      .then((data) => {
+        const userData = data.userData ?? {
+          location: '-',
+          ip: '-',
+        }
+        const isVPNEnabled = data.isVPNEnabled ?? 'OFF'
+        setUserData(userData)
+        setStatus(isVPNEnabled)
+        if (data.token) {
+          setAuthToken(data.token)
+          setIsAuthenticated(true)
+        }
+      })
+      .catch((error) => {
+        console.log('ERROR GETTING THE CACHED VALUES: ', error)
+      })
+  }, [])
 
   const onConnectVpn = async () => {
     await updateProxySettings()
@@ -53,7 +70,7 @@ export const App = ({
     setUserData(defaultUserDataInfo)
   }
 
-  async function onToggleClicked() {
+  const onToggleClicked = async () => {
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -66,6 +83,18 @@ export const App = ({
     } finally {
       const newStatus = status === 'OFF' ? 'ON' : 'OFF'
       setStatus(newStatus)
+    }
+  }
+
+  //!TODO: set the free location
+  const onLogOut = async () => {
+    try {
+      await chrome.storage.local.remove('token')
+      setIsAuthenticated(false)
+    } catch (error) {
+      console.log('ERROR: ', error)
+    } finally {
+      setIsAuthenticated(false)
     }
   }
 
@@ -136,7 +165,7 @@ export const App = ({
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
       </div>
       <div className="border border-gray-10 w-full" />
-      <Footer isAuthenticated={false} onLogOut={() => {}} />
+      <Footer isAuthenticated={isAuthenticated} onLogOut={() => {}} />
     </div>
   )
 }
