@@ -16,6 +16,7 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.5",
     "@webext-core/storage": "^1.2.0",
+    "@wxt-dev/i18n": "^0.2.3",
     "axios": "^1.6.8",
     "chrome-extension-async": "^3.4.1",
     "crypto-js": "^4.2.0",
@@ -38,6 +39,6 @@
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
     "typescript": "^5.2.2",
-    "wxt": "^0.18.2"
+    "wxt": "^0.19.27"
   }
 }
