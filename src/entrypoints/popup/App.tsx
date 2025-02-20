@@ -5,6 +5,7 @@ import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
+import { getAnonymousToken } from './users.service'
 
 interface UserDataObj {
   location: string
@@ -26,13 +27,17 @@ export const App = () => {
     ip: '-',
   })
   const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
-  const [authToken, setAuthToken] = useState<string>()
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const [selectedLocation, setSelectedLocation] = useState<string>('FR')
+  const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
+    'FR',
+    'DE',
+    'PL',
+  ])
 
   useEffect(() => {
     chrome.storage.local
-      .get(['isVPNEnabled', 'userData', 'token'])
+      .get(['isVPNEnabled', 'userData', 'token', 'connection'])
       .then((data) => {
         const userData = data.userData ?? {
           location: '-',
@@ -42,19 +47,28 @@ export const App = () => {
         setUserData(userData)
         setStatus(isVPNEnabled)
         if (data.token) {
-          setAuthToken(data.token)
           setIsAuthenticated(true)
+        } else {
+          getAnonymousToken()
+            .then((anonymousToken) => {
+              chrome.storage.local.set({
+                token: anonymousToken,
+              })
+            })
+            .catch((err) => {
+              console.log('ERROR GETTING THE ANONYMOUS TOKEN: ', err)
+            })
+        }
+        if (data.connection) {
+          setSelectedLocation('FR')
+        } else {
+          chrome.storage.local.set({ connection: 'FR' })
         }
       })
       .catch((error) => {
         console.log('ERROR GETTING THE CACHED VALUES: ', error)
       })
   }, [])
-  const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
-    'FR',
-    'DE',
-    'PL',
-  ])
 
   const onConnectVpn = async () => {
     await updateProxySettings()

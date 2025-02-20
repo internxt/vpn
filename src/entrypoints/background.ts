@@ -33,18 +33,27 @@ export default defineBackground(() => {
 
   browser.webRequest.onAuthRequired.addListener(
     function (details: WebRequest.OnAuthRequiredDetailsType) {
-      if (details.isProxy) {
-        return {
-          authCredentials: {
-            username: import.meta.env.VITE_VPN_USERNAME,
-            password: import.meta.env.VITE_VPN_PASSWORD,
-          },
-        }
+      if (!details.isProxy) {
+        return {}
       }
+
+      let authCredentials
+
+      chrome.storage.local.get(['token', 'connection'], (storedData) => {
+        const username = storedData.connection
+        const password = storedData.token
+
+        if (!username || !password) {
+          console.error('VPN credentials are missing.')
+          return
+        }
+
+        authCredentials = { username, password }
+      })
+
+      return authCredentials ? { authCredentials } : {}
     },
-    {
-      urls: ['<all_urls>'],
-    },
+    { urls: ['<all_urls>'] },
     ['blocking']
   )
 
