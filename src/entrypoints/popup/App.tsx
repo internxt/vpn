@@ -11,6 +11,8 @@ interface UserDataObj {
   ip: string
 }
 
+export type VPNLocation = 'FR' | 'DE' | 'PL' | 'CA' | 'UK'
+
 export type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
 
 const defaultUserDataInfo: UserDataObj = {
@@ -31,6 +33,11 @@ export const App = ({
     storedUserData.isVPNEnabled as VPN_STATUS_SWITCH
   )
   const [selectedLocation, setSelectedLocation] = useState('FR')
+  const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
+    'FR',
+    'DE',
+    'PL',
+  ])
 
   const onConnectVpn = async () => {
     await updateProxySettings()
@@ -69,59 +76,70 @@ export const App = ({
     }
   }
 
-  const onChangeLocation = (newLocation: string) => {
+  const onChangeLocation = (newLocation: VPNLocation) => {
     setSelectedLocation(newLocation)
     chrome.storage.local.set({
       connection: newLocation,
     })
   }
 
-  const dropdownSections = [
-    {
-      title: translate('plans.current'),
-      separator: true,
-      isLocked: false,
-      items: [
-        {
-          label: translate('countryConnections.france'),
-          value: 'FR',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-    {
-      title: translate('plans.premium'),
-      isLocked: false,
-      items: [
-        {
-          label: translate('countryConnections.germany'),
-          value: 'GE',
-          onClick: onChangeLocation,
-        },
-        {
-          label: translate('countryConnections.poland'),
-          value: 'PO',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-    {
-      title: translate('plans.ultimate'),
-      isLocked: true,
-      items: [
-        {
-          label: translate('countryConnections.canada'),
-          value: 'CA',
-          onClick: onChangeLocation,
-        },
-        {
-          label: translate('countryConnections.unitedKingdom'),
-          value: 'UK',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-  ]
+  function getDropdownSections(availableLocations: VPNLocation[]) {
+    return [
+      {
+        title: translate('plans.current'),
+        separator: true,
+        items: [
+          {
+            label: translate('countryConnections.france'),
+            value: 'FR' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+      {
+        title: translate('plans.premium'),
+        items: [
+          {
+            label: translate('countryConnections.germany'),
+            value: 'DE' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+          {
+            label: translate('countryConnections.poland'),
+            value: 'PL' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+      {
+        title: translate('plans.ultimate'),
+        items: [
+          {
+            label: translate('countryConnections.canada'),
+            value: 'CA' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+          {
+            label: translate('countryConnections.unitedKingdom'),
+            value: 'UK' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+    ].map((section) => {
+      const allItemsUnavailable = section.items.every(
+        (item) => !availableLocations.includes(item.value)
+      )
+
+      return {
+        ...section,
+        isLocked: allItemsUnavailable,
+        items: section.items,
+      }
+    })
+  }
+
+  const dropdownSections = getDropdownSections(availableLocations)
 
   return (
     <div className="flex flex-col h-screen w-96 bg-white">

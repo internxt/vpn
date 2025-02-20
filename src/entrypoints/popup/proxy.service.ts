@@ -1,22 +1,5 @@
 import { browser } from 'wxt/browser'
 
-const IP_API_URL = import.meta.env.VITE_IP_API_URL
-
-export const getUserIp = async () => {
-  const request = await fetch(`${IP_API_URL}/json`, {
-    method: 'GET',
-  })
-  const data = await request.json()
-
-  const { ip, city, region, country } = data
-  const locationText = `${city}, ${region}, ${country}`
-
-  return {
-    location: locationText,
-    ip,
-  }
-}
-
 const VPN_CONFIG = {
   host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
   port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
@@ -27,7 +10,7 @@ export async function updateProxySettings() {
     mode: 'fixed_servers',
     rules: {
       singleProxy: {
-        scheme: 'https',
+        scheme: 'http',
         host: VPN_CONFIG.host,
         port: VPN_CONFIG.port,
       },
@@ -35,7 +18,14 @@ export async function updateProxySettings() {
     },
   }
 
-  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+  browser.proxy.settings
+    .set({ value: proxyConfig, scope: 'regular' })
+    .then(() => {
+      console.log('CONNECTED')
+    })
+    .catch((err) => {
+      console.log('ERROR WHILE CONNECTING TO THE PROXY: ', err)
+    })
 }
 
 export async function clearProxySettings() {
