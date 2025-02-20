@@ -1,6 +1,7 @@
 import { translate } from '@/constants'
+import { getAppUrl } from '../utils/getAppUrl'
 
-const HOST_AUTH = import.meta.env.VITE_AUTH_HOST_URL
+const HOST_AUTH = getAppUrl(import.meta.env.MODE)
 
 interface FooterProps {
   isAuthenticated: boolean
