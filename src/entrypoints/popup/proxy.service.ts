@@ -11,8 +11,8 @@ export async function updateProxySettings() {
     rules: {
       singleProxy: {
         scheme: 'http',
-        host: VPN_CONFIG.host,
-        port: VPN_CONFIG.port,
+        host: `localhost`,
+        port: 8082,
       },
       bypassList: ['<local>'],
     },
