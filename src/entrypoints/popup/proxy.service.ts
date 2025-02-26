@@ -5,6 +5,19 @@ const VPN_CONFIG = {
   port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
 }
 
+async function clearProxyCache() {
+  const options: Record<string, any> = {}
+  const rootDomain = 'localhost'
+  options.origins = []
+  options.origins.push('http://' + rootDomain)
+  options.origins.push('https://' + rootDomain)
+
+  const types = { cookies: true }
+  chrome.browsingData.remove(options, types, function () {
+    console.log('LIFE REMOVED')
+  })
+}
+
 export async function updateProxySettings() {
   const proxyConfig = {
     mode: 'fixed_servers',
@@ -42,5 +55,6 @@ export async function clearProxySettings() {
           browser.runtime.lastError
         )
       }
+      clearProxyCache()
     })
 }
