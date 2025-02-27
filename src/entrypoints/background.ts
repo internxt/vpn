@@ -31,20 +31,50 @@ export default defineBackground(() => {
     return true
   })
 
+  // background.ts
+
+  const localCache = {
+    token: null as string | null,
+    connection: null as string | null,
+  }
+
+  async function initializeLocalCache() {
+    const { token, connection } = await chrome.storage.local.get([
+      'token',
+      'connection',
+    ])
+    localCache.token = token ?? null
+    localCache.connection = connection ?? null
+  }
+
+  initializeLocalCache()
+
+  // Listener de cambios en el storage
+  chrome.storage.onChanged.addListener((changes, areaName) => {
+    if (areaName === 'local') {
+      if (changes.token) {
+        localCache.token = changes.token.newValue ?? null
+      }
+      if (changes.connection) {
+        localCache.connection = changes.connection.newValue ?? null
+      }
+    }
+  })
+
   browser.webRequest.onAuthRequired.addListener(
     function (details: WebRequest.OnAuthRequiredDetailsType) {
       if (details.isProxy) {
+        console.log({ localCache })
         return {
           authCredentials: {
-            username: import.meta.env.VITE_VPN_USERNAME,
-            password: import.meta.env.VITE_VPN_PASSWORD,
+            username: localCache.connection ?? 'FR',
+            password: localCache.token ?? '',
           },
         }
       }
+      return {}
     },
-    {
-      urls: ['<all_urls>'],
-    },
+    { urls: ['<all_urls>'] },
     ['blocking']
   )
 

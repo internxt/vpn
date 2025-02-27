@@ -19,7 +19,13 @@ export default defineConfig({
       '48': '/icon/48.png',
       '192': '/icon/192.png',
     },
-    permissions: ['storage', 'proxy', 'webRequest', 'webRequestAuthProvider'],
+    permissions: [
+      'storage',
+      'proxy',
+      'webRequest',
+      'webRequestAuthProvider',
+      'browsingData',
+    ],
     web_accessible_resources: [
       {
         resources: ['index.html'],

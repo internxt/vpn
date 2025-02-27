@@ -1,11 +1,12 @@
 import { CaretDown, CaretUp } from '@phosphor-icons/react'
 import React, { useState, useRef, useEffect } from 'react'
 import { DropdownSection } from './components/DropdownSection'
+import { VPNLocation } from '@/entrypoints/popup/App'
 
 export interface SectionItemProps {
   label: string
-  value: string
-  onClick: (newLocation: string) => void
+  value: VPNLocation
+  onClick: (newLocation: VPNLocation) => void
 }
 
 export interface SectionProps {

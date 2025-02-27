@@ -5,11 +5,14 @@ import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
+import { getAnonymousToken, getUserAvailableLocations } from './users.service'
 
 interface UserDataObj {
   location: string
   ip: string
 }
+
+export type VPNLocation = 'FR' | 'DE' | 'PL' | 'CA' | 'UK'
 
 export type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
 
@@ -24,13 +27,15 @@ export const App = () => {
     ip: '-',
   })
   const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
-  const [authToken, setAuthToken] = useState<string>()
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const [selectedLocation, setSelectedLocation] = useState<string>('FR')
+  const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
+    'FR',
+  ])
 
   useEffect(() => {
     chrome.storage.local
-      .get(['isVPNEnabled', 'userData', 'token'])
+      .get(['isVPNEnabled', 'userData', 'token', 'connection', 'authenticated'])
       .then((data) => {
         const userData = data.userData ?? {
           location: '-',
@@ -40,14 +45,46 @@ export const App = () => {
         setUserData(userData)
         setStatus(isVPNEnabled)
         if (data.token) {
-          setAuthToken(data.token)
-          setIsAuthenticated(true)
+          setIsAuthenticated(data.authenticated)
+          console.log(data.token)
+          if (data.authenticated) {
+            getUserAvailableLocations(data.token)
+              .then((locations) => {
+                console.log(locations)
+                setAvailableLocations(locations.zones)
+              })
+              .catch((error) => {
+                console.log('ERROR WHILE GETTING LOCATIONS: ', error)
+              })
+          } else {
+            setAvailableLocations(['FR'])
+          }
+        } else {
+          onAnonymousTokenRequested()
+        }
+        if (data.connection) {
+          setSelectedLocation(data.connection)
+        } else {
+          chrome.storage.local.set({ connection: 'FR' })
         }
       })
       .catch((error) => {
         console.log('ERROR GETTING THE CACHED VALUES: ', error)
       })
   }, [])
+
+  const onAnonymousTokenRequested = async () => {
+    try {
+      const anonymousToken = await getAnonymousToken()
+      console.log('ANONYMOUS TOKEN: ', anonymousToken)
+      chrome.storage.local.set({
+        token: anonymousToken.token,
+        authenticated: false,
+      })
+    } catch (error) {
+      console.log('ERROR GETTING THE ANONYMOUS TOKEN: ', error)
+    }
+  }
 
   const onConnectVpn = async () => {
     await updateProxySettings()
@@ -90,7 +127,12 @@ export const App = () => {
   const onLogOut = async () => {
     try {
       await chrome.storage.local.remove('token')
+      await chrome.storage.local.set({ connection: 'FR' })
+      setStatus('OFF')
+      setSelectedLocation('FR')
       setIsAuthenticated(false)
+      await onDisconnectVpn()
+      await onAnonymousTokenRequested()
     } catch (error) {
       console.log('ERROR: ', error)
     } finally {
@@ -98,59 +140,78 @@ export const App = () => {
     }
   }
 
-  const onChangeLocation = (newLocation: string) => {
-    setSelectedLocation(newLocation)
-    chrome.storage.local.set({
-      connection: newLocation,
+  const onChangeLocation = async (newLocation: VPNLocation) => {
+    try {
+      if (status === 'ON') {
+        await onDisconnectVpn()
+        setStatus('OFF')
+      }
+      setSelectedLocation(newLocation)
+      chrome.storage.local.set({
+        connection: newLocation,
+      })
+    } catch (error) {
+      console.error(`ERROR WHILE DISCONNECTING THE USER FROM THE VPN: ${error}`)
+    }
+  }
+
+  function getDropdownSections(availableLocations: VPNLocation[]) {
+    return [
+      {
+        title: translate('plans.current'),
+        separator: true,
+        items: [
+          {
+            label: translate('countryConnections.france'),
+            value: 'FR' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+      {
+        title: translate('plans.premium'),
+        items: [
+          {
+            label: translate('countryConnections.germany'),
+            value: 'DE' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+          {
+            label: translate('countryConnections.poland'),
+            value: 'PL' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+      {
+        title: translate('plans.ultimate'),
+        items: [
+          {
+            label: translate('countryConnections.canada'),
+            value: 'CA' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+          {
+            label: translate('countryConnections.unitedKingdom'),
+            value: 'UK' as VPNLocation,
+            onClick: onChangeLocation,
+          },
+        ],
+      },
+    ].map((section) => {
+      const allItemsUnavailable = section.items.every(
+        (item) => !availableLocations.includes(item.value)
+      )
+
+      return {
+        ...section,
+        isLocked: allItemsUnavailable,
+        items: section.items,
+      }
     })
   }
 
-  const dropdownSections = [
-    {
-      title: translate('plans.current'),
-      separator: true,
-      isLocked: false,
-      items: [
-        {
-          label: translate('countryConnections.france'),
-          value: 'FR',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-    {
-      title: translate('plans.premium'),
-      isLocked: false,
-      items: [
-        {
-          label: translate('countryConnections.germany'),
-          value: 'GE',
-          onClick: onChangeLocation,
-        },
-        {
-          label: translate('countryConnections.poland'),
-          value: 'PO',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-    {
-      title: translate('plans.ultimate'),
-      isLocked: true,
-      items: [
-        {
-          label: translate('countryConnections.canada'),
-          value: 'CA',
-          onClick: onChangeLocation,
-        },
-        {
-          label: translate('countryConnections.unitedKingdom'),
-          value: 'UK',
-          onClick: onChangeLocation,
-        },
-      ],
-    },
-  ]
+  const dropdownSections = getDropdownSections(availableLocations)
 
   return (
     <div className="flex flex-col h-screen w-96 bg-white">

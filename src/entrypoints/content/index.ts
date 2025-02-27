@@ -11,47 +11,48 @@ export default defineContentScript({
   matches: ['*://*/*'],
   main() {
     const targetUrl = getAppUrl(import.meta.env.MODE)
+    console.log('TargetUrl:', targetUrl, 'Origin:', window.location.origin)
 
     if (!targetUrl.includes(window.location.origin)) {
       return
     }
 
+    let receivedToken = false
     const abortController = new AbortController()
-    const { signal } = abortController
 
-    chrome.storage.local.get('token', (data) => {
-      if (data.token) {
-        window.postMessage(
-          { source: POST_MESSAGE_SOURCE, tokenStatus: TOKEN_STATUS.EXISTS },
-          targetUrl
-        )
+    const requestToken = () => {
+      window.postMessage(
+        { source: POST_MESSAGE_SOURCE, tokenStatus: TOKEN_STATUS.NOT_FOUND },
+        targetUrl
+      )
+    }
 
-        abortController.abort()
-      } else {
-        window.postMessage(
-          { source: POST_MESSAGE_SOURCE, tokenStatus: TOKEN_STATUS.NOT_FOUND },
-          targetUrl
-        )
+    requestToken()
+
+    const retryTimer = setTimeout(() => {
+      if (!receivedToken) {
+        console.log('No token received after 5s, retrying...')
+        requestToken()
       }
-    })
+    }, 5000)
 
     window.addEventListener(
       'message',
       (event) => {
-        if (!targetUrl.includes(event.origin)) {
-          return
-        }
+        if (!targetUrl.includes(event.origin)) return
 
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
-          const token = event.data.payload
-          chrome.storage.local.set({ token }, () => {
-            console.log('The user has been authenticated in the VPN extension')
+          receivedToken = true
+          clearTimeout(retryTimer)
 
+          const token = event.data.payload
+          chrome.storage.local.set({ token, authenticated: true }, () => {
+            console.log('The user has been authenticated in the VPN extension')
             abortController.abort()
           })
         }
       },
-      { signal }
+      { signal: abortController.signal }
     )
   },
 })

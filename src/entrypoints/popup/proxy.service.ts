@@ -1,25 +1,21 @@
 import { browser } from 'wxt/browser'
 
-const IP_API_URL = import.meta.env.VITE_IP_API_URL
-
-export const getUserIp = async () => {
-  const request = await fetch(`${IP_API_URL}/json`, {
-    method: 'GET',
-  })
-  const data = await request.json()
-
-  const { ip, city, region, country } = data
-  const locationText = `${city}, ${region}, ${country}`
-
-  return {
-    location: locationText,
-    ip,
-  }
+const VPN_CONFIG = {
+  HOST: import.meta.env.VITE_VPN_SERVER_ADDRESS,
+  PORT: Number(import.meta.env.VITE_VPN_SERVER_PORT),
 }
 
-const VPN_CONFIG = {
-  host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
-  port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
+async function clearProxyCache() {
+  const options: Record<string, any> = {}
+  const rootDomain = VPN_CONFIG.HOST
+  options.origins = []
+  options.origins.push('http://' + rootDomain)
+  options.origins.push('https://' + rootDomain)
+
+  const types = { cookies: true }
+  chrome.browsingData.remove(options, types, function () {
+    console.log('PROXY CACHE REMOVED')
+  })
 }
 
 export async function updateProxySettings() {
@@ -27,15 +23,22 @@ export async function updateProxySettings() {
     mode: 'fixed_servers',
     rules: {
       singleProxy: {
-        scheme: 'https',
-        host: VPN_CONFIG.host,
-        port: VPN_CONFIG.port,
+        scheme: 'http',
+        host: VPN_CONFIG.HOST,
+        port: VPN_CONFIG.PORT,
       },
       bypassList: ['<local>'],
     },
   }
 
-  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+  browser.proxy.settings
+    .set({ value: proxyConfig, scope: 'regular' })
+    .then(() => {
+      console.log('CONNECTED')
+    })
+    .catch((err) => {
+      console.log('ERROR WHILE CONNECTING TO THE PROXY: ', err)
+    })
 }
 
 export async function clearProxySettings() {
@@ -52,5 +55,6 @@ export async function clearProxySettings() {
           browser.runtime.lastError
         )
       }
+      clearProxyCache()
     })
 }
