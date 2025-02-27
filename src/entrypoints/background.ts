@@ -31,8 +31,6 @@ export default defineBackground(() => {
     return true
   })
 
-  // background.ts
-
   const localCache = {
     token: null as string | null,
     connection: null as string | null,
@@ -49,7 +47,6 @@ export default defineBackground(() => {
 
   initializeLocalCache()
 
-  // Listener de cambios en el storage
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
       if (changes.token) {
@@ -64,7 +61,6 @@ export default defineBackground(() => {
   browser.webRequest.onAuthRequired.addListener(
     function (details: WebRequest.OnAuthRequiredDetailsType) {
       if (details.isProxy) {
-        console.log({ localCache })
         return {
           authCredentials: {
             username: localCache.connection ?? 'FR',

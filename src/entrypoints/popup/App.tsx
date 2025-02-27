@@ -46,11 +46,9 @@ export const App = () => {
         setStatus(isVPNEnabled)
         if (data.token) {
           setIsAuthenticated(data.authenticated)
-          console.log(data.token)
           if (data.authenticated) {
             getUserAvailableLocations(data.token)
               .then((locations) => {
-                console.log(locations)
                 setAvailableLocations(locations.zones)
               })
               .catch((error) => {
@@ -76,7 +74,6 @@ export const App = () => {
   const onAnonymousTokenRequested = async () => {
     try {
       const anonymousToken = await getAnonymousToken()
-      console.log('ANONYMOUS TOKEN: ', anonymousToken)
       chrome.storage.local.set({
         token: anonymousToken.token,
         authenticated: false,

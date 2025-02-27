@@ -11,7 +11,6 @@ export default defineContentScript({
   matches: ['*://*/*'],
   main() {
     const targetUrl = getAppUrl(import.meta.env.MODE)
-    console.log('TargetUrl:', targetUrl, 'Origin:', window.location.origin)
 
     if (!targetUrl.includes(window.location.origin)) {
       return
