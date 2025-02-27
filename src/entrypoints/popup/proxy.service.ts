@@ -1,20 +1,20 @@
 import { browser } from 'wxt/browser'
 
 const VPN_CONFIG = {
-  host: import.meta.env.VITE_VPN_SERVER_ADDRESS,
-  port: Number(import.meta.env.VITE_VPN_SERVER_PORT),
+  HOST: import.meta.env.VITE_VPN_SERVER_ADDRESS,
+  PORT: Number(import.meta.env.VITE_VPN_SERVER_PORT),
 }
 
 async function clearProxyCache() {
   const options: Record<string, any> = {}
-  const rootDomain = 'localhost'
+  const rootDomain = VPN_CONFIG.HOST
   options.origins = []
   options.origins.push('http://' + rootDomain)
   options.origins.push('https://' + rootDomain)
 
   const types = { cookies: true }
   chrome.browsingData.remove(options, types, function () {
-    console.log('LIFE REMOVED')
+    console.log('PROXY CACHE REMOVED')
   })
 }
 
@@ -24,8 +24,8 @@ export async function updateProxySettings() {
     rules: {
       singleProxy: {
         scheme: 'http',
-        host: `localhost`,
-        port: 8082,
+        host: VPN_CONFIG.HOST,
+        port: VPN_CONFIG.PORT,
       },
       bypassList: ['<local>'],
     },

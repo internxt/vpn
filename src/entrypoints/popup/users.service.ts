@@ -2,9 +2,7 @@ import axios from 'axios'
 
 export const getAnonymousToken = async () => {
   const anonymousToken = await axios.get(
-    `http://${
-      import.meta.env.VITE_VPN_SERVER_ADDRESS
-    }:3005/users/anonymous/token`
+    `${import.meta.env.VITE_VPN_API_URL}/users/anonymous/token`
   )
 
   return anonymousToken.data
@@ -12,7 +10,7 @@ export const getAnonymousToken = async () => {
 
 export const getUserAvailableLocations = async (token: string) => {
   const availableLocations = await axios.get(
-    `http://${import.meta.env.VITE_VPN_SERVER_ADDRESS}:3005/users`,
+    `${import.meta.env.VITE_VPN_API_URL}/users`,
     {
       headers: {
         Authorization: `Bearer ${token}`,

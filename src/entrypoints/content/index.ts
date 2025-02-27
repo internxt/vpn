@@ -10,10 +10,9 @@ const TOKEN_STATUS = {
 export default defineContentScript({
   matches: ['*://*/*'],
   main() {
-    const targetUrl = getAppUrl('development')
+    const targetUrl = getAppUrl(import.meta.env.MODE)
     console.log('TargetUrl:', targetUrl, 'Origin:', window.location.origin)
 
-    // Solo continuamos si la URL de la página matchea con la que esperamos
     if (!targetUrl.includes(window.location.origin)) {
       return
     }
@@ -21,7 +20,6 @@ export default defineContentScript({
     let receivedToken = false
     const abortController = new AbortController()
 
-    // Función que envía el "request" de token
     const requestToken = () => {
       window.postMessage(
         { source: POST_MESSAGE_SOURCE, tokenStatus: TOKEN_STATUS.NOT_FOUND },
@@ -29,10 +27,8 @@ export default defineContentScript({
       )
     }
 
-    // 1. Enviamos el primer request
     requestToken()
 
-    // 2. Preparamos un retry a los 5s si no llega el token
     const retryTimer = setTimeout(() => {
       if (!receivedToken) {
         console.log('No token received after 5s, retrying...')
@@ -40,17 +36,14 @@ export default defineContentScript({
       }
     }, 5000)
 
-    // 3. Escuchamos la respuesta
     window.addEventListener(
       'message',
       (event) => {
-        // Validamos origen
         if (!targetUrl.includes(event.origin)) return
 
-        // Si la web nos manda de vuelta el token
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
           receivedToken = true
-          clearTimeout(retryTimer) // Cancelamos el retry (o retiros futuros)
+          clearTimeout(retryTimer)
 
           const token = event.data.payload
           chrome.storage.local.set({ token, authenticated: true }, () => {
