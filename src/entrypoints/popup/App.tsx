@@ -127,7 +127,11 @@ export const App = () => {
   const onLogOut = async () => {
     try {
       await chrome.storage.local.remove('token')
+      await chrome.storage.local.set({ connection: 'FR' })
+      setStatus('OFF')
+      setSelectedLocation('FR')
       setIsAuthenticated(false)
+      await onDisconnectVpn()
       await onAnonymousTokenRequested()
     } catch (error) {
       console.log('ERROR: ', error)
