@@ -74,7 +74,7 @@ export const App = () => {
   const onAnonymousTokenRequested = async () => {
     try {
       const anonymousToken = await getAnonymousToken()
-      chrome.storage.local.set({
+      await chrome.storage.local.set({
         token: anonymousToken.token,
         authenticated: false,
       })

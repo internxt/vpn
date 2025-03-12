@@ -1,5 +1,5 @@
 import { translate } from '@/constants'
-import { getAppUrl } from '../utils/getAppUrl'
+import { getAppUrl } from '../utils/getUrl'
 
 const HOST_AUTH = getAppUrl(import.meta.env.MODE)
 
