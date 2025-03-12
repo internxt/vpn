@@ -37,11 +37,11 @@ export default defineBackground(() => {
   }
 
   async function initializeLocalCache() {
-    const { token, connection } = await chrome.storage.local.get([
-      'token',
+    const { userToken, connection } = await chrome.storage.local.get([
+      'userToken',
       'connection',
     ])
-    localCache.token = token ?? null
+    localCache.token = userToken.token ?? null
     localCache.connection = connection ?? null
   }
 
@@ -49,8 +49,8 @@ export default defineBackground(() => {
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
-      if (changes.token) {
-        localCache.token = changes.token.newValue ?? null
+      if (changes.userToken) {
+        localCache.token = changes.userToken.newValue.token ?? null
       }
       if (changes.connection) {
         localCache.connection = changes.connection.newValue ?? null
