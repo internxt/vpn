@@ -41,7 +41,7 @@ export default defineBackground(() => {
       'userToken',
       'connection',
     ])
-    localCache.token = userToken.token ?? null
+    localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
   }
 
