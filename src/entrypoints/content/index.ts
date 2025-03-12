@@ -2,9 +2,11 @@ import { getAppUrl } from '../utils/getUrl'
 
 const POST_MESSAGE_SOURCE = 'drive-extension'
 const LISTENER_MESSAGE_SOURCE = 'drive-web'
-const TOKEN_STATUS = {
+const MESSAGES = {
   EXISTS: 'token-exists',
   NOT_FOUND: 'token-not-found',
+  USER_LOG_OUT: 'user-logged-out',
+  USER_TOKEN: 'user-token',
 }
 
 export default defineContentScript({
@@ -21,7 +23,7 @@ export default defineContentScript({
 
     const requestToken = () => {
       window.postMessage(
-        { source: POST_MESSAGE_SOURCE, tokenStatus: TOKEN_STATUS.NOT_FOUND },
+        { source: POST_MESSAGE_SOURCE, tokenStatus: MESSAGES.NOT_FOUND },
         targetUrl
       )
     }
@@ -44,21 +46,29 @@ export default defineContentScript({
           receivedToken = true
           clearTimeout(retryTimer)
 
-          const token = event.data.payload
-          chrome.storage.local.set(
-            {
-              userToken: {
-                token,
-                type: 'user',
+          console.log('Token received:', event.data)
+          const eventMessage = event.data.payload.message
+
+          if (eventMessage === MESSAGES.USER_TOKEN) {
+            const token = event.data.payload.token
+            chrome.storage.local.set(
+              {
+                userToken: {
+                  token,
+                  type: 'user',
+                },
               },
-            },
-            () => {
-              console.log(
-                'The user has been authenticated in the VPN extension'
-              )
-              abortController.abort()
-            }
-          )
+              () => {
+                console.log(
+                  'The user has been authenticated in the VPN extension'
+                )
+              }
+            )
+          } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
+            chrome.storage.local.clear(() => {
+              console.log('The user has been logged out from the VPN extension')
+            })
+          }
         }
       },
       { signal: abortController.signal }
