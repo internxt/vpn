@@ -1,4 +1,4 @@
-import { getAppUrl } from '../utils/getAppUrl'
+import { getAppUrl } from '../utils/getUrl'
 
 const POST_MESSAGE_SOURCE = 'drive-extension'
 const LISTENER_MESSAGE_SOURCE = 'drive-web'
