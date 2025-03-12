@@ -6,7 +6,7 @@ const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
 const interval = setInterval(() => {
   console.log('Checking user token...')
   handleUserToken()
-}, FOUR_DAYS_IN_MS)
+}, 10000)
 
 const resetInterval = () => {
   clearInterval(interval)
