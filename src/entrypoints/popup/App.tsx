@@ -12,6 +12,13 @@ interface UserDataObj {
   ip: string
 }
 
+interface StorageData {
+  isVPNEnabled?: VPN_STATUS_SWITCH
+  userData?: UserDataObj
+  userToken?: { token: string; type: string }
+  connection?: string
+}
+
 export type VPNLocation = 'FR' | 'DE' | 'PL' | 'CA' | 'UK'
 
 export type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
@@ -39,19 +46,20 @@ export const App = () => {
 
   const initialAppState = async () => {
     try {
-      const storageData = await chrome.storage.local.get([
+      const storageData = (await chrome.storage.local.get([
         'isVPNEnabled',
         'userData',
         'userToken',
         'connection',
-      ])
+      ])) as StorageData
 
       setUserData(storageData.userData ?? defaultUserDataInfo)
       setStatus(storageData.isVPNEnabled ?? 'OFF')
 
       if (!storageData.userToken) {
-        await onAnonymousTokenRequested()
+        return onAnonymousTokenRequested()
       }
+
       setIsAuthenticated(storageData.userToken.type === 'user')
 
       const { zones: userAvailableLocations } = await getUserAvailableLocations(
@@ -59,11 +67,14 @@ export const App = () => {
       )
       setAvailableLocations(userAvailableLocations as VPNLocation[])
 
-      if (!storageData.connection) {
+      const location = storageData?.connection
+
+      if (!location) {
         await chrome.storage.local.set({ connection: 'FR' })
         setSelectedLocation('FR')
+        return
       }
-      const location = storageData.connection
+
       setSelectedLocation(location)
     } catch (error) {
       console.error(`ERROR WHILE INITIALIZING APP STATE: ${error}`)
@@ -73,6 +84,7 @@ export const App = () => {
   const onAnonymousTokenRequested = async () => {
     try {
       const anonymousToken = await getAnonymousToken()
+      console.log('ANONYMOUS TOKEN: ', anonymousToken)
       await chrome.storage.local.set({
         userToken: {
           token: anonymousToken.token,
