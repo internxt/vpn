@@ -52,7 +52,7 @@ export const App = () => {
       if (!storageData.userToken) {
         await onAnonymousTokenRequested()
       }
-      setIsAuthenticated(storageData.authenticated)
+      setIsAuthenticated(storageData.userToken.type === 'user')
 
       const { zones: userAvailableLocations } = await getUserAvailableLocations(
         storageData.userToken.token
@@ -78,7 +78,6 @@ export const App = () => {
           token: anonymousToken.token,
           type: 'anonymous',
         },
-        authenticated: false,
       })
     } catch (error) {
       console.log('ERROR GETTING THE ANONYMOUS TOKEN: ', error)
@@ -218,7 +217,7 @@ export const App = () => {
         <ConnectionDetails
           dropdownSections={dropdownSections}
           selectedLocation={selectedLocation}
-          isAuthenticated={false}
+          isAuthenticated={isAuthenticated}
           userIp={userData.ip}
         />
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
