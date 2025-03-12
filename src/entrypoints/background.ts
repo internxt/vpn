@@ -1,16 +1,12 @@
 import { WebRequest } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
 
-const HALF_HOUR_IN_MS = 30 * 60 * 1000
 const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
-
-const intervalMs =
-  process.env.NODE_ENV === 'development' ? HALF_HOUR_IN_MS : FOUR_DAYS_IN_MS
 
 const interval = setInterval(() => {
   console.log('Checking user token...')
   handleUserToken()
-}, intervalMs)
+}, FOUR_DAYS_IN_MS)
 
 const resetInterval = () => {
   clearInterval(interval)
@@ -57,7 +53,7 @@ export default defineBackground(() => {
       'userToken',
       'connection',
     ])
-    localCache.token = userToken.token ?? null
+    localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
   }
 
