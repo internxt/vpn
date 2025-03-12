@@ -1,4 +1,20 @@
 import { WebRequest } from 'wxt/browser'
+import { handleUserToken } from './utils/handleUserToken'
+
+const HALF_HOUR_IN_MS = 30 * 60 * 1000
+const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
+
+const intervalMs =
+  process.env.NODE_ENV === 'development' ? HALF_HOUR_IN_MS : FOUR_DAYS_IN_MS
+
+const interval = setInterval(() => {
+  console.log('Checking user token...')
+  handleUserToken()
+}, intervalMs)
+
+const resetInterval = () => {
+  clearInterval(interval)
+}
 
 export default defineBackground(() => {
   const IP_API_URL = import.meta.env.VITE_IP_API_URL
@@ -51,6 +67,7 @@ export default defineBackground(() => {
     if (areaName === 'local') {
       if (changes.userToken) {
         localCache.token = changes.userToken.newValue.token ?? null
+        resetInterval()
       }
       if (changes.connection) {
         localCache.connection = changes.connection.newValue ?? null
