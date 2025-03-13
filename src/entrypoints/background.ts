@@ -2,13 +2,14 @@ import { WebRequest } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
 
 const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
+let interval: NodeJS.Timeout | null = null
 
-const interval = setInterval(() => {
-  handleUserToken()
-}, 60000)
-
-const resetInterval = () => {
-  clearInterval(interval)
+function startInterval() {
+  if (interval) clearInterval(interval)
+  interval = setInterval(() => {
+    console.log('Refresh token')
+    handleUserToken()
+  }, FOUR_DAYS_IN_MS)
 }
 
 export default defineBackground(() => {
@@ -55,14 +56,14 @@ export default defineBackground(() => {
     localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
   }
-
+  startInterval()
   initializeLocalCache()
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
       if (changes.userToken) {
         localCache.token = changes.userToken.newValue.token ?? null
-        resetInterval()
+        startInterval()
       }
       if (changes.connection) {
         localCache.connection = changes.connection.newValue ?? null
