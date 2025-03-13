@@ -4,6 +4,28 @@ import {
   refreshUserToken,
 } from '../popup/users.service'
 
+const refreshExistentUserToken = async (userToken: string) => {
+  const refreshedToken = await refreshUserToken(userToken)
+  console.log(`User token refreshed`)
+  chrome.storage.local.set({
+    userToken: {
+      token: refreshedToken,
+      type: 'user',
+    },
+  })
+}
+
+const refreshAnonymousToken = async () => {
+  const anonymousToken = await getAnonymousToken()
+  console.log(`Anonymous token refreshed`)
+  chrome.storage.local.set({
+    userToken: {
+      token: anonymousToken.token,
+      type: 'anonymous',
+    },
+  })
+}
+
 export const handleUserToken = async () => {
   const { userToken } = await chrome.storage.local.get('userToken')
 
@@ -12,14 +34,7 @@ export const handleUserToken = async () => {
   }
 
   if (isTokenExpired(userToken.token)) {
-    const anonymousToken = await getAnonymousToken()
-    chrome.storage.local.set({
-      userToken: {
-        token: anonymousToken.token,
-        type: 'anonymous',
-      },
-    })
-
+    await refreshAnonymousToken()
     return
   }
 
@@ -27,34 +42,15 @@ export const handleUserToken = async () => {
 
   switch (tokenType) {
     case 'anonymous':
-      {
-        const anonymousToken = await getAnonymousToken()
-        console.log(`Anonymous token refreshed`)
-        chrome.storage.local.set({
-          userToken: {
-            token: anonymousToken.token,
-            type: 'anonymous',
-          },
-        })
-      }
+      await refreshAnonymousToken()
       break
 
     case 'user':
-      {
-        const refreshedToken = await refreshUserToken(userToken.token)
-        console.log(`User token refreshed`)
-        chrome.storage.local.set({
-          userToken: {
-            token: refreshedToken,
-            type: 'user',
-          },
-        })
-      }
+      await refreshExistentUserToken(userToken.token)
       break
 
     default:
-      console.log('There are no token to refresh')
-
+      await refreshAnonymousToken()
       break
   }
 }
