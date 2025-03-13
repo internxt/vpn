@@ -45,10 +45,20 @@ export default defineContentScript({
           clearTimeout(retryTimer)
 
           const token = event.data.payload
-          chrome.storage.local.set({ token, authenticated: true }, () => {
-            console.log('The user has been authenticated in the VPN extension')
-            abortController.abort()
-          })
+          chrome.storage.local.set(
+            {
+              userToken: {
+                token,
+                type: 'user',
+              },
+            },
+            () => {
+              console.log(
+                'The user has been authenticated in the VPN extension'
+              )
+              abortController.abort()
+            }
+          )
         }
       },
       { signal: abortController.signal }

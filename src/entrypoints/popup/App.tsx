@@ -12,6 +12,13 @@ interface UserDataObj {
   ip: string
 }
 
+interface StorageData {
+  isVPNEnabled?: VPN_STATUS_SWITCH
+  userData?: UserDataObj
+  userToken?: { token: string; type: string }
+  connection?: string
+}
+
 export type VPNLocation = 'FR' | 'DE' | 'PL' | 'CA' | 'UK'
 
 export type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
@@ -34,49 +41,55 @@ export const App = () => {
   ])
 
   useEffect(() => {
-    chrome.storage.local
-      .get(['isVPNEnabled', 'userData', 'token', 'connection', 'authenticated'])
-      .then((data) => {
-        const userData = data.userData ?? {
-          location: '-',
-          ip: '-',
-        }
-        const isVPNEnabled = data.isVPNEnabled ?? 'OFF'
-        setUserData(userData)
-        setStatus(isVPNEnabled)
-        if (data.token) {
-          setIsAuthenticated(data.authenticated)
-          if (data.authenticated) {
-            getUserAvailableLocations(data.token)
-              .then((locations) => {
-                setAvailableLocations(locations.zones)
-              })
-              .catch((error) => {
-                console.log('ERROR WHILE GETTING LOCATIONS: ', error)
-              })
-          } else {
-            setAvailableLocations(['FR'])
-          }
-        } else {
-          onAnonymousTokenRequested()
-        }
-        if (data.connection) {
-          setSelectedLocation(data.connection)
-        } else {
-          chrome.storage.local.set({ connection: 'FR' })
-        }
-      })
-      .catch((error) => {
-        console.log('ERROR GETTING THE CACHED VALUES: ', error)
-      })
+    initialAppState()
   }, [])
+
+  const initialAppState = async () => {
+    try {
+      const storageData = (await chrome.storage.local.get([
+        'isVPNEnabled',
+        'userData',
+        'userToken',
+        'connection',
+      ])) as StorageData
+
+      setUserData(storageData.userData ?? defaultUserDataInfo)
+      setStatus(storageData.isVPNEnabled ?? 'OFF')
+
+      if (!storageData.userToken) {
+        return onAnonymousTokenRequested()
+      }
+
+      setIsAuthenticated(storageData.userToken.type === 'user')
+
+      const { zones: userAvailableLocations } = await getUserAvailableLocations(
+        storageData.userToken.token
+      )
+      setAvailableLocations(userAvailableLocations as VPNLocation[])
+
+      const location = storageData?.connection
+
+      if (!location) {
+        await chrome.storage.local.set({ connection: 'FR' })
+        setSelectedLocation('FR')
+        return
+      }
+
+      setSelectedLocation(location)
+    } catch (error) {
+      console.error(`ERROR WHILE INITIALIZING APP STATE: ${error}`)
+    }
+  }
 
   const onAnonymousTokenRequested = async () => {
     try {
       const anonymousToken = await getAnonymousToken()
+      console.log('ANONYMOUS TOKEN: ', anonymousToken)
       await chrome.storage.local.set({
-        token: anonymousToken.token,
-        authenticated: false,
+        userToken: {
+          token: anonymousToken.token,
+          type: 'anonymous',
+        },
       })
     } catch (error) {
       console.log('ERROR GETTING THE ANONYMOUS TOKEN: ', error)
@@ -120,18 +133,17 @@ export const App = () => {
     }
   }
 
-  //!TODO: set the free location
   const onLogOut = async () => {
     try {
-      await chrome.storage.local.remove('token')
       await chrome.storage.local.set({ connection: 'FR' })
       setStatus('OFF')
       setSelectedLocation('FR')
+      setAvailableLocations(['FR'])
       setIsAuthenticated(false)
       await onDisconnectVpn()
       await onAnonymousTokenRequested()
     } catch (error) {
-      console.log('ERROR: ', error)
+      console.log('ERROR LOGGING OUT: ', error)
     } finally {
       setIsAuthenticated(false)
     }
@@ -152,7 +164,7 @@ export const App = () => {
     }
   }
 
-  function getDropdownSections(availableLocations: VPNLocation[]) {
+  const getDropdownSections = (availableLocations: VPNLocation[]) => {
     return [
       {
         title: translate('plans.current'),
@@ -217,7 +229,7 @@ export const App = () => {
         <ConnectionDetails
           dropdownSections={dropdownSections}
           selectedLocation={selectedLocation}
-          isAuthenticated={false}
+          isAuthenticated={isAuthenticated}
           userIp={userData.ip}
         />
         <VpnStatus status={status} onToggleClicked={onToggleClicked} />
