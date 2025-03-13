@@ -51,6 +51,7 @@ export default defineContentScript({
 
           if (eventMessage === MESSAGES.USER_TOKEN) {
             const token = event.data.payload.token
+
             chrome.storage.local.set(
               {
                 userToken: {

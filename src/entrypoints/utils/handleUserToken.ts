@@ -3,27 +3,18 @@ import {
   isTokenExpired,
   refreshUserToken,
 } from '../popup/users.service'
+import storageService from '../sevices/storage.service'
 
 const refreshExistentUserToken = async (userToken: string) => {
   const refreshedToken = await refreshUserToken(userToken)
   console.log(`User token refreshed`)
-  chrome.storage.local.set({
-    userToken: {
-      token: refreshedToken,
-      type: 'user',
-    },
-  })
+  await storageService.saveUserToken('user', refreshedToken)
 }
 
 const refreshAnonymousToken = async () => {
   const anonymousToken = await getAnonymousToken()
   console.log(`Anonymous token refreshed`)
-  chrome.storage.local.set({
-    userToken: {
-      token: anonymousToken.token,
-      type: 'anonymous',
-    },
-  })
+  await storageService.saveUserToken('anonymous', anonymousToken.token)
 }
 
 export const handleUserToken = async () => {

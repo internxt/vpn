@@ -6,34 +6,35 @@ import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
 import { getAnonymousToken, getUserAvailableLocations } from './users.service'
+import storageService from '../sevices/storage.service'
 
-interface UserDataObj {
+export interface UserData {
   location: string
   ip: string
 }
 
 interface StorageData {
-  isVPNEnabled?: VPN_STATUS_SWITCH
-  userData?: UserDataObj
+  vpnStatus?: VPN_STATUS
+  userData?: UserData
   userToken?: { token: string; type: string }
   connection?: string
 }
 
 export type VPNLocation = 'FR' | 'DE' | 'PL' | 'CA' | 'UK'
 
-export type VPN_STATUS_SWITCH = 'ON' | 'OFF' | 'CONNECTING'
+export type VPN_STATUS = 'ON' | 'OFF' | 'CONNECTING'
 
-const defaultUserDataInfo: UserDataObj = {
+const defaultUserDataInfo: UserData = {
   location: '-',
   ip: '-',
 }
 
 export const App = () => {
-  const [userData, setUserData] = useState<UserDataObj>({
+  const [userData, setUserData] = useState<UserData>({
     location: '-',
     ip: '-',
   })
-  const [status, setStatus] = useState<VPN_STATUS_SWITCH>('OFF')
+  const [status, setStatus] = useState<VPN_STATUS>('OFF')
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
   const [selectedLocation, setSelectedLocation] = useState<string>('FR')
   const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
@@ -47,14 +48,14 @@ export const App = () => {
   const initialAppState = async () => {
     try {
       const storageData = (await chrome.storage.local.get([
-        'isVPNEnabled',
+        'vpnStatus',
         'userData',
         'userToken',
         'connection',
       ])) as StorageData
 
       setUserData(storageData.userData ?? defaultUserDataInfo)
-      setStatus(storageData.isVPNEnabled ?? 'OFF')
+      setStatus(storageData.vpnStatus ?? 'OFF')
 
       if (!storageData.userToken) {
         return onAnonymousTokenRequested()
@@ -70,7 +71,7 @@ export const App = () => {
       const location = storageData?.connection
 
       if (!location) {
-        await chrome.storage.local.set({ connection: 'FR' })
+        await storageService.saveUserConnection('FR')
         setSelectedLocation('FR')
         return
       }
@@ -84,13 +85,7 @@ export const App = () => {
   const onAnonymousTokenRequested = async () => {
     try {
       const anonymousToken = await getAnonymousToken()
-      console.log('ANONYMOUS TOKEN: ', anonymousToken)
-      await chrome.storage.local.set({
-        userToken: {
-          token: anonymousToken.token,
-          type: 'anonymous',
-        },
-      })
+      await storageService.saveUserToken('anonymous', anonymousToken.token)
     } catch (error) {
       console.log('ERROR GETTING THE ANONYMOUS TOKEN: ', error)
     }
@@ -100,19 +95,14 @@ export const App = () => {
     await updateProxySettings()
     const userData = await chrome.runtime.sendMessage('GET_DATA')
     setUserData(userData)
-    chrome.storage.local.set({
-      isVPNEnabled: 'ON',
-      userData: userData,
-    })
+    await storageService.saveVpnStatus('ON', userData)
+
     setStatus('ON')
   }
 
   const onDisconnectVpn = async () => {
     await clearProxySettings()
-    chrome.storage.local.set({
-      isVPNEnabled: 'OFF',
-      userData: defaultUserDataInfo,
-    })
+    await storageService.saveVpnStatus('OFF', defaultUserDataInfo)
     setStatus('OFF')
     setUserData(defaultUserDataInfo)
   }
@@ -135,7 +125,7 @@ export const App = () => {
 
   const onLogOut = async () => {
     try {
-      await chrome.storage.local.set({ connection: 'FR' })
+      await storageService.saveUserConnection('FR')
       setStatus('OFF')
       setSelectedLocation('FR')
       setAvailableLocations(['FR'])
@@ -156,9 +146,7 @@ export const App = () => {
         setStatus('OFF')
       }
       setSelectedLocation(newLocation)
-      chrome.storage.local.set({
-        connection: newLocation,
-      })
+      await storageService.saveUserConnection(newLocation)
     } catch (error) {
       console.error(`ERROR WHILE DISCONNECTING THE USER FROM THE VPN: ${error}`)
     }
