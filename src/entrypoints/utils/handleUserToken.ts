@@ -3,7 +3,7 @@ import {
   isTokenExpired,
   refreshUserToken,
 } from '../popup/users.service'
-import storageService from '../sevices/storage.service'
+import storageService from '../services/storage.service'
 
 const refreshExistentUserToken = async (userToken: string) => {
   const refreshedToken = await refreshUserToken(userToken)

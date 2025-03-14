@@ -66,7 +66,8 @@ export default defineContentScript({
               }
             )
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
-            chrome.storage.local.clear(() => {
+            chrome.storage.local.clear(async () => {
+              await chrome.runtime.sendMessage('RESET_PROXY')
               console.log('The user has been logged out from the VPN extension')
             })
           }

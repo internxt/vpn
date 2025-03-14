@@ -1,5 +1,6 @@
 import { WebRequest } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
+import { clearProxySettings } from './popup/proxy.service'
 
 const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
 let interval: NodeJS.Timeout | null = null
@@ -39,6 +40,10 @@ export default defineBackground(() => {
         .catch(() => {
           // NO OP
         })
+    } else if (message === 'RESET_PROXY') {
+      clearProxySettings().then(() => {
+        console.log('THE PROXY SETTINGS HAS BEEN CLEARED')
+      })
     }
     return true
   })

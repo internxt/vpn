@@ -6,7 +6,7 @@ import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
 import { getAnonymousToken, getUserAvailableLocations } from './users.service'
-import storageService from '../sevices/storage.service'
+import storageService from '../services/storage.service'
 
 export interface UserData {
   location: string
