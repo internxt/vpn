@@ -41,9 +41,14 @@ export default defineBackground(() => {
           // NO OP
         })
     } else if (message === 'RESET_PROXY') {
-      clearProxySettings().then(() => {
-        console.log('THE PROXY SETTINGS HAS BEEN CLEARED')
-      })
+      clearProxySettings()
+        .then(() => {
+          console.log('THE PROXY SETTINGS HAS BEEN CLEARED')
+        })
+        .catch((error) => {
+          console.error(`ERROR WHILE CLEARING PROXY SETTINGS: ${error}`)
+        })
+      sendResponse({})
     }
     return true
   })
@@ -66,11 +71,11 @@ export default defineBackground(() => {
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
-      if (changes.userToken) {
-        localCache.token = changes.userToken.newValue.token ?? null
+      if (changes.userToken?.newValue) {
+        localCache.token = changes.userToken.newValue?.token ?? null
         startInterval()
       }
-      if (changes.connection) {
+      if (changes.connection?.newValue) {
         localCache.connection = changes.connection.newValue ?? null
       }
     }
