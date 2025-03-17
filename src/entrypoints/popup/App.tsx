@@ -5,7 +5,11 @@ import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
-import { getAnonymousToken, getUserAvailableLocations } from './users.service'
+import {
+  getAnonymousToken,
+  getUserAvailableLocations,
+  UnauthorizedError,
+} from './users.service'
 import storageService from '../services/storage.service'
 
 export interface UserData {
@@ -79,6 +83,10 @@ export const App = () => {
       setSelectedLocation(location)
     } catch (error) {
       console.error(`ERROR WHILE INITIALIZING APP STATE: ${error}`)
+      if (error instanceof UnauthorizedError) {
+        console.warn('Authorization error detected:', error.message)
+        await onLogOut()
+      }
     }
   }
 
