@@ -62,15 +62,14 @@ export const App = () => {
       setStatus(storageData.vpnStatus ?? 'OFF')
 
       if (!storageData.userToken) {
-        return onAnonymousTokenRequested()
+        await onAnonymousTokenRequested()
+      } else {
+        setIsAuthenticated(storageData.userToken.type === 'user')
+
+        const { zones: userAvailableLocations } =
+          await getUserAvailableLocations(storageData.userToken.token)
+        setAvailableLocations(userAvailableLocations as VPNLocation[])
       }
-
-      setIsAuthenticated(storageData.userToken.type === 'user')
-
-      const { zones: userAvailableLocations } = await getUserAvailableLocations(
-        storageData.userToken.token
-      )
-      setAvailableLocations(userAvailableLocations as VPNLocation[])
 
       const location = storageData?.connection
 
