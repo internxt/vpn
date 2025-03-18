@@ -1,5 +1,5 @@
 import { WebRequest } from 'wxt/browser'
-import { handleUserToken, refreshAnonymousToken } from './utils/handleUserToken'
+import { handleUserToken } from './utils/handleUserToken'
 import { clearProxySettings } from './popup/proxy.service'
 
 const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
@@ -44,7 +44,6 @@ export default defineBackground(() => {
       clearProxySettings()
         .then(() => {
           console.log('THE PROXY SETTINGS HAS BEEN CLEARED')
-          refreshAnonymousToken()
         })
         .catch((error) => {
           console.error(`ERROR WHILE CLEARING PROXY SETTINGS: ${error}`)
