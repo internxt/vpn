@@ -1,15 +1,16 @@
 import { WebRequest } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
+import { clearProxySettings } from './popup/proxy.service'
 
 const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
+let interval: NodeJS.Timeout | null = null
 
-const interval = setInterval(() => {
-  console.log('Checking user token...')
-  handleUserToken()
-}, 10000)
-
-const resetInterval = () => {
-  clearInterval(interval)
+function startInterval() {
+  if (interval) clearInterval(interval)
+  interval = setInterval(() => {
+    console.log('Refresh token')
+    handleUserToken()
+  }, FOUR_DAYS_IN_MS)
 }
 
 export default defineBackground(() => {
@@ -39,6 +40,15 @@ export default defineBackground(() => {
         .catch(() => {
           // NO OP
         })
+    } else if (message === 'RESET_PROXY') {
+      clearProxySettings()
+        .then(() => {
+          console.log('THE PROXY SETTINGS HAS BEEN CLEARED')
+        })
+        .catch((error) => {
+          console.error(`ERROR WHILE CLEARING PROXY SETTINGS: ${error}`)
+        })
+      sendResponse({})
     }
     return true
   })
@@ -53,19 +63,20 @@ export default defineBackground(() => {
       'userToken',
       'connection',
     ])
+    console.log('INITIAL LOCAL STORAGE: ', userToken)
     localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
   }
-
+  startInterval()
   initializeLocalCache()
 
   chrome.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
-      if (changes.userToken) {
-        localCache.token = changes.userToken.newValue.token ?? null
-        resetInterval()
+      if (changes.userToken?.newValue) {
+        localCache.token = changes.userToken.newValue?.token ?? null
+        startInterval()
       }
-      if (changes.connection) {
+      if (changes.connection?.newValue) {
         localCache.connection = changes.connection.newValue ?? null
       }
     }

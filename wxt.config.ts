@@ -11,7 +11,7 @@ export default defineConfig({
     name: 'Internxt VPN - Free, Encrypted & Unlimited VPN',
     short_name: 'Internxt VPN',
     default_locale: 'en',
-    version: '1.3.0',
+    version: '1.4.0',
     description:
       'Internxt free VPN for Chrome: an encrypted, secure VPN built to protect your privacy.',
     icons: {
@@ -32,7 +32,6 @@ export default defineConfig({
         matches: ['<all_urls>'],
       },
     ],
-
     host_permissions: ['<all_urls>'],
     action: {
       default_popup: 'index.html',

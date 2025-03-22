@@ -1,26 +1,26 @@
 import { translate } from '@/constants'
-import { VPN_STATUS_SWITCH } from '../popup/App'
+import { VPN_STATUS } from '../popup/App'
 import { StatusComponent } from './StatusComponent'
 import ToggleSwitch from './Switch'
 
 interface VpnStatusProps {
-  status: VPN_STATUS_SWITCH
+  status: VPN_STATUS
   onToggleClicked: () => void
 }
 
-const STATUS: Record<VPN_STATUS_SWITCH, string> = {
+const STATUS: Record<VPN_STATUS, string> = {
   ON: translate('vpnStatus.connected.status'),
   OFF: translate('vpnStatus.disconnected.status'),
   CONNECTING: translate('vpnStatus.connecting.status'),
 }
 
-const STATUS_DESCRIPTION: Record<VPN_STATUS_SWITCH, string> = {
+const STATUS_DESCRIPTION: Record<VPN_STATUS, string> = {
   ON: translate('vpnStatus.connected.description'),
   OFF: translate('vpnStatus.disconnected.description'),
   CONNECTING: translate('vpnStatus.connecting.description'),
 }
 
-const CONNECTION_IMAGES: Record<VPN_STATUS_SWITCH, string> = {
+const CONNECTION_IMAGES: Record<VPN_STATUS, string> = {
   ON: '../../images/vpn-connected.svg',
   OFF: '../images/vpn-disconnected.svg',
   CONNECTING: '../images/establishing-connection.svg',

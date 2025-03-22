@@ -3,6 +3,14 @@ import { getDriveApiUrl, getVpnApiUrl } from '../utils/getUrl'
 
 const ENV_MODE = import.meta.env.MODE
 
+export class UnauthorizedError extends Error {
+  constructor(message = 'Unauthorized access') {
+    super(message)
+
+    Object.setPrototypeOf(this, UnauthorizedError.prototype)
+  }
+}
+
 export const getAnonymousToken = async (): Promise<{
   token: string
 }> => {
@@ -45,12 +53,20 @@ export const getUserAvailableLocations = async (
 ): Promise<{
   zones: string[]
 }> => {
-  const vpnApiUrl = getVpnApiUrl(ENV_MODE)
-  const { data: availableLocations } = await axios.get(`${vpnApiUrl}/users`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
+  try {
+    const vpnApiUrl = getVpnApiUrl(ENV_MODE)
+    const { data: availableLocations } = await axios.get(`${vpnApiUrl}/users`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
 
-  return availableLocations
+    return availableLocations
+  } catch (error) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      throw new UnauthorizedError('Invalid or expired token')
+    }
+
+    throw error
+  }
 }
