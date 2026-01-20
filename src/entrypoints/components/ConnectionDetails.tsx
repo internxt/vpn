@@ -1,4 +1,4 @@
-import { Database, MapPin } from '@phosphor-icons/react'
+import { DatabaseIcon, MapPinIcon } from '@phosphor-icons/react'
 import { Dropdown, SectionProps } from './dropdown/Dropdown'
 import { translate } from '@/constants'
 
@@ -28,7 +28,7 @@ export const ConnectionDetails = ({
       <div className="flex flex-col space-y-4 w-full">
         <div className="flex flex-row justify-between items-center text-white">
           <div className="flex flex-row space-x-2 items-center text-gray-100">
-            <Database size={16} />
+            <DatabaseIcon size={16} />
             <p className="text-sm font-semibold">{translate('location')}</p>
           </div>
           <div className="flex w-full z-20 justify-end">
@@ -43,7 +43,7 @@ export const ConnectionDetails = ({
         <Divider />
         <div className="flex flex-row justify-between items-center">
           <div className="flex flex-row space-x-2 items-center">
-            <MapPin size={16} className="text-gray-100" />
+            <MapPinIcon size={16} className="text-gray-100" />
             <p className="text-sm text-gray-100 font-semibold">
               {translate('ipAddress')}
             </p>

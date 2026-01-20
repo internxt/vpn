@@ -1,4 +1,4 @@
-import { CaretDown, CaretUp } from '@phosphor-icons/react'
+import { CaretDownIcon, CaretUpIcon } from '@phosphor-icons/react'
 import React, { useState, useRef, useEffect } from 'react'
 import { DropdownSection } from './components/DropdownSection'
 import { VPNLocation } from '@/entrypoints/popup/App'
@@ -67,11 +67,11 @@ export const Dropdown: React.FC<DropdownProps> = ({
         aria-expanded={isOpen}
       >
         {buttonLabel}
-        {isOpen ? <CaretUp size={16} /> : <CaretDown size={16} />}
+        {isOpen ? <CaretUpIcon size={16} /> : <CaretDownIcon size={16} />}
       </button>
 
       {isOpen && (
-        <div className="origin-top-right mt-1 absolute right-0 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="origin-top-right mt-1 absolute right-0 w-56 rounded-md shadow-lg bg-white border border-gray-10">
           <div className="py-1">
             {sections.map((section) => (
               <DropdownSection
