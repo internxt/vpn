@@ -14,6 +14,14 @@ export const saveUserToken = async (
   })
 }
 
+export const getUserToken = async (): Promise<{
+  token: string
+  type: TokenType
+}> => {
+  const storageData = await chrome.storage.local.get('userToken')
+  return storageData.userToken as { token: string; type: TokenType }
+}
+
 export const saveUserConnection = async (connection: VPNLocation) => {
   await chrome.storage.local.set({
     connection,
@@ -34,6 +42,7 @@ const storageService = {
   saveUserToken,
   saveUserConnection,
   saveVpnStatus,
+  getUserToken,
 }
 
 export default storageService

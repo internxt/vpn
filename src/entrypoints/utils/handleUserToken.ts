@@ -3,7 +3,7 @@ import {
   isTokenExpired,
   refreshUserToken,
 } from '../popup/users.service'
-import storageService from '../services/storage.service'
+import storageService, { getUserToken } from '../services/storage.service'
 
 const refreshExistentUserToken = async (userToken: string) => {
   const refreshedToken = await refreshUserToken(userToken)
@@ -18,7 +18,7 @@ const refreshAnonymousToken = async () => {
 }
 
 export const handleUserToken = async () => {
-  const { userToken } = await chrome.storage.local.get('userToken')
+  const userToken = await getUserToken()
 
   if (!userToken) {
     return

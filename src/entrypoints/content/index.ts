@@ -40,7 +40,10 @@ export default defineContentScript({
     window.addEventListener(
       'message',
       (event) => {
+        console.log('EVENT ORIGIN: ', event.origin)
         if (!targetUrl.includes(event.origin)) return
+
+        console.log('EVENT DATA SOURCE: ', event.data?.source)
 
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
           receivedToken = true
@@ -51,6 +54,7 @@ export default defineContentScript({
 
           if (eventMessage === MESSAGES.USER_TOKEN) {
             const token = event.data.payload.token
+            console.log('User token:', token)
 
             chrome.storage.local.set(
               {

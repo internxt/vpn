@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "wxt -p 3001",
+    "dev:prod": "wxt -p 3001 --mode production",
     "dev:firefox": "wxt -b firefox",
     "build": "wxt build",
     "build:staging": "wxt build --mode staging",
@@ -17,29 +18,31 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.1.5",
     "@webext-core/storage": "^1.2.0",
-    "@wxt-dev/i18n": "^0.2.3",
+    "@wxt-dev/i18n": "=0.2.4",
     "axios": "^1.6.8",
     "chrome-extension-async": "^3.4.1",
     "crypto-js": "^4.2.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "vite": "7.3.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.267",
+    "@tailwindcss/postcss": "^4.1.18",
+    "@types/chrome": "^0.1.32",
     "@types/crypto-js": "^4.2.2",
-    "@types/node": "^20.12.7",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "@typescript-eslint/eslint-plugin": "^7.2.0",
-    "@typescript-eslint/parser": "^7.2.0",
-    "@vitejs/plugin-react": "^4.2.1",
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.50.0",
+    "@typescript-eslint/parser": "^8.50.0",
+    "@vitejs/plugin-react": "^5.1.2",
     "autoprefixer": "^10.4.19",
-    "eslint": "^8.57.0",
-    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint": "^9.39.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.6",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.2.2",
-    "wxt": "^0.19.27"
+    "wxt": "0.20.13"
   }
 }

@@ -13,7 +13,7 @@ export const DropdownItem = ({
   onItemClicked,
   isLocked,
   isSelectedItem,
-}: DropdownItemProps): JSX.Element => {
+}: DropdownItemProps) => {
   return (
     <button
       key={item.value}

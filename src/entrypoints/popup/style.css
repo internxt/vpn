@@ -1,6 +1,149 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* NEW DESIGN SYSTEM */
+  --color-primary: rgb(0, 102, 255);
+  --color-primary-dark: rgb(0, 88, 219);
+  --color-red: rgb(255, 13, 0);
+  --color-red-dark: rgb(230, 11, 0);
+  --color-orange: rgb(255, 149, 0);
+  --color-orange-dark: rgb(230, 134, 0);
+  --color-yellow: rgb(255, 204, 0);
+  --color-yellow-dark: rgb(230, 184, 0);
+  --color-green: rgb(50, 195, 86);
+  --color-green-dark: rgb(45, 174, 77);
+  --color-pink: rgb(255, 36, 76);
+  --color-pink-dark: rgb(235, 0, 63);
+  --color-indigo: rgb(81, 78, 212);
+  --color-indigo-dark: rgb(60, 58, 207);
+  --color-teal: rgb(50, 182, 205);
+  --color-teal-dark: rgb(45, 164, 185);
+  --color-mint: rgb(5, 189, 180);
+  --color-mint-dark: rgb(4, 164, 156);
+
+  /* Gray scale */
+  --color-gray-1: rgb(249, 249, 252);
+  --color-gray-5: rgb(243, 243, 248);
+  --color-gray-10: rgb(229, 229, 235);
+  --color-gray-20: rgb(209, 209, 215);
+  --color-gray-30: rgb(199, 199, 205);
+  --color-gray-40: rgb(174, 174, 179);
+  --color-gray-50: rgb(142, 142, 148);
+  --color-gray-60: rgb(99, 99, 103);
+  --color-gray-70: rgb(72, 72, 75);
+  --color-gray-80: rgb(58, 58, 59);
+  --color-gray-90: rgb(44, 44, 48);
+  --color-gray-100: rgb(24, 24, 27);
+
+  /* Gradients */
+  --color-gradients-electric-cyan: rgb(0, 191, 255);
+
+  /* OLD DESIGN SYSTEM - Cool Gray */
+  --color-cool-gray-5: rgb(249, 250, 252);
+  --color-cool-gray-10: rgb(242, 244, 248);
+  --color-cool-gray-20: rgb(221, 225, 230);
+  --color-cool-gray-30: rgb(193, 199, 205);
+  --color-cool-gray-40: rgb(162, 169, 176);
+  --color-cool-gray-50: rgb(135, 141, 150);
+  --color-cool-gray-60: rgb(105, 112, 119);
+  --color-cool-gray-70: rgb(77, 83, 88);
+  --color-cool-gray-80: rgb(52, 58, 63);
+  --color-cool-gray-90: rgb(33, 39, 42);
+  --color-cool-gray-100: rgb(18, 22, 25);
+
+  /* Blue */
+  --color-blue-10: rgb(237, 245, 255);
+  --color-blue-20: rgb(208, 226, 255);
+  --color-blue-30: rgb(166, 200, 255);
+  --color-blue-40: rgb(120, 169, 255);
+  --color-blue-50: rgb(69, 137, 255);
+  --color-blue-60: rgb(15, 98, 254);
+  --color-blue-70: rgb(0, 67, 206);
+  --color-blue-80: rgb(0, 45, 156);
+  --color-blue-90: rgb(0, 29, 108);
+  --color-blue-100: rgb(0, 17, 65);
+
+  /* Red Old */
+  --color-red-old-10: rgb(255, 241, 241);
+  --color-red-old-20: rgb(255, 215, 217);
+  --color-red-old-30: rgb(255, 179, 184);
+  --color-red-old-40: rgb(255, 131, 137);
+  --color-red-old-50: rgb(250, 77, 86);
+  --color-red-old-60: rgb(218, 30, 40);
+  --color-red-old-70: rgb(162, 25, 31);
+  --color-red-old-80: rgb(117, 14, 19);
+  --color-red-old-90: rgb(82, 4, 8);
+  --color-red-old-100: rgb(45, 7, 9);
+
+  /* Orange Old */
+  --color-orange-old-10: rgb(255, 242, 232);
+  --color-orange-old-20: rgb(255, 217, 190);
+  --color-orange-old-30: rgb(255, 183, 132);
+  --color-orange-old-40: rgb(255, 131, 43);
+  --color-orange-old-50: rgb(235, 98, 0);
+  --color-orange-old-60: rgb(186, 78, 0);
+  --color-orange-old-70: rgb(138, 56, 0);
+  --color-orange-old-80: rgb(94, 41, 0);
+  --color-orange-old-90: rgb(62, 26, 0);
+  --color-orange-old-100: rgb(35, 16, 0);
+
+  /* Green Old */
+  --color-green-old-10: rgb(222, 251, 230);
+  --color-green-old-20: rgb(167, 240, 186);
+  --color-green-old-30: rgb(111, 220, 140);
+  --color-green-old-40: rgb(66, 190, 101);
+  --color-green-old-50: rgb(36, 161, 72);
+  --color-green-old-60: rgb(25, 128, 56);
+  --color-green-old-70: rgb(14, 96, 39);
+  --color-green-old-80: rgb(4, 67, 23);
+  --color-green-old-90: rgb(2, 45, 13);
+  --color-green-old-100: rgb(7, 25, 8);
+
+  /* Neutral */
+  --color-neutral-10: rgb(250, 251, 252);
+  --color-neutral-20: rgb(244, 245, 247);
+  --color-neutral-30: rgb(235, 236, 240);
+  --color-neutral-40: rgb(223, 225, 230);
+  --color-neutral-50: rgb(193, 199, 208);
+  --color-neutral-60: rgb(179, 186, 197);
+  --color-neutral-70: rgb(165, 173, 186);
+  --color-neutral-80: rgb(151, 160, 175);
+  --color-neutral-100: rgb(122, 134, 154);
+  --color-neutral-200: rgb(107, 119, 140);
+  --color-neutral-300: rgb(94, 108, 132);
+  --color-neutral-400: rgb(80, 95, 121);
+  --color-neutral-500: rgb(66, 82, 110);
+  --color-neutral-600: rgb(52, 69, 99);
+  --color-neutral-700: rgb(37, 56, 88);
+  --color-neutral-800: rgb(23, 43, 77);
+  --color-neutral-900: rgb(9, 30, 66);
+
+  /* Screens */
+  --breakpoint-xs: 512px;
+  --breakpoint-3xl: 1582px;
+
+  /* Border radius */
+  --radius-4xl: 2.75rem;
+  --radius-full-percentage: 100%;
+
+  /* Box shadows */
+  --shadow-subtle: 0 32px 40px 0 rgba(24, 24, 27, 0.04);
+  --shadow-switch-button: 0px 8px 12px rgba(0, 0, 0, 0.04);
+  --shadow-subtle-hard: 0 32px 40px 0 rgba(24, 24, 27, 0.08);
+  --shadow-box-floating: 0 0 96px 0 rgba(24, 24, 27, 0.06), 0 0 48px 0 rgba(24, 24, 27, 0.02);
+
+  /* Font sizes */
+  --font-size-supporting-1: 0.5rem;
+  --font-size-supporting-2: 0.625rem;
+
+  /* Animations */
+  --animate-pingpong-v: pingpong-v 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pingpong-v {
+  0%, 100% { top: 0%; }
+  50% { top: 100%; }
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

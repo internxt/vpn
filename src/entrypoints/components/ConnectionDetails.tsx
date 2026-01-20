@@ -16,7 +16,7 @@ export const ConnectionDetails = ({
   dropdownSections,
   userIp,
   isAuthenticated,
-}: ConnectionDetailsProps): JSX.Element => {
+}: ConnectionDetailsProps) => {
   const buttonLabel =
     dropdownSections
       .flatMap((s) => s.items)
