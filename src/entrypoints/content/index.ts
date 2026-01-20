@@ -24,7 +24,7 @@ export default defineContentScript({
     const requestToken = () => {
       window.postMessage(
         { source: POST_MESSAGE_SOURCE, tokenStatus: MESSAGES.NOT_FOUND },
-        targetUrl
+        targetUrl,
       )
     }
 
@@ -40,21 +40,16 @@ export default defineContentScript({
     window.addEventListener(
       'message',
       (event) => {
-        console.log('EVENT ORIGIN: ', event.origin)
         if (!targetUrl.includes(event.origin)) return
-
-        console.log('EVENT DATA SOURCE: ', event.data?.source)
 
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
           receivedToken = true
           clearTimeout(retryTimer)
 
-          console.log('Token received:', event.data)
           const eventMessage = event.data.payload.message
 
           if (eventMessage === MESSAGES.USER_TOKEN) {
             const token = event.data.payload.token
-            console.log('User token:', token)
 
             chrome.storage.local.set(
               {
@@ -65,9 +60,9 @@ export default defineContentScript({
               },
               () => {
                 console.log(
-                  'The user has been authenticated in the VPN extension'
+                  'The user has been authenticated in the VPN extension',
                 )
-              }
+              },
             )
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
             chrome.storage.local.clear(async () => {
@@ -77,7 +72,7 @@ export default defineContentScript({
           }
         }
       },
-      { signal: abortController.signal }
+      { signal: abortController.signal },
     )
   },
 })

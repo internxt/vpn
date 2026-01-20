@@ -52,7 +52,7 @@ export async function clearProxySettings() {
       if (browser.runtime.lastError) {
         console.error(
           'ERROR ADDING THE DEFAULT PROXY CONFIG: ',
-          browser.runtime.lastError
+          browser.runtime.lastError,
         )
       }
       clearProxyCache()
