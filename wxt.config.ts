@@ -15,9 +15,11 @@ export default defineConfig({
     description:
       'Internxt free VPN for Chrome: an encrypted, secure VPN built to protect your privacy.',
     icons: {
-      '16': '/icon/16.png',
-      '48': '/icon/48.png',
-      '192': '/icon/192.png',
+      '16': 'icon/16.png',
+      '48': 'icon/48.png',
+      '128': 'icon/128.png',
+      '192': 'icon/192.png',
+      '512': 'icon/512.png',
     },
     permissions: [
       'storage',

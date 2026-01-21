@@ -1,4 +1,3 @@
-import { WebRequest } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
 import { clearProxySettings } from './popup/proxy.service'
 
@@ -67,6 +66,7 @@ export default defineBackground(() => {
     localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
   }
+
   startInterval()
   initializeLocalCache()
 
@@ -83,7 +83,7 @@ export default defineBackground(() => {
   })
 
   browser.webRequest.onAuthRequired.addListener(
-    function (details: WebRequest.OnAuthRequiredDetailsType) {
+    function (details) {
       if (details.isProxy) {
         return {
           authCredentials: {

@@ -1,4 +1,4 @@
-import { Globe, Lock, Check } from '@phosphor-icons/react'
+import { LockIcon, GlobeIcon, CheckIcon } from '@phosphor-icons/react'
 import { SectionItemProps } from '../Dropdown'
 
 interface DropdownItemProps {
@@ -13,7 +13,7 @@ export const DropdownItem = ({
   onItemClicked,
   isLocked,
   isSelectedItem,
-}: DropdownItemProps): JSX.Element => {
+}: DropdownItemProps) => {
   return (
     <button
       key={item.value}
@@ -27,13 +27,13 @@ export const DropdownItem = ({
     >
       <div className="flex gap-2 items-center">
         {isLocked ? (
-          <Lock size={20} className="text-gray-50" />
+          <LockIcon size={20} className="text-gray-50" />
         ) : (
-          <Globe size={20} />
+          <GlobeIcon size={20} />
         )}
         <p>{item.label}</p>
       </div>
-      {isSelectedItem && <Check size={20} className="text-gray-100" />}
+      {isSelectedItem && <CheckIcon size={20} className="text-gray-100" />}
     </button>
   )
 }

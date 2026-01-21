@@ -56,7 +56,7 @@ export const App = () => {
         'userData',
         'userToken',
         'connection',
-      ])) as StorageData
+      ])) satisfies StorageData
 
       setUserData(storageData.userData ?? defaultUserDataInfo)
       setStatus(storageData.vpnStatus ?? 'OFF')
@@ -204,7 +204,7 @@ export const App = () => {
       },
     ].map((section) => {
       const allItemsUnavailable = section.items.every(
-        (item) => !availableLocations.includes(item.value)
+        (item) => !availableLocations.includes(item.value),
       )
 
       return {
