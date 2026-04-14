@@ -19,16 +19,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
+          cache: yarn
 
       - name: Install dependencies
-        run: npm ci
+        run: yarn install --frozen-lockfile
 
       - name: Type check
-        run: npm run compile
+        run: yarn compile
 
       - name: Build Chrome (MV3)
-        run: npm run build
+        run: yarn build
         env:
           VITE_VPN_SERVER_ADDRESS: ${{ secrets.VITE_VPN_SERVER_ADDRESS }}
           VITE_VPN_SERVER_PORT: ${{ secrets.VITE_VPN_SERVER_PORT }}
@@ -46,7 +46,7 @@ jobs:
           VITE_DRIVE_API_URL_DEVELOPMENT: ${{ secrets.VITE_DRIVE_API_URL_DEVELOPMENT }}
 
       - name: Build Firefox (MV2)
-        run: npm run build:firefox
+        run: yarn build:firefox
         env:
           VITE_VPN_SERVER_ADDRESS: ${{ secrets.VITE_VPN_SERVER_ADDRESS }}
           VITE_VPN_SERVER_PORT: ${{ secrets.VITE_VPN_SERVER_PORT }}
