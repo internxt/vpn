@@ -1,7 +1,7 @@
-import { VPN_STATUS_SWITCH } from '../constants'
+import { VPN_STATUS } from '~/entrypoints/popup/App'
 
 interface StatusComponentProps {
-  status: VPN_STATUS_SWITCH
+  status: VPN_STATUS
 }
 
 export const StatusComponent = ({ status }: StatusComponentProps) => {
