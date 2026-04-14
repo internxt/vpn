@@ -13,17 +13,17 @@ async function clearProxyCache() {
   options.origins.push('https://' + rootDomain)
 
   const types = { cookies: true }
-  chrome.browsingData.remove(options, types, function () {
+  browser.browsingData.remove(options, types).then(() => {
     console.log('PROXY CACHE REMOVED')
   })
 }
 
 export async function updateProxySettings() {
   const proxyConfig = {
-    mode: 'fixed_servers',
+    mode: 'fixed_servers' as const,
     rules: {
       singleProxy: {
-        scheme: 'http',
+        scheme: 'http' as const,
         host: VPN_CONFIG.HOST,
         port: VPN_CONFIG.PORT,
       },
@@ -43,7 +43,7 @@ export async function updateProxySettings() {
 
 export async function clearProxySettings() {
   const proxyConfig = {
-    mode: 'system',
+    mode: 'system' as const,
   }
 
   browser.proxy.settings
