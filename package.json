@@ -26,6 +26,10 @@
     "react-dom": "^19.2.3",
     "vite": "7.3.2"
   },
+  "resolutions": {
+    "picomatch": "^4.0.3",
+    "minimatch": "^9.0.5"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@types/chrome": "^0.1.32",
