@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { browser } from 'wxt/browser'
 
 import { clearProxySettings, updateProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
@@ -51,7 +52,7 @@ export const App = () => {
 
   const initialAppState = async () => {
     try {
-      const storageData = (await chrome.storage.local.get([
+      const storageData = (await browser.storage.local.get([
         'vpnStatus',
         'userData',
         'userToken',
@@ -100,7 +101,7 @@ export const App = () => {
 
   const onConnectVpn = async () => {
     await updateProxySettings()
-    const userData = await chrome.runtime.sendMessage('GET_DATA')
+    const userData = await browser.runtime.sendMessage('GET_DATA')
     setUserData(userData)
     await storageService.saveVpnStatus('ON', userData)
 
@@ -218,7 +219,7 @@ export const App = () => {
   const dropdownSections = getDropdownSections(availableLocations)
 
   return (
-    <div className="flex flex-col h-screen w-96 bg-white">
+    <div className="flex flex-col min-h-fit w-96 bg-white">
       {/* Main section (logo, title, description) */}
       <div className="flex flex-col p-5 space-y-5">
         <ConnectionDetails

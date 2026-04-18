@@ -1,3 +1,4 @@
+import { browser } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
 import { clearProxySettings } from './popup/proxy.service'
 
@@ -15,13 +16,13 @@ function startInterval() {
 export default defineBackground(() => {
   const IP_API_URL = import.meta.env.VITE_IP_API_URL
 
-  chrome.runtime.onInstalled.addListener((details) => {
+  browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
-      chrome.tabs.create({ url: 'https://internxt.com/vpn' })
+      browser.tabs.create({ url: 'https://internxt.com/vpn' })
     }
   })
 
-  chrome.runtime.onMessage.addListener((message, _, sendResponse) => {
+  browser.runtime.onMessage.addListener((message, _, sendResponse) => {
     if (message === 'GET_DATA') {
       fetch(`${IP_API_URL}/json`, {
         method: 'GET',
@@ -58,10 +59,9 @@ export default defineBackground(() => {
   }
 
   async function initializeLocalCache() {
-    const { userToken, connection } = await chrome.storage.local.get([
-      'userToken',
-      'connection',
-    ])
+    const result = await browser.storage.local.get(['userToken', 'connection'])
+    const userToken = result.userToken as { token: string } | undefined
+    const connection = result.connection as string | undefined
     console.log('INITIAL LOCAL STORAGE: ', userToken)
     localCache.token = userToken?.token ?? null
     localCache.connection = connection ?? null
@@ -70,14 +70,14 @@ export default defineBackground(() => {
   startInterval()
   initializeLocalCache()
 
-  chrome.storage.onChanged.addListener((changes, areaName) => {
+  browser.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
       if (changes.userToken?.newValue) {
-        localCache.token = changes.userToken.newValue?.token ?? null
+        localCache.token = (changes.userToken.newValue as { token: string })?.token ?? null
         startInterval()
       }
       if (changes.connection?.newValue) {
-        localCache.connection = changes.connection.newValue ?? null
+        localCache.connection = (changes.connection.newValue as string) ?? null
       }
     }
   })

@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build Chrome & Firefox
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Type check
+        run: yarn compile
+
+      - name: Build Chrome (MV3)
+        run: yarn build
+        env:
+          VITE_VPN_SERVER_ADDRESS: ${{ secrets.VITE_VPN_SERVER_ADDRESS }}
+          VITE_VPN_SERVER_PORT: ${{ secrets.VITE_VPN_SERVER_PORT }}
+          VITE_VPN_USERNAME: ${{ secrets.VITE_VPN_USERNAME }}
+          VITE_VPN_PASSWORD: ${{ secrets.VITE_VPN_PASSWORD }}
+          VITE_VPN_API_URL: ${{ secrets.VITE_VPN_API_URL }}
+          VITE_VPN_API_URL_STAGING: ${{ secrets.VITE_VPN_API_URL_STAGING }}
+          VITE_VPN_API_URL_DEVELOPMENT: ${{ secrets.VITE_VPN_API_URL_DEVELOPMENT }}
+          VITE_IP_API_URL: ${{ secrets.VITE_IP_API_URL }}
+          VITE_AUTH_HOST_URL: ${{ secrets.VITE_AUTH_HOST_URL }}
+          VITE_AUTH_HOST_URL_STAGING: ${{ secrets.VITE_AUTH_HOST_URL_STAGING }}
+          VITE_AUTH_HOST_URL_DEVELOPMENT: ${{ secrets.VITE_AUTH_HOST_URL_DEVELOPMENT }}
+          VITE_DRIVE_API_URL: ${{ secrets.VITE_DRIVE_API_URL }}
+          VITE_DRIVE_API_URL_STAGING: ${{ secrets.VITE_DRIVE_API_URL_STAGING }}
+          VITE_DRIVE_API_URL_DEVELOPMENT: ${{ secrets.VITE_DRIVE_API_URL_DEVELOPMENT }}
+
+      - name: Build Firefox (MV2)
+        run: yarn build:firefox
+        env:
+          VITE_VPN_SERVER_ADDRESS: ${{ secrets.VITE_VPN_SERVER_ADDRESS }}
+          VITE_VPN_SERVER_PORT: ${{ secrets.VITE_VPN_SERVER_PORT }}
+          VITE_VPN_USERNAME: ${{ secrets.VITE_VPN_USERNAME }}
+          VITE_VPN_PASSWORD: ${{ secrets.VITE_VPN_PASSWORD }}
+          VITE_VPN_API_URL: ${{ secrets.VITE_VPN_API_URL }}
+          VITE_VPN_API_URL_STAGING: ${{ secrets.VITE_VPN_API_URL_STAGING }}
+          VITE_VPN_API_URL_DEVELOPMENT: ${{ secrets.VITE_VPN_API_URL_DEVELOPMENT }}
+          VITE_IP_API_URL: ${{ secrets.VITE_IP_API_URL }}
+          VITE_AUTH_HOST_URL: ${{ secrets.VITE_AUTH_HOST_URL }}
+          VITE_AUTH_HOST_URL_STAGING: ${{ secrets.VITE_AUTH_HOST_URL_STAGING }}
+          VITE_AUTH_HOST_URL_DEVELOPMENT: ${{ secrets.VITE_AUTH_HOST_URL_DEVELOPMENT }}
+          VITE_DRIVE_API_URL: ${{ secrets.VITE_DRIVE_API_URL }}
+          VITE_DRIVE_API_URL_STAGING: ${{ secrets.VITE_DRIVE_API_URL_STAGING }}
+          VITE_DRIVE_API_URL_DEVELOPMENT: ${{ secrets.VITE_DRIVE_API_URL_DEVELOPMENT }}
+
+      - name: Upload Chrome build
+        uses: actions/upload-artifact@v4
+        with:
+          name: chrome-mv3
+          path: .output/chrome-mv3/
+          retention-days: 7
+
+      - name: Upload Firefox build
+        uses: actions/upload-artifact@v4
+        with:
+          name: firefox-mv2
+          path: .output/firefox-mv2/
+          retention-days: 7

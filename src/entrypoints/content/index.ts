@@ -1,3 +1,4 @@
+import { browser } from 'wxt/browser'
 import { getAppUrl } from '../utils/getUrl'
 
 const POST_MESSAGE_SOURCE = 'drive-extension'
@@ -51,22 +52,21 @@ export default defineContentScript({
           if (eventMessage === MESSAGES.USER_TOKEN) {
             const token = event.data.payload.token
 
-            chrome.storage.local.set(
-              {
+            browser.storage.local
+              .set({
                 userToken: {
                   token,
                   type: 'user',
                 },
-              },
-              () => {
+              })
+              .then(() => {
                 console.log(
                   'The user has been authenticated in the VPN extension',
                 )
-              },
-            )
+              })
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
-            chrome.storage.local.clear(async () => {
-              await chrome.runtime.sendMessage('RESET_PROXY')
+            browser.storage.local.clear().then(async () => {
+              await browser.runtime.sendMessage('RESET_PROXY')
               console.log('The user has been logged out from the VPN extension')
             })
           }
