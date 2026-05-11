@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		59F870D32FB1C671003F9462 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F870D22FB1C671003F9462 /* AppDelegate.swift */; };
+		59F870D72FB1C671003F9462 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 59F870D52FB1C671003F9462 /* Main.html */; };
+		59F870D92FB1C671003F9462 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59F870D82FB1C671003F9462 /* Icon.png */; };
+		59F870DB2FB1C671003F9462 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 59F870DA2FB1C671003F9462 /* Style.css */; };
+		59F870DD2FB1C671003F9462 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 59F870DC2FB1C671003F9462 /* Script.js */; };
+		59F870DF2FB1C671003F9462 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F870DE2FB1C671003F9462 /* ViewController.swift */; };
+		59F870E22FB1C671003F9462 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59F870E02FB1C671003F9462 /* Main.storyboard */; };
+		59F870E42FB1C672003F9462 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59F870E32FB1C672003F9462 /* Assets.xcassets */; };
+		59F870EB2FB1C672003F9462 /* vpn Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 59F870EA2FB1C672003F9462 /* vpn Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59F870F02FB1C672003F9462 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F870EF2FB1C672003F9462 /* SafariWebExtensionHandler.swift */; };
+		59F871062FB1C672003F9462 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 59F870FC2FB1C672003F9462 /* background.js */; };
+		59F871072FB1C672003F9462 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 59F870FD2FB1C672003F9462 /* images */; };
+		59F871082FB1C672003F9462 /* wxt.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59F870FE2FB1C672003F9462 /* wxt.svg */; };
+		59F871092FB1C672003F9462 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 59F870FF2FB1C672003F9462 /* popup.html */; };
+		59F8710A2FB1C672003F9462 /* chunks in Resources */ = {isa = PBXBuildFile; fileRef = 59F871002FB1C672003F9462 /* chunks */; };
+		59F8710B2FB1C672003F9462 /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = 59F871012FB1C672003F9462 /* content-scripts */; };
+		59F8710C2FB1C672003F9462 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 59F871022FB1C672003F9462 /* manifest.json */; };
+		59F8710D2FB1C672003F9462 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 59F871032FB1C672003F9462 /* _locales */; };
+		59F8710E2FB1C672003F9462 /* icon in Resources */ = {isa = PBXBuildFile; fileRef = 59F871042FB1C672003F9462 /* icon */; };
+		59F8710F2FB1C672003F9462 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 59F871052FB1C672003F9462 /* assets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59F870EC2FB1C672003F9462 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59F870C72FB1C671003F9462 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59F870E92FB1C672003F9462;
+			remoteInfo = "vpn Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59F870F72FB1C672003F9462 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				59F870EB2FB1C672003F9462 /* vpn Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		59F870CF2FB1C671003F9462 /* vpn.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vpn.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F870D22FB1C671003F9462 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		59F870D62FB1C671003F9462 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		59F870D82FB1C671003F9462 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		59F870DA2FB1C671003F9462 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		59F870DC2FB1C671003F9462 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		59F870DE2FB1C671003F9462 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59F870E12FB1C671003F9462 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		59F870E32FB1C672003F9462 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59F870E52FB1C672003F9462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59F870EA2FB1C672003F9462 /* vpn Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "vpn Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F870EF2FB1C672003F9462 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		59F870F12FB1C672003F9462 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59F870FC2FB1C672003F9462 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../../.output/safari-mv2/background.js"; sourceTree = "<group>"; };
+		59F870FD2FB1C672003F9462 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = "../../../.output/safari-mv2/images"; sourceTree = "<group>"; };
+		59F870FE2FB1C672003F9462 /* wxt.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = wxt.svg; path = "../../../.output/safari-mv2/wxt.svg"; sourceTree = "<group>"; };
+		59F870FF2FB1C672003F9462 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = "../../../.output/safari-mv2/popup.html"; sourceTree = "<group>"; };
+		59F871002FB1C672003F9462 /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = "../../../.output/safari-mv2/chunks"; sourceTree = "<group>"; };
+		59F871012FB1C672003F9462 /* content-scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "content-scripts"; path = "../../../.output/safari-mv2/content-scripts"; sourceTree = "<group>"; };
+		59F871022FB1C672003F9462 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../../.output/safari-mv2/manifest.json"; sourceTree = "<group>"; };
+		59F871032FB1C672003F9462 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = "../../../.output/safari-mv2/_locales"; sourceTree = "<group>"; };
+		59F871042FB1C672003F9462 /* icon */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icon; path = "../../../.output/safari-mv2/icon"; sourceTree = "<group>"; };
+		59F871052FB1C672003F9462 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../../.output/safari-mv2/assets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		59F870CC2FB1C671003F9462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F870E72FB1C672003F9462 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59F870C62FB1C671003F9462 = {
+			isa = PBXGroup;
+			children = (
+				59F870D12FB1C671003F9462 /* vpn */,
+				59F870EE2FB1C672003F9462 /* vpn Extension */,
+				59F870D02FB1C671003F9462 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		59F870D02FB1C671003F9462 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				59F870CF2FB1C671003F9462 /* vpn.app */,
+				59F870EA2FB1C672003F9462 /* vpn Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59F870D12FB1C671003F9462 /* vpn */ = {
+			isa = PBXGroup;
+			children = (
+				59F870D22FB1C671003F9462 /* AppDelegate.swift */,
+				59F870DE2FB1C671003F9462 /* ViewController.swift */,
+				59F870E02FB1C671003F9462 /* Main.storyboard */,
+				59F870E32FB1C672003F9462 /* Assets.xcassets */,
+				59F870E52FB1C672003F9462 /* Info.plist */,
+				59F870D42FB1C671003F9462 /* Resources */,
+			);
+			path = vpn;
+			sourceTree = "<group>";
+		};
+		59F870D42FB1C671003F9462 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59F870D52FB1C671003F9462 /* Main.html */,
+				59F870D82FB1C671003F9462 /* Icon.png */,
+				59F870DA2FB1C671003F9462 /* Style.css */,
+				59F870DC2FB1C671003F9462 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		59F870EE2FB1C672003F9462 /* vpn Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59F870FB2FB1C672003F9462 /* Resources */,
+				59F870EF2FB1C672003F9462 /* SafariWebExtensionHandler.swift */,
+				59F870F12FB1C672003F9462 /* Info.plist */,
+			);
+			path = "vpn Extension";
+			sourceTree = "<group>";
+		};
+		59F870FB2FB1C672003F9462 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59F870FC2FB1C672003F9462 /* background.js */,
+				59F870FD2FB1C672003F9462 /* images */,
+				59F870FE2FB1C672003F9462 /* wxt.svg */,
+				59F870FF2FB1C672003F9462 /* popup.html */,
+				59F871002FB1C672003F9462 /* chunks */,
+				59F871012FB1C672003F9462 /* content-scripts */,
+				59F871022FB1C672003F9462 /* manifest.json */,
+				59F871032FB1C672003F9462 /* _locales */,
+				59F871042FB1C672003F9462 /* icon */,
+				59F871052FB1C672003F9462 /* assets */,
+			);
+			name = Resources;
+			path = "vpn Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		59F870CE2FB1C671003F9462 /* vpn */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59F870F82FB1C672003F9462 /* Build configuration list for PBXNativeTarget "vpn" */;
+			buildPhases = (
+				59F870CB2FB1C671003F9462 /* Sources */,
+				59F870CC2FB1C671003F9462 /* Frameworks */,
+				59F870CD2FB1C671003F9462 /* Resources */,
+				59F870F72FB1C672003F9462 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59F870ED2FB1C672003F9462 /* PBXTargetDependency */,
+			);
+			name = vpn;
+			packageProductDependencies = (
+			);
+			productName = vpn;
+			productReference = 59F870CF2FB1C671003F9462 /* vpn.app */;
+			productType = "com.apple.product-type.application";
+		};
+		59F870E92FB1C672003F9462 /* vpn Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59F870F42FB1C672003F9462 /* Build configuration list for PBXNativeTarget "vpn Extension" */;
+			buildPhases = (
+				59F870E62FB1C672003F9462 /* Sources */,
+				59F870E72FB1C672003F9462 /* Frameworks */,
+				59F870E82FB1C672003F9462 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "vpn Extension";
+			packageProductDependencies = (
+			);
+			productName = "vpn Extension";
+			productReference = 59F870EA2FB1C672003F9462 /* vpn Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		59F870C72FB1C671003F9462 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					59F870CE2FB1C671003F9462 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					59F870E92FB1C672003F9462 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 59F870CA2FB1C671003F9462 /* Build configuration list for PBXProject "vpn" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 59F870C62FB1C671003F9462;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 59F870D02FB1C671003F9462 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				59F870CE2FB1C671003F9462 /* vpn */,
+				59F870E92FB1C672003F9462 /* vpn Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		59F870CD2FB1C671003F9462 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F870D92FB1C671003F9462 /* Icon.png in Resources */,
+				59F870E22FB1C671003F9462 /* Main.storyboard in Resources */,
+				59F870DD2FB1C671003F9462 /* Script.js in Resources */,
+				59F870D72FB1C671003F9462 /* Main.html in Resources */,
+				59F870E42FB1C672003F9462 /* Assets.xcassets in Resources */,
+				59F870DB2FB1C671003F9462 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F870E82FB1C672003F9462 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F8710A2FB1C672003F9462 /* chunks in Resources */,
+				59F8710C2FB1C672003F9462 /* manifest.json in Resources */,
+				59F8710D2FB1C672003F9462 /* _locales in Resources */,
+				59F8710B2FB1C672003F9462 /* content-scripts in Resources */,
+				59F871082FB1C672003F9462 /* wxt.svg in Resources */,
+				59F8710F2FB1C672003F9462 /* assets in Resources */,
+				59F871092FB1C672003F9462 /* popup.html in Resources */,
+				59F871072FB1C672003F9462 /* images in Resources */,
+				59F8710E2FB1C672003F9462 /* icon in Resources */,
+				59F871062FB1C672003F9462 /* background.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		59F870CB2FB1C671003F9462 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F870DF2FB1C671003F9462 /* ViewController.swift in Sources */,
+				59F870D32FB1C671003F9462 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F870E62FB1C672003F9462 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F870F02FB1C672003F9462 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59F870ED2FB1C672003F9462 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59F870E92FB1C672003F9462 /* vpn Extension */;
+			targetProxy = 59F870EC2FB1C672003F9462 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		59F870D52FB1C671003F9462 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59F870D62FB1C671003F9462 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		59F870E02FB1C671003F9462 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59F870E12FB1C671003F9462 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		59F870F22FB1C672003F9462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		59F870F32FB1C672003F9462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		59F870F52FB1C672003F9462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "vpn Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "vpn Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59F870F62FB1C672003F9462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "vpn Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "vpn Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		59F870F92FB1C672003F9462 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = vpn/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = vpn;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59F870FA2FB1C672003F9462 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = vpn/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = vpn;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		59F870CA2FB1C671003F9462 /* Build configuration list for PBXProject "vpn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F870F22FB1C672003F9462 /* Debug */,
+				59F870F32FB1C672003F9462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59F870F42FB1C672003F9462 /* Build configuration list for PBXNativeTarget "vpn Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F870F52FB1C672003F9462 /* Debug */,
+				59F870F62FB1C672003F9462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59F870F82FB1C672003F9462 /* Build configuration list for PBXNativeTarget "vpn" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F870F92FB1C672003F9462 /* Debug */,
+				59F870FA2FB1C672003F9462 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 59F870C72FB1C671003F9462 /* Project object */;
+}

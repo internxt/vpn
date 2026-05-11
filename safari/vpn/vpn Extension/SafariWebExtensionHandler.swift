@@ -1,6 +1,6 @@
 //
 //  SafariWebExtensionHandler.swift
-//  Internxt VPN Extension
+//  vpn Extension
 //
 //  Created by Javi on 11/5/26.
 //

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Internxt VPN
+//  vpn
 //
 //  Created by Javi on 11/5/26.
 //
