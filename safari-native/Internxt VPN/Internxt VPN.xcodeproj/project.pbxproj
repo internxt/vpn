@@ -1,0 +1,633 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		59F3BCEC2FB1C53E006A8604 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3BCEB2FB1C53E006A8604 /* AppDelegate.swift */; };
+		59F3BCF02FB1C53E006A8604 /* Main.html in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCEE2FB1C53E006A8604 /* Main.html */; };
+		59F3BCF22FB1C53E006A8604 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCF12FB1C53E006A8604 /* Icon.png */; };
+		59F3BCF42FB1C53E006A8604 /* Style.css in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCF32FB1C53E006A8604 /* Style.css */; };
+		59F3BCF62FB1C53E006A8604 /* Script.js in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCF52FB1C53E006A8604 /* Script.js */; };
+		59F3BCF82FB1C53E006A8604 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3BCF72FB1C53E006A8604 /* ViewController.swift */; };
+		59F3BCFB2FB1C53E006A8604 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCF92FB1C53E006A8604 /* Main.storyboard */; };
+		59F3BCFD2FB1C53F006A8604 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BCFC2FB1C53F006A8604 /* Assets.xcassets */; };
+		59F3BD042FB1C53F006A8604 /* Internxt VPN Extension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 59F3BD032FB1C53F006A8604 /* Internxt VPN Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		59F3BD092FB1C53F006A8604 /* SafariWebExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F3BD082FB1C53F006A8604 /* SafariWebExtensionHandler.swift */; };
+		59F3BD1F2FB1C53F006A8604 /* background.js in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD152FB1C53F006A8604 /* background.js */; };
+		59F3BD202FB1C53F006A8604 /* images in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD162FB1C53F006A8604 /* images */; };
+		59F3BD212FB1C53F006A8604 /* wxt.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD172FB1C53F006A8604 /* wxt.svg */; };
+		59F3BD222FB1C53F006A8604 /* popup.html in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD182FB1C53F006A8604 /* popup.html */; };
+		59F3BD232FB1C53F006A8604 /* chunks in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD192FB1C53F006A8604 /* chunks */; };
+		59F3BD242FB1C53F006A8604 /* content-scripts in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD1A2FB1C53F006A8604 /* content-scripts */; };
+		59F3BD252FB1C53F006A8604 /* manifest.json in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD1B2FB1C53F006A8604 /* manifest.json */; };
+		59F3BD262FB1C53F006A8604 /* _locales in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD1C2FB1C53F006A8604 /* _locales */; };
+		59F3BD272FB1C53F006A8604 /* icon in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD1D2FB1C53F006A8604 /* icon */; };
+		59F3BD282FB1C53F006A8604 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 59F3BD1E2FB1C53F006A8604 /* assets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59F3BD052FB1C53F006A8604 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59F3BCE02FB1C53E006A8604 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59F3BD022FB1C53F006A8604;
+			remoteInfo = "Internxt VPN Extension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59F3BD102FB1C53F006A8604 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				59F3BD042FB1C53F006A8604 /* Internxt VPN Extension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		59F3BCE82FB1C53E006A8604 /* Internxt VPN.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Internxt VPN.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F3BCEB2FB1C53E006A8604 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		59F3BCEF2FB1C53E006A8604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Main.html; sourceTree = "<group>"; };
+		59F3BCF12FB1C53E006A8604 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		59F3BCF32FB1C53E006A8604 /* Style.css */ = {isa = PBXFileReference; lastKnownFileType = text.css; path = Style.css; sourceTree = "<group>"; };
+		59F3BCF52FB1C53E006A8604 /* Script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Script.js; sourceTree = "<group>"; };
+		59F3BCF72FB1C53E006A8604 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		59F3BCFA2FB1C53E006A8604 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		59F3BCFC2FB1C53F006A8604 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		59F3BCFE2FB1C53F006A8604 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59F3BD032FB1C53F006A8604 /* Internxt VPN Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Internxt VPN Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F3BD082FB1C53F006A8604 /* SafariWebExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariWebExtensionHandler.swift; sourceTree = "<group>"; };
+		59F3BD0A2FB1C53F006A8604 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		59F3BD152FB1C53F006A8604 /* background.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; name = background.js; path = "../../../.output/safari-mv2/background.js"; sourceTree = "<group>"; };
+		59F3BD162FB1C53F006A8604 /* images */ = {isa = PBXFileReference; lastKnownFileType = folder; name = images; path = "../../../.output/safari-mv2/images"; sourceTree = "<group>"; };
+		59F3BD172FB1C53F006A8604 /* wxt.svg */ = {isa = PBXFileReference; lastKnownFileType = text; name = wxt.svg; path = "../../../.output/safari-mv2/wxt.svg"; sourceTree = "<group>"; };
+		59F3BD182FB1C53F006A8604 /* popup.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = popup.html; path = "../../../.output/safari-mv2/popup.html"; sourceTree = "<group>"; };
+		59F3BD192FB1C53F006A8604 /* chunks */ = {isa = PBXFileReference; lastKnownFileType = folder; name = chunks; path = "../../../.output/safari-mv2/chunks"; sourceTree = "<group>"; };
+		59F3BD1A2FB1C53F006A8604 /* content-scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "content-scripts"; path = "../../../.output/safari-mv2/content-scripts"; sourceTree = "<group>"; };
+		59F3BD1B2FB1C53F006A8604 /* manifest.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = manifest.json; path = "../../../.output/safari-mv2/manifest.json"; sourceTree = "<group>"; };
+		59F3BD1C2FB1C53F006A8604 /* _locales */ = {isa = PBXFileReference; lastKnownFileType = folder; name = _locales; path = "../../../.output/safari-mv2/_locales"; sourceTree = "<group>"; };
+		59F3BD1D2FB1C53F006A8604 /* icon */ = {isa = PBXFileReference; lastKnownFileType = folder; name = icon; path = "../../../.output/safari-mv2/icon"; sourceTree = "<group>"; };
+		59F3BD1E2FB1C53F006A8604 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = "../../../.output/safari-mv2/assets"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		59F3BCE52FB1C53E006A8604 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F3BD002FB1C53F006A8604 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59F3BCDF2FB1C53E006A8604 = {
+			isa = PBXGroup;
+			children = (
+				59F3BCEA2FB1C53E006A8604 /* Internxt VPN */,
+				59F3BD072FB1C53F006A8604 /* Internxt VPN Extension */,
+				59F3BCE92FB1C53E006A8604 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		59F3BCE92FB1C53E006A8604 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				59F3BCE82FB1C53E006A8604 /* Internxt VPN.app */,
+				59F3BD032FB1C53F006A8604 /* Internxt VPN Extension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59F3BCEA2FB1C53E006A8604 /* Internxt VPN */ = {
+			isa = PBXGroup;
+			children = (
+				59F3BCEB2FB1C53E006A8604 /* AppDelegate.swift */,
+				59F3BCF72FB1C53E006A8604 /* ViewController.swift */,
+				59F3BCF92FB1C53E006A8604 /* Main.storyboard */,
+				59F3BCFC2FB1C53F006A8604 /* Assets.xcassets */,
+				59F3BCFE2FB1C53F006A8604 /* Info.plist */,
+				59F3BCED2FB1C53E006A8604 /* Resources */,
+			);
+			path = "Internxt VPN";
+			sourceTree = "<group>";
+		};
+		59F3BCED2FB1C53E006A8604 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59F3BCEE2FB1C53E006A8604 /* Main.html */,
+				59F3BCF12FB1C53E006A8604 /* Icon.png */,
+				59F3BCF32FB1C53E006A8604 /* Style.css */,
+				59F3BCF52FB1C53E006A8604 /* Script.js */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		59F3BD072FB1C53F006A8604 /* Internxt VPN Extension */ = {
+			isa = PBXGroup;
+			children = (
+				59F3BD142FB1C53F006A8604 /* Resources */,
+				59F3BD082FB1C53F006A8604 /* SafariWebExtensionHandler.swift */,
+				59F3BD0A2FB1C53F006A8604 /* Info.plist */,
+			);
+			path = "Internxt VPN Extension";
+			sourceTree = "<group>";
+		};
+		59F3BD142FB1C53F006A8604 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59F3BD152FB1C53F006A8604 /* background.js */,
+				59F3BD162FB1C53F006A8604 /* images */,
+				59F3BD172FB1C53F006A8604 /* wxt.svg */,
+				59F3BD182FB1C53F006A8604 /* popup.html */,
+				59F3BD192FB1C53F006A8604 /* chunks */,
+				59F3BD1A2FB1C53F006A8604 /* content-scripts */,
+				59F3BD1B2FB1C53F006A8604 /* manifest.json */,
+				59F3BD1C2FB1C53F006A8604 /* _locales */,
+				59F3BD1D2FB1C53F006A8604 /* icon */,
+				59F3BD1E2FB1C53F006A8604 /* assets */,
+			);
+			name = Resources;
+			path = "Internxt VPN Extension";
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		59F3BCE72FB1C53E006A8604 /* Internxt VPN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59F3BD112FB1C53F006A8604 /* Build configuration list for PBXNativeTarget "Internxt VPN" */;
+			buildPhases = (
+				59F3BCE42FB1C53E006A8604 /* Sources */,
+				59F3BCE52FB1C53E006A8604 /* Frameworks */,
+				59F3BCE62FB1C53E006A8604 /* Resources */,
+				59F3BD102FB1C53F006A8604 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59F3BD062FB1C53F006A8604 /* PBXTargetDependency */,
+			);
+			name = "Internxt VPN";
+			packageProductDependencies = (
+			);
+			productName = "Internxt VPN";
+			productReference = 59F3BCE82FB1C53E006A8604 /* Internxt VPN.app */;
+			productType = "com.apple.product-type.application";
+		};
+		59F3BD022FB1C53F006A8604 /* Internxt VPN Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59F3BD0D2FB1C53F006A8604 /* Build configuration list for PBXNativeTarget "Internxt VPN Extension" */;
+			buildPhases = (
+				59F3BCFF2FB1C53F006A8604 /* Sources */,
+				59F3BD002FB1C53F006A8604 /* Frameworks */,
+				59F3BD012FB1C53F006A8604 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Internxt VPN Extension";
+			packageProductDependencies = (
+			);
+			productName = "Internxt VPN Extension";
+			productReference = 59F3BD032FB1C53F006A8604 /* Internxt VPN Extension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		59F3BCE02FB1C53E006A8604 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2640;
+				LastUpgradeCheck = 2640;
+				TargetAttributes = {
+					59F3BCE72FB1C53E006A8604 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+					59F3BD022FB1C53F006A8604 = {
+						CreatedOnToolsVersion = 26.4;
+					};
+				};
+			};
+			buildConfigurationList = 59F3BCE32FB1C53E006A8604 /* Build configuration list for PBXProject "Internxt VPN" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 59F3BCDF2FB1C53E006A8604;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 59F3BCE92FB1C53E006A8604 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				59F3BCE72FB1C53E006A8604 /* Internxt VPN */,
+				59F3BD022FB1C53F006A8604 /* Internxt VPN Extension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		59F3BCE62FB1C53E006A8604 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F3BCF22FB1C53E006A8604 /* Icon.png in Resources */,
+				59F3BCFB2FB1C53E006A8604 /* Main.storyboard in Resources */,
+				59F3BCF62FB1C53E006A8604 /* Script.js in Resources */,
+				59F3BCF02FB1C53E006A8604 /* Main.html in Resources */,
+				59F3BCFD2FB1C53F006A8604 /* Assets.xcassets in Resources */,
+				59F3BCF42FB1C53E006A8604 /* Style.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F3BD012FB1C53F006A8604 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F3BD232FB1C53F006A8604 /* chunks in Resources */,
+				59F3BD252FB1C53F006A8604 /* manifest.json in Resources */,
+				59F3BD262FB1C53F006A8604 /* _locales in Resources */,
+				59F3BD242FB1C53F006A8604 /* content-scripts in Resources */,
+				59F3BD212FB1C53F006A8604 /* wxt.svg in Resources */,
+				59F3BD282FB1C53F006A8604 /* assets in Resources */,
+				59F3BD222FB1C53F006A8604 /* popup.html in Resources */,
+				59F3BD202FB1C53F006A8604 /* images in Resources */,
+				59F3BD272FB1C53F006A8604 /* icon in Resources */,
+				59F3BD1F2FB1C53F006A8604 /* background.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		59F3BCE42FB1C53E006A8604 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F3BCF82FB1C53E006A8604 /* ViewController.swift in Sources */,
+				59F3BCEC2FB1C53E006A8604 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59F3BCFF2FB1C53F006A8604 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59F3BD092FB1C53F006A8604 /* SafariWebExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59F3BD062FB1C53F006A8604 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59F3BD022FB1C53F006A8604 /* Internxt VPN Extension */;
+			targetProxy = 59F3BD052FB1C53F006A8604 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		59F3BCEE2FB1C53E006A8604 /* Main.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59F3BCEF2FB1C53E006A8604 /* Base */,
+			);
+			name = Main.html;
+			sourceTree = "<group>";
+		};
+		59F3BCF92FB1C53E006A8604 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				59F3BCFA2FB1C53E006A8604 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		59F3BD0B2FB1C53F006A8604 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		59F3BD0C2FB1C53F006A8604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		59F3BD0E2FB1C53F006A8604 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Internxt VPN Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Internxt VPN Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59F3BD0F2FB1C53F006A8604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Internxt VPN Extension/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Internxt VPN Extension";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.internxt.vpn.Extension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		59F3BD122FB1C53F006A8604 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Internxt VPN/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Internxt VPN";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.internxt.Internxt-VPN";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59F3BD132FB1C53F006A8604 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_APP_SANDBOX = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
+				ENABLE_USER_SELECTED_FILES = readonly;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Internxt VPN/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Internxt VPN";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSMainStoryboardFile = Main;
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"-framework",
+					SafariServices,
+					"-framework",
+					WebKit,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.internxt.Internxt-VPN";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		59F3BCE32FB1C53E006A8604 /* Build configuration list for PBXProject "Internxt VPN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F3BD0B2FB1C53F006A8604 /* Debug */,
+				59F3BD0C2FB1C53F006A8604 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59F3BD0D2FB1C53F006A8604 /* Build configuration list for PBXNativeTarget "Internxt VPN Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F3BD0E2FB1C53F006A8604 /* Debug */,
+				59F3BD0F2FB1C53F006A8604 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59F3BD112FB1C53F006A8604 /* Build configuration list for PBXNativeTarget "Internxt VPN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59F3BD122FB1C53F006A8604 /* Debug */,
+				59F3BD132FB1C53F006A8604 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 59F3BCE02FB1C53E006A8604 /* Project object */;
+}
