@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { browser } from 'wxt/browser'
 
-import { clearProxySettings, updateProxySettings } from './proxy.service'
+import { clearProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
@@ -82,9 +82,7 @@ export const App = () => {
 
       setSelectedLocation(location)
     } catch (error) {
-      console.error(`ERROR WHILE INITIALIZING APP STATE: ${error}`)
       if (error instanceof UnauthorizedError) {
-        console.warn('Authorization error detected:', error.message)
         await onLogOut()
       }
     }
@@ -100,11 +98,11 @@ export const App = () => {
   }
 
   const onConnectVpn = async () => {
-    await updateProxySettings()
+    await browser.runtime.sendMessage('SET_PROXY')
     const userData = await browser.runtime.sendMessage('GET_DATA')
-    setUserData(userData)
-    await storageService.saveVpnStatus('ON', userData)
-
+    const resolvedUserData = userData ?? defaultUserDataInfo
+    setUserData(resolvedUserData)
+    await storageService.saveVpnStatus('ON', resolvedUserData)
     setStatus('ON')
   }
 
@@ -125,9 +123,7 @@ export const App = () => {
       }
     } catch (err) {
       await onDisconnectVpn()
-    } finally {
-      const newStatus = status === 'OFF' ? 'ON' : 'OFF'
-      setStatus(newStatus)
+      setStatus('OFF')
     }
   }
 

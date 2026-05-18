@@ -7,14 +7,12 @@ import storageService, { getUserToken } from '../services/storage.service'
 
 const refreshExistentUserToken = async (userToken: string) => {
   const refreshedToken = await refreshUserToken(userToken)
-  console.log(`User token refreshed`)
-  await storageService.saveUserToken('user', refreshedToken)
+    await storageService.saveUserToken('user', refreshedToken)
 }
 
 const refreshAnonymousToken = async () => {
   const anonymousToken = await getAnonymousToken()
-  console.log(`Anonymous token refreshed`)
-  await storageService.saveUserToken('anonymous', anonymousToken.token)
+    await storageService.saveUserToken('anonymous', anonymousToken.token)
 }
 
 export const handleUserToken = async () => {

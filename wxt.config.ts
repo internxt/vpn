@@ -7,7 +7,7 @@ export default defineConfig({
   }),
   modules: ['@wxt-dev/i18n/module'],
   srcDir: 'src',
-  manifest: {
+  manifest: ({ browser }) => ({
     name: 'Internxt VPN - Free, Encrypted & Unlimited VPN',
     short_name: 'Internxt VPN',
     default_locale: 'en',
@@ -25,7 +25,7 @@ export default defineConfig({
       'storage',
       'proxy',
       'webRequest',
-      'webRequestAuthProvider',
+      ...(browser === 'firefox' ? ['webRequestBlocking'] : ['webRequestAuthProvider']),
       'browsingData',
     ],
     web_accessible_resources: [
@@ -38,5 +38,5 @@ export default defineConfig({
     action: {
       default_popup: 'index.html',
     },
-  },
+  }),
 })

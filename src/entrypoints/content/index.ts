@@ -52,22 +52,10 @@ export default defineContentScript({
           if (eventMessage === MESSAGES.USER_TOKEN) {
             const token = event.data.payload.token
 
-            browser.storage.local
-              .set({
-                userToken: {
-                  token,
-                  type: 'user',
-                },
-              })
-              .then(() => {
-                console.log(
-                  'The user has been authenticated in the VPN extension',
-                )
-              })
+            browser.storage.local.set({ userToken: { token, type: 'user' } })
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
             browser.storage.local.clear().then(async () => {
               await browser.runtime.sendMessage('RESET_PROXY')
-              console.log('The user has been logged out from the VPN extension')
             })
           }
         }
