@@ -62,6 +62,7 @@ export default defineBackground(() => {
   const localCache = {
     token: null as string | null,
     connection: null as string | null,
+    vpnEnabled: false as boolean,
   }
 
   async function initializeLocalCache() {
