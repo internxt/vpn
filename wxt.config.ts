@@ -25,7 +25,9 @@ export default defineConfig({
       'storage',
       'proxy',
       'webRequest',
-      ...(browser === 'firefox' ? ['webRequestBlocking'] : ['webRequestAuthProvider']),
+      ...(browser === 'firefox'
+        ? ['webRequestBlocking']
+        : ['webRequestAuthProvider']),
       'browsingData',
     ],
     web_accessible_resources: [
