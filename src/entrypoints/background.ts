@@ -66,7 +66,11 @@ export default defineBackground(() => {
   }
 
   async function initializeLocalCache() {
-    const result = await browser.storage.local.get(['userToken', 'connection', 'vpnEnabled'])
+    const result = await browser.storage.local.get([
+      'userToken',
+      'connection',
+      'vpnEnabled',
+    ])
     const userToken = result.userToken as { token: string } | undefined
     const connection = result.connection as string | undefined
     console.log('INITIAL LOCAL STORAGE: ', userToken)
@@ -81,14 +85,16 @@ export default defineBackground(() => {
   browser.storage.onChanged.addListener((changes, areaName) => {
     if (areaName === 'local') {
       if (changes.userToken?.newValue) {
-        localCache.token = (changes.userToken.newValue as { token: string })?.token ?? null
+        localCache.token =
+          (changes.userToken.newValue as { token: string })?.token ?? null
         startInterval()
       }
-      if (changes.connection?.newValue) {
+      if ('connection' in changes) {
         localCache.connection = (changes.connection.newValue as string) ?? null
       }
       if ('vpnEnabled' in changes) {
-        localCache.vpnEnabled = (changes.vpnEnabled.newValue as boolean) ?? false
+        localCache.vpnEnabled =
+          (changes.vpnEnabled.newValue as boolean) ?? false
       }
     }
   })
@@ -98,9 +104,19 @@ export default defineBackground(() => {
     const VPN_PORT = Number(import.meta.env.VITE_VPN_SERVER_PORT)
     ;(browser as any).proxy.onRequest.addListener(
       (details: any) => {
-        if (details.tabId === -1 || details.originUrl?.startsWith('moz-extension://')) return { type: 'direct' }
+        if (
+          details.tabId === -1 ||
+          details.originUrl?.startsWith('moz-extension://')
+        )
+          return { type: 'direct' }
         if (!localCache.vpnEnabled) return { type: 'direct' }
-        return { type: 'http', host: VPN_HOST, port: VPN_PORT, username: localCache.connection ?? 'FR', password: localCache.token ?? '' }
+        return {
+          type: 'http',
+          host: VPN_HOST,
+          port: VPN_PORT,
+          username: localCache.connection ?? 'FR',
+          password: localCache.token ?? '',
+        }
       },
       { urls: ['<all_urls>'] },
     )
@@ -108,10 +124,33 @@ export default defineBackground(() => {
     browser.webRequest.onAuthRequired.addListener(
       function (details) {
         if (!details.isProxy) return {}
-        return { authCredentials: { username: localCache.connection ?? 'FR', password: localCache.token ?? '' } }
+        return {
+          authCredentials: {
+            username: localCache.connection ?? 'FR',
+            password: localCache.token ?? '',
+          },
+        }
       },
       { urls: ['<all_urls>'] },
       ['blocking'],
+    )
+
+    browser.webRequest.onBeforeSendHeaders.addListener(
+      (details) => {
+        if (!localCache.vpnEnabled || !localCache.token) return {}
+        const username = localCache.connection ?? 'FR'
+        const credentials = btoa(`${username}:${localCache.token}`)
+        const headers = (details.requestHeaders ?? []).filter(
+          (h) => h.name.toLowerCase() !== 'proxy-authorization',
+        )
+        headers.push({
+          name: 'Proxy-Authorization',
+          value: `Basic ${credentials}`,
+        })
+        return { requestHeaders: headers }
+      },
+      { urls: ['<all_urls>'] },
+      ['blocking', 'requestHeaders'],
     )
   } else {
     browser.webRequest.onAuthRequired.addListener(

@@ -5,7 +5,6 @@ import { clearProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
-import { RestartBrowserModal } from '../components/RestartBrowserModal'
 import { translate } from '@/constants'
 
 const IS_FIREFOX = import.meta.env.BROWSER === 'firefox'
@@ -49,8 +48,9 @@ export const App = () => {
   const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
     'FR',
   ])
-  const [showFirefoxLocationInfo, setShowFirefoxLocationInfo] = useState<boolean>(false)
-  const [firefoxNeedsRestart, setFirefoxNeedsRestart] = useState<boolean>(false)
+  // const [showFirefoxLocationInfo, setShowFirefoxLocationInfo] =
+  //   useState<boolean>(false)
+  // const [firefoxNeedsRestart, setFirefoxNeedsRestart] = useState<boolean>(false)
 
   useEffect(() => {
     initialAppState()
@@ -120,10 +120,10 @@ export const App = () => {
   }
 
   const onToggleClicked = async () => {
-    if (IS_FIREFOX && firefoxNeedsRestart && status === 'OFF') {
-      setShowFirefoxLocationInfo(true)
-      return
-    }
+    // if (IS_FIREFOX && firefoxNeedsRestart && status === 'OFF') {
+    //   setShowFirefoxLocationInfo(true)
+    //   return
+    // }
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -154,13 +154,13 @@ export const App = () => {
   }
 
   const onChangeLocation = async (newLocation: VPNLocation) => {
-    if (IS_FIREFOX && status === 'ON') {
-      if (newLocation !== selectedLocation) {
-        setShowFirefoxLocationInfo(true)
-        setFirefoxNeedsRestart(true)
-      }
-      return
-    }
+    // if (IS_FIREFOX && status === 'ON') {
+    //   if (newLocation !== selectedLocation) {
+    //     setShowFirefoxLocationInfo(true)
+    //     setFirefoxNeedsRestart(true)
+    //   }
+    //   return
+    // }
 
     try {
       if (status === 'ON') {
@@ -246,9 +246,9 @@ export const App = () => {
       </div>
       <div className="border border-gray-10 w-full" />
       <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
-      {showFirefoxLocationInfo && (
+      {/* {showFirefoxLocationInfo && (
         <RestartBrowserModal onClose={() => setShowFirefoxLocationInfo(false)} />
-      )}
+      )} */}
     </div>
   )
 }
