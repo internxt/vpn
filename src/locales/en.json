@@ -32,11 +32,6 @@
       "description": "Connect for secure browsing."
     }
   },
-  "firefoxLocationModal": {
-    "title": "Restart browser to change location",
-    "description": "Close Firefox > Open a new window > Open Internxt VPN > Click preferred location",
-    "confirm": "Got it"
-  },
   "footer": {
     "login": "Log in",
     "signup": "Sign up",

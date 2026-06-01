@@ -7,7 +7,6 @@ import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
 
-const IS_FIREFOX = import.meta.env.BROWSER === 'firefox'
 
 import {
   getAnonymousToken,
@@ -48,9 +47,7 @@ export const App = () => {
   const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
     'FR',
   ])
-  // const [showFirefoxLocationInfo, setShowFirefoxLocationInfo] =
-  //   useState<boolean>(false)
-  // const [firefoxNeedsRestart, setFirefoxNeedsRestart] = useState<boolean>(false)
+  
 
   useEffect(() => {
     initialAppState()
@@ -120,10 +117,7 @@ export const App = () => {
   }
 
   const onToggleClicked = async () => {
-    // if (IS_FIREFOX && firefoxNeedsRestart && status === 'OFF') {
-    //   setShowFirefoxLocationInfo(true)
-    //   return
-    // }
+    
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -154,14 +148,7 @@ export const App = () => {
   }
 
   const onChangeLocation = async (newLocation: VPNLocation) => {
-    // if (IS_FIREFOX && status === 'ON') {
-    //   if (newLocation !== selectedLocation) {
-    //     setShowFirefoxLocationInfo(true)
-    //     setFirefoxNeedsRestart(true)
-    //   }
-    //   return
-    // }
-
+   
     try {
       if (status === 'ON') {
         await onDisconnectVpn()
@@ -246,9 +233,7 @@ export const App = () => {
       </div>
       <div className="border border-gray-10 w-full" />
       <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
-      {/* {showFirefoxLocationInfo && (
-        <RestartBrowserModal onClose={() => setShowFirefoxLocationInfo(false)} />
-      )} */}
+      
     </div>
   )
 }
