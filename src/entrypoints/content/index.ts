@@ -29,14 +29,22 @@ export default defineContentScript({
       )
     }
 
-    requestToken()
+    const isAuthPage =
+      window.location.pathname.startsWith('/login') ||
+      window.location.pathname.startsWith('/new')
 
-    const retryTimer = setTimeout(() => {
-      if (!receivedToken) {
-        console.log('No token received after 5s, retrying...')
-        requestToken()
-      }
-    }, 5000)
+    let retryTimer: ReturnType<typeof setTimeout> | undefined
+
+    if (!isAuthPage) {
+      requestToken()
+
+      retryTimer = setTimeout(() => {
+        if (!receivedToken) {
+          console.log('No token received after 5s, retrying...')
+          requestToken()
+        }
+      }, 5000)
+    }
 
     window.addEventListener(
       'message',
