@@ -8,6 +8,11 @@ interface FooterProps {
   onLogOut: () => void
 }
 
+const openTabAndClose = (url: string) => {
+  browser.tabs.create({ url })
+  window.close()
+}
+
 const AuthButtons = ({
   isAuthenticated,
   onLogOut,
@@ -22,23 +27,19 @@ const AuthButtons = ({
       </button>
     ) : (
       <>
-        <a
-          href={`${HOST_AUTH}/login?vpnAuth=true`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex hover:underline text-sm font-medium text-primary"
+        <button
+          className="flex hover:underline bg-transparent text-sm font-medium text-primary"
+          onClick={() => openTabAndClose(`${HOST_AUTH}/login?vpnAuth=true`)}
         >
           {translate('footer.login')}
-        </a>
+        </button>
         <div className="flex h-full border-gray-1" />
-        <a
-          href={`${HOST_AUTH}/new?vpnAuth=true`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex hover:underline text-sm font-medium text-primary"
+        <button
+          className="flex hover:underline bg-transparent text-sm font-medium text-primary"
+          onClick={() => openTabAndClose(`${HOST_AUTH}/new?vpnAuth=true`)}
         >
           {translate('footer.signup')}
-        </a>
+        </button>
       </>
     )}
   </div>
