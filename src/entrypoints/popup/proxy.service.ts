@@ -53,7 +53,6 @@ export async function clearProxySettings() {
     if (browser.webRequest.handlerBehaviorChanged) {
       await browser.webRequest.handlerBehaviorChanged()
     }
-    await reloadAllTabsBypassingCache()
     return
   }
 
