@@ -84,6 +84,10 @@ export const App = () => {
       } else {
         setIsAuthenticated(storageData.userToken.type === 'user')
 
+        if (storageData.userToken.type !== 'user') {
+          browser.runtime.sendMessage('REQUEST_TOKEN_FROM_TABS').catch(() => {})
+        }
+
         const { zones: userAvailableLocations } =
           await getUserAvailableLocations(storageData.userToken.token)
         setAvailableLocations(userAvailableLocations as VPNLocation[])

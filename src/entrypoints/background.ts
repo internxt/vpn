@@ -46,6 +46,15 @@ export default defineBackground(() => {
         .catch(() => {
           sendResponse({})
         })
+    } else if (message === 'REQUEST_TOKEN_FROM_TABS') {
+      browser.tabs.query({}).then((tabs) => {
+        tabs.forEach((tab) => {
+          if (tab.id) {
+            browser.tabs.sendMessage(tab.id, 'REQUEST_TOKEN').catch(() => {})
+          }
+        })
+      })
+      sendResponse({})
     } else if (message === 'RESET_PROXY') {
       clearProxySettings()
         .then(() => {

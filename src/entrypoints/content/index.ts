@@ -38,6 +38,12 @@ export default defineContentScript({
       }
     }, 5000)
 
+    browser.runtime.onMessage.addListener((message) => {
+      if (message === 'REQUEST_TOKEN' && !receivedToken) {
+        requestToken()
+      }
+    })
+
     window.addEventListener(
       'message',
       (event) => {
