@@ -51,6 +51,16 @@ export const App = () => {
 
   useEffect(() => {
     initialAppState()
+
+    const onStorageChanged = (changes: Record<string, browser.storage.StorageChange>) => {
+      if (changes.userToken) {
+        const newToken = changes.userToken.newValue as { token: string; type: string } | undefined
+        setIsAuthenticated(newToken?.type === 'user')
+      }
+    }
+
+    browser.storage.onChanged.addListener(onStorageChanged)
+    return () => browser.storage.onChanged.removeListener(onStorageChanged)
   }, [])
 
   const initialAppState = async () => {
