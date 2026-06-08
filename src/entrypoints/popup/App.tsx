@@ -60,7 +60,11 @@ export const App = () => {
     }
 
     browser.storage.onChanged.addListener(onStorageChanged)
-    return () => browser.storage.onChanged.removeListener(onStorageChanged)
+    window.addEventListener('focus', initialAppState)
+    return () => {
+      browser.storage.onChanged.removeListener(onStorageChanged)
+      window.removeEventListener('focus', initialAppState)
+    }
   }, [])
 
   const initialAppState = async () => {

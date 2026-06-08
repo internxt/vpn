@@ -54,8 +54,12 @@ export default defineContentScript({
 
             browser.storage.local.set({ userToken: { token, type: 'user' } })
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
-            browser.storage.local.clear().then(async () => {
-              await browser.runtime.sendMessage('RESET_PROXY')
+            browser.storage.local.get('userToken').then(async (result) => {
+              const currentToken = result.userToken as { type: string } | undefined
+              if (currentToken?.type === 'user') {
+                await browser.storage.local.remove('userToken')
+                await browser.runtime.sendMessage('RESET_PROXY')
+              }
             })
           }
         }
