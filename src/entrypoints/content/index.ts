@@ -50,12 +50,11 @@ export default defineContentScript({
         if (!targetUrl.includes(event.origin)) return
 
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
-          receivedToken = true
-          clearTimeout(retryTimer)
-
           const eventMessage = event.data.payload.message
 
           if (eventMessage === MESSAGES.USER_TOKEN) {
+            receivedToken = true
+            clearTimeout(retryTimer)
             const token = event.data.payload.token
 
             browser.storage.local.set({ userToken: { token, type: 'user' } })

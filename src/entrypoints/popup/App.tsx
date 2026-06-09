@@ -82,15 +82,16 @@ export const App = () => {
       if (!storageData.userToken) {
         await onAnonymousTokenRequested()
       } else {
-        setIsAuthenticated(storageData.userToken.type === 'user')
+        const isUserToken = storageData.userToken.type === 'user'
+        setIsAuthenticated(isUserToken)
 
-        if (storageData.userToken.type !== 'user') {
+        if (!isUserToken) {
           browser.runtime.sendMessage('REQUEST_TOKEN_FROM_TABS').catch(() => {})
+        } else {
+          const { zones: userAvailableLocations } =
+            await getUserAvailableLocations(storageData.userToken.token)
+          setAvailableLocations(userAvailableLocations as VPNLocation[])
         }
-
-        const { zones: userAvailableLocations } =
-          await getUserAvailableLocations(storageData.userToken.token)
-        setAvailableLocations(userAvailableLocations as VPNLocation[])
       }
 
       const location = storageData?.connection

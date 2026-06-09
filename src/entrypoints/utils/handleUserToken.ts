@@ -23,7 +23,11 @@ export const handleUserToken = async () => {
   }
 
   if (isTokenExpired(userToken.token)) {
-    await refreshAnonymousToken()
+    if (userToken.type === 'user') {
+      await refreshExistentUserToken(userToken.token).catch(() => refreshAnonymousToken())
+    } else {
+      await refreshAnonymousToken()
+    }
     return
   }
 
