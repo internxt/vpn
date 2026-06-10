@@ -26,7 +26,6 @@ export async function updateProxySettings() {
     if (browser.webRequest.handlerBehaviorChanged) {
       await browser.webRequest.handlerBehaviorChanged()
     }
-    await reloadAllTabsBypassingCache()
     return
   }
 
@@ -42,7 +41,14 @@ export async function updateProxySettings() {
     },
   }
 
-  browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+  await browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+}
+
+export async function reloadTabsAfterConnect() {
+  if (IS_FIREFOX) {
+    await reloadAllTabsBypassingCache()
+    return
+  }
   await browser.tabs.reload()
 }
 

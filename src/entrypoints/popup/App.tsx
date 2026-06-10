@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { browser } from 'wxt/browser'
 
-import { clearProxySettings } from './proxy.service'
+import { clearProxySettings, reloadTabsAfterConnect } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
@@ -122,10 +122,13 @@ export const App = () => {
   const onConnectVpn = async () => {
     await browser.runtime.sendMessage('SET_PROXY')
     const userData = await browser.runtime.sendMessage('GET_DATA')
-    const resolvedUserData = userData ?? defaultUserDataInfo
-    setUserData(resolvedUserData)
-    await storageService.saveVpnStatus('ON', resolvedUserData)
+    if (!userData) {
+      throw new Error('Could not verify the VPN connection')
+    }
+    setUserData(userData)
+    await storageService.saveVpnStatus('ON', userData)
     setStatus('ON')
+    await reloadTabsAfterConnect()
   }
 
   const onDisconnectVpn = async () => {

@@ -25,6 +25,7 @@ export default defineBackground(() => {
     if (message === 'GET_DATA') {
       fetch(`${IP_API_URL}/json`, {
         method: 'GET',
+        signal: AbortSignal.timeout(15000),
       })
         .then((data) => data.json())
         .then((items) => {
@@ -111,14 +112,27 @@ export default defineBackground(() => {
   if (import.meta.env.BROWSER === 'firefox') {
     const VPN_HOST = import.meta.env.VITE_VPN_SERVER_ADDRESS
     const VPN_PORT = Number(import.meta.env.VITE_VPN_SERVER_PORT)
+
+    // The IP check must go through the proxy so it verifies the tunnel is
+    // actually reachable; every other extension/background request stays direct.
+    const shouldProxyRequest = (details: {
+      url?: string
+      tabId?: number
+      originUrl?: string
+    }) => {
+      if (!localCache.vpnEnabled) return false
+      if (details.url?.startsWith(IP_API_URL)) return true
+      if (
+        details.tabId === -1 ||
+        details.originUrl?.startsWith('moz-extension://')
+      )
+        return false
+      return true
+    }
+
     ;(browser as any).proxy.onRequest.addListener(
       (details: any) => {
-        if (
-          details.tabId === -1 ||
-          details.originUrl?.startsWith('moz-extension://')
-        )
-          return { type: 'direct' }
-        if (!localCache.vpnEnabled) return { type: 'direct' }
+        if (!shouldProxyRequest(details)) return { type: 'direct' }
         return {
           type: 'http',
           host: VPN_HOST,
@@ -146,7 +160,7 @@ export default defineBackground(() => {
 
     browser.webRequest.onBeforeSendHeaders.addListener(
       (details) => {
-        if (!localCache.vpnEnabled || !localCache.token) return {}
+        if (!localCache.token || !shouldProxyRequest(details)) return {}
         const username = localCache.connection ?? 'FR'
         const credentials = btoa(`${username}:${localCache.token}`)
         const headers = (details.requestHeaders ?? []).filter(
