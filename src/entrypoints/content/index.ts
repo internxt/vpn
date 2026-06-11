@@ -1,3 +1,4 @@
+import { browser } from 'wxt/browser'
 import { getAppUrl } from '../utils/getUrl'
 
 const POST_MESSAGE_SOURCE = 'drive-extension'
@@ -37,37 +38,33 @@ export default defineContentScript({
       }
     }, 5000)
 
+    browser.runtime.onMessage.addListener((message) => {
+      if (message === 'REQUEST_TOKEN' && !receivedToken) {
+        requestToken()
+      }
+    })
+
     window.addEventListener(
       'message',
       (event) => {
         if (!targetUrl.includes(event.origin)) return
 
         if (event.data?.source === LISTENER_MESSAGE_SOURCE) {
-          receivedToken = true
-          clearTimeout(retryTimer)
-
           const eventMessage = event.data.payload.message
 
           if (eventMessage === MESSAGES.USER_TOKEN) {
+            receivedToken = true
+            clearTimeout(retryTimer)
             const token = event.data.payload.token
 
-            chrome.storage.local.set(
-              {
-                userToken: {
-                  token,
-                  type: 'user',
-                },
-              },
-              () => {
-                console.log(
-                  'The user has been authenticated in the VPN extension',
-                )
-              },
-            )
+            browser.storage.local.set({ userToken: { token, type: 'user' } })
           } else if (eventMessage === MESSAGES.USER_LOG_OUT) {
-            chrome.storage.local.clear(async () => {
-              await chrome.runtime.sendMessage('RESET_PROXY')
-              console.log('The user has been logged out from the VPN extension')
+            browser.storage.local.get('userToken').then(async (result) => {
+              const currentToken = result.userToken as { type: string } | undefined
+              if (currentToken?.type === 'user') {
+                await browser.storage.local.remove('userToken')
+                await browser.runtime.sendMessage('RESET_PROXY')
+              }
             })
           }
         }

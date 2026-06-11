@@ -1,3 +1,4 @@
+import { browser } from 'wxt/browser'
 import { translate } from '@/constants'
 import { SectionItemProps, SectionProps } from '../Dropdown'
 import { DropdownItem } from './DropdownItem'
@@ -16,7 +17,7 @@ export const DropdownSection = ({
   onItemClicked,
 }: DropdownSectionProps) => {
   const handleUpgradeButtonClicked = () => {
-    chrome.tabs.create({ url: 'https://internxt.com/pricing' })
+    browser.tabs.create({ url: 'https://internxt.com/pricing' })
   }
   return (
     <div

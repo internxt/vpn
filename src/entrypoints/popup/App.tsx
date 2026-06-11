@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react'
+import { browser } from 'wxt/browser'
 
-import { clearProxySettings, updateProxySettings } from './proxy.service'
+import { clearProxySettings, reloadTabsAfterConnect } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
+
+
 import {
   getAnonymousToken,
   getUserAvailableLocations,
@@ -44,14 +47,29 @@ export const App = () => {
   const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
     'FR',
   ])
+  
 
   useEffect(() => {
     initialAppState()
+
+    const onStorageChanged = (changes: Record<string, browser.storage.StorageChange>) => {
+      if (changes.userToken) {
+        const newToken = changes.userToken.newValue as { token: string; type: string } | undefined
+        setIsAuthenticated(newToken?.type === 'user')
+      }
+    }
+
+    browser.storage.onChanged.addListener(onStorageChanged)
+    window.addEventListener('focus', initialAppState)
+    return () => {
+      browser.storage.onChanged.removeListener(onStorageChanged)
+      window.removeEventListener('focus', initialAppState)
+    }
   }, [])
 
   const initialAppState = async () => {
     try {
-      const storageData = (await chrome.storage.local.get([
+      const storageData = (await browser.storage.local.get([
         'vpnStatus',
         'userData',
         'userToken',
@@ -64,11 +82,16 @@ export const App = () => {
       if (!storageData.userToken) {
         await onAnonymousTokenRequested()
       } else {
-        setIsAuthenticated(storageData.userToken.type === 'user')
+        const isUserToken = storageData.userToken.type === 'user'
+        setIsAuthenticated(isUserToken)
 
-        const { zones: userAvailableLocations } =
-          await getUserAvailableLocations(storageData.userToken.token)
-        setAvailableLocations(userAvailableLocations as VPNLocation[])
+        if (!isUserToken) {
+          browser.runtime.sendMessage('REQUEST_TOKEN_FROM_TABS').catch(() => {})
+        } else {
+          const { zones: userAvailableLocations } =
+            await getUserAvailableLocations(storageData.userToken.token)
+          setAvailableLocations(userAvailableLocations as VPNLocation[])
+        }
       }
 
       const location = storageData?.connection
@@ -81,9 +104,7 @@ export const App = () => {
 
       setSelectedLocation(location)
     } catch (error) {
-      console.error(`ERROR WHILE INITIALIZING APP STATE: ${error}`)
       if (error instanceof UnauthorizedError) {
-        console.warn('Authorization error detected:', error.message)
         await onLogOut()
       }
     }
@@ -99,12 +120,15 @@ export const App = () => {
   }
 
   const onConnectVpn = async () => {
-    await updateProxySettings()
-    const userData = await chrome.runtime.sendMessage('GET_DATA')
+    await browser.runtime.sendMessage('SET_PROXY')
+    const userData = await browser.runtime.sendMessage('GET_DATA')
+    if (!userData) {
+      throw new Error('Could not verify the VPN connection')
+    }
     setUserData(userData)
     await storageService.saveVpnStatus('ON', userData)
-
     setStatus('ON')
+    await reloadTabsAfterConnect()
   }
 
   const onDisconnectVpn = async () => {
@@ -115,6 +139,7 @@ export const App = () => {
   }
 
   const onToggleClicked = async () => {
+    
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -124,9 +149,7 @@ export const App = () => {
       }
     } catch (err) {
       await onDisconnectVpn()
-    } finally {
-      const newStatus = status === 'OFF' ? 'ON' : 'OFF'
-      setStatus(newStatus)
+      setStatus('OFF')
     }
   }
 
@@ -147,6 +170,7 @@ export const App = () => {
   }
 
   const onChangeLocation = async (newLocation: VPNLocation) => {
+   
     try {
       if (status === 'ON') {
         await onDisconnectVpn()
@@ -218,7 +242,7 @@ export const App = () => {
   const dropdownSections = getDropdownSections(availableLocations)
 
   return (
-    <div className="flex flex-col h-screen w-96 bg-white">
+    <div className="relative flex flex-col min-h-fit w-96 bg-white">
       {/* Main section (logo, title, description) */}
       <div className="flex flex-col p-5 space-y-5">
         <ConnectionDetails
@@ -231,6 +255,7 @@ export const App = () => {
       </div>
       <div className="border border-gray-10 w-full" />
       <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
+      
     </div>
   )
 }

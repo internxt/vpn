@@ -5,25 +5,35 @@ const VPN_CONFIG = {
   PORT: Number(import.meta.env.VITE_VPN_SERVER_PORT),
 }
 
-async function clearProxyCache() {
-  const options: Record<string, any> = {}
-  const rootDomain = VPN_CONFIG.HOST
-  options.origins = []
-  options.origins.push('http://' + rootDomain)
-  options.origins.push('https://' + rootDomain)
+const IS_FIREFOX = import.meta.env.BROWSER === 'firefox'
 
-  const types = { cookies: true }
-  chrome.browsingData.remove(options, types, function () {
-    console.log('PROXY CACHE REMOVED')
-  })
+async function clearProxyCache() {
+  browser.browsingData.remove({}, { cookies: true })
+}
+
+async function reloadAllTabsBypassingCache() {
+  const tabs = await browser.tabs.query({})
+  await Promise.all(
+    tabs
+      .filter((tab) => tab.id !== undefined && !tab.url?.startsWith('about:'))
+      .map((tab) => browser.tabs.reload(tab.id!, { bypassCache: true })),
+  )
 }
 
 export async function updateProxySettings() {
+  if (IS_FIREFOX) {
+    await browser.storage.local.set({ vpnEnabled: true })
+    if (browser.webRequest.handlerBehaviorChanged) {
+      await browser.webRequest.handlerBehaviorChanged()
+    }
+    return
+  }
+
   const proxyConfig = {
-    mode: 'fixed_servers',
+    mode: 'fixed_servers' as const,
     rules: {
       singleProxy: {
-        scheme: 'http',
+        scheme: 'http' as const,
         host: VPN_CONFIG.HOST,
         port: VPN_CONFIG.PORT,
       },
@@ -31,30 +41,34 @@ export async function updateProxySettings() {
     },
   }
 
-  browser.proxy.settings
-    .set({ value: proxyConfig, scope: 'regular' })
-    .then(() => {
-      console.log('CONNECTED')
-    })
-    .catch((err) => {
-      console.log('ERROR WHILE CONNECTING TO THE PROXY: ', err)
-    })
+  await browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
+}
+
+export async function reloadTabsAfterConnect() {
+  if (IS_FIREFOX) {
+    await reloadAllTabsBypassingCache()
+    return
+  }
+  await browser.tabs.reload()
 }
 
 export async function clearProxySettings() {
+  if (IS_FIREFOX) {
+    await browser.storage.local.set({ vpnEnabled: false })
+    clearProxyCache()
+    if (browser.webRequest.handlerBehaviorChanged) {
+      await browser.webRequest.handlerBehaviorChanged()
+    }
+    return
+  }
+
   const proxyConfig = {
-    mode: 'system',
+    mode: 'system' as const,
   }
 
   browser.proxy.settings
     .set({ value: proxyConfig, scope: 'regular' })
     .then(() => {
-      if (browser.runtime.lastError) {
-        console.error(
-          'ERROR ADDING THE DEFAULT PROXY CONFIG: ',
-          browser.runtime.lastError,
-        )
-      }
       clearProxyCache()
     })
 }
