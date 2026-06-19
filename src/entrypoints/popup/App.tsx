@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { browser } from 'wxt/browser'
 
-import { clearProxySettings, reloadTabsAfterConnect } from './proxy.service'
+import { clearProxySettings } from './proxy.service'
 import { ConnectionDetails } from '../components/ConnectionDetails'
 import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
@@ -128,7 +128,6 @@ export const App = () => {
     setUserData(userData)
     await storageService.saveVpnStatus('ON', userData)
     setStatus('ON')
-    await reloadTabsAfterConnect()
   }
 
   const onDisconnectVpn = async () => {
