@@ -7,19 +7,6 @@ const VPN_CONFIG = {
 
 const IS_FIREFOX = import.meta.env.BROWSER === 'firefox'
 
-async function clearProxyCache() {
-  browser.browsingData.remove({}, { cookies: true })
-}
-
-async function reloadAllTabsBypassingCache() {
-  const tabs = await browser.tabs.query({})
-  await Promise.all(
-    tabs
-      .filter((tab) => tab.id !== undefined && !tab.url?.startsWith('about:'))
-      .map((tab) => browser.tabs.reload(tab.id!, { bypassCache: true })),
-  )
-}
-
 export async function updateProxySettings() {
   if (IS_FIREFOX) {
     await browser.storage.local.set({ vpnEnabled: true })
@@ -44,18 +31,9 @@ export async function updateProxySettings() {
   await browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
 }
 
-export async function reloadTabsAfterConnect() {
-  if (IS_FIREFOX) {
-    await reloadAllTabsBypassingCache()
-    return
-  }
-  await browser.tabs.reload()
-}
-
 export async function clearProxySettings() {
   if (IS_FIREFOX) {
     await browser.storage.local.set({ vpnEnabled: false })
-    clearProxyCache()
     if (browser.webRequest.handlerBehaviorChanged) {
       await browser.webRequest.handlerBehaviorChanged()
     }
@@ -66,9 +44,5 @@ export async function clearProxySettings() {
     mode: 'system' as const,
   }
 
-  browser.proxy.settings
-    .set({ value: proxyConfig, scope: 'regular' })
-    .then(() => {
-      clearProxyCache()
-    })
+  await browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
 }
