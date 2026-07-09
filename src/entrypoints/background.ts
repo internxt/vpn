@@ -139,6 +139,7 @@ export default defineBackground(() => {
           port: VPN_PORT,
           username: localCache.connection ?? 'FR',
           password: localCache.token ?? '',
+          connectionIsolationKey: localCache.connection ?? 'FR',
         }
       },
       { urls: ['<all_urls>'] },
