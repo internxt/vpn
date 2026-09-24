@@ -7,7 +7,6 @@ import { VpnStatus } from '../components/VpnStatus'
 import { Footer } from '../components/Footer'
 import { translate } from '@/constants'
 
-
 import {
   getAnonymousToken,
   getUserAvailableLocations,
@@ -47,14 +46,17 @@ export const App = () => {
   const [availableLocations, setAvailableLocations] = useState<VPNLocation[]>([
     'FR',
   ])
-  
 
   useEffect(() => {
     initialAppState()
 
-    const onStorageChanged = (changes: Record<string, browser.storage.StorageChange>) => {
+    const onStorageChanged = (
+      changes: Record<string, Browser.storage.StorageChange>,
+    ) => {
       if (changes.userToken) {
-        const newToken = changes.userToken.newValue as { token: string; type: string } | undefined
+        const newToken = changes.userToken.newValue as
+          | { token: string; type: string }
+          | undefined
         setIsAuthenticated(newToken?.type === 'user')
       }
     }
@@ -138,7 +140,6 @@ export const App = () => {
   }
 
   const onToggleClicked = async () => {
-    
     setStatus('CONNECTING')
     try {
       if (status === 'OFF') {
@@ -169,7 +170,6 @@ export const App = () => {
   }
 
   const onChangeLocation = async (newLocation: VPNLocation) => {
-   
     try {
       if (status === 'ON') {
         await onDisconnectVpn()
@@ -254,7 +254,6 @@ export const App = () => {
       </div>
       <div className="border border-gray-10 w-full" />
       <Footer isAuthenticated={isAuthenticated} onLogOut={onLogOut} />
-      
     </div>
   )
 }
