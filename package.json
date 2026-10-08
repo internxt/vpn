@@ -19,6 +19,7 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@internxt/lib": "1.5.1",
     "@phosphor-icons/react": "^2.1.5",
     "@webext-core/storage": "^1.2.0",
     "@wxt-dev/i18n": "=0.2.4",

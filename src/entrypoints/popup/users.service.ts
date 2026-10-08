@@ -1,4 +1,8 @@
 import axios from 'axios'
+import {
+  isTokenExpired as hasExpirationPassed,
+  isTokenRefreshRequired as hasRefreshThresholdPassed,
+} from '@internxt/lib/dist/auth/checkTokenExpiration'
 import { browser } from 'wxt/browser'
 import { getDriveApiUrl, getVpnApiUrl } from '../utils/getUrl'
 
@@ -24,10 +28,6 @@ export const getAnonymousToken = async (): Promise<{
   return anonymousToken
 }
 
-const SIX_HOURS_IN_SECONDS = 6 * 60 * 60
-
-const nowInSeconds = () => Math.floor(Date.now() / 1000)
-
 function getTokenClaims(
   userToken: string
 ): { exp?: number; iat?: number } | undefined {
@@ -44,22 +44,16 @@ function getTokenClaims(
 
 export function isTokenExpired(userToken: string): boolean {
   const claims = getTokenClaims(userToken)
-  if (!claims?.exp) {
-    return true
-  }
-  return nowInSeconds() >= claims.exp
+  return !claims?.exp || hasExpirationPassed(claims.exp)
 }
 
 export function isTokenRefreshRequired(userToken: string): boolean {
   const claims = getTokenClaims(userToken)
-  if (!claims?.exp) {
-    return true
-  }
-  const remainingSeconds = claims.exp - nowInSeconds()
-  const refreshThreshold = claims.iat
-    ? (claims.exp - claims.iat) / 2
-    : SIX_HOURS_IN_SECONDS
-  return remainingSeconds <= refreshThreshold
+  return (
+    !claims?.exp ||
+    hasExpirationPassed(claims.exp) ||
+    hasRefreshThresholdPassed(claims.exp, claims.iat)
+  )
 }
 
 export const refreshUserToken = async (
