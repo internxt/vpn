@@ -2,14 +2,16 @@ import { browser } from 'wxt/browser'
 import { handleUserToken } from './utils/handleUserToken'
 import { clearProxySettings, updateProxySettings } from './popup/proxy.service'
 
-const FOUR_DAYS_IN_MS = 4 * 24 * 60 * 60 * 1000
-let interval: NodeJS.Timeout | null = null
+const REFRESH_TOKEN_ALARM = 'refresh-user-token'
+const REFRESH_TOKEN_CHECK_PERIOD_IN_MINUTES = 6 * 60
 
-function startInterval() {
-  if (interval) clearInterval(interval)
-  interval = setInterval(() => {
-    handleUserToken()
-  }, FOUR_DAYS_IN_MS)
+async function scheduleTokenRefreshIfMissing() {
+  const existingAlarm = await browser.alarms.get(REFRESH_TOKEN_ALARM)
+  if (!existingAlarm) {
+    await browser.alarms.create(REFRESH_TOKEN_ALARM, {
+      periodInMinutes: REFRESH_TOKEN_CHECK_PERIOD_IN_MINUTES,
+    })
+  }
 }
 
 export default defineBackground(() => {
@@ -18,6 +20,16 @@ export default defineBackground(() => {
   browser.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
       browser.tabs.create({ url: 'https://internxt.com/vpn' })
+    }
+  })
+
+  browser.runtime.onStartup.addListener(() => {
+    handleUserToken()
+  })
+
+  browser.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === REFRESH_TOKEN_ALARM) {
+      handleUserToken()
     }
   })
 
@@ -89,7 +101,7 @@ export default defineBackground(() => {
     localCache.vpnEnabled = (result.vpnEnabled as boolean) ?? false
   }
 
-  startInterval()
+  scheduleTokenRefreshIfMissing()
   initializeLocalCache()
 
   browser.storage.onChanged.addListener((changes, areaName) => {
@@ -97,7 +109,6 @@ export default defineBackground(() => {
       if (changes.userToken?.newValue) {
         localCache.token =
           (changes.userToken.newValue as { token: string })?.token ?? null
-        startInterval()
       }
       if ('connection' in changes) {
         localCache.connection = (changes.connection.newValue as string) ?? null

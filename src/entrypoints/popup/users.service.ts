@@ -1,7 +1,9 @@
 import axios from 'axios'
+import { browser } from 'wxt/browser'
 import { getDriveApiUrl, getVpnApiUrl } from '../utils/getUrl'
 
 const ENV_MODE = import.meta.env.MODE
+const DRIVE_API_CLIENT_NAME = 'internxt-vpn'
 
 export class UnauthorizedError extends Error {
   constructor(message = 'Unauthorized access') {
@@ -22,17 +24,42 @@ export const getAnonymousToken = async (): Promise<{
   return anonymousToken
 }
 
-export function isTokenExpired(userToken: string): boolean {
+const SIX_HOURS_IN_SECONDS = 6 * 60 * 60
+
+const nowInSeconds = () => Math.floor(Date.now() / 1000)
+
+function getTokenClaims(
+  userToken: string
+): { exp?: number; iat?: number } | undefined {
   try {
-    const arrayToken = userToken.split('.')
-    const tokenPayload = JSON.parse(atob(arrayToken[1]))
-    if (!tokenPayload.exp) {
-      return true
-    }
-    return Math.floor(new Date().getTime() / 1000) >= tokenPayload.exp
-  } catch (error) {
+    const base64Payload = userToken
+      .split('.')[1]
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+    return JSON.parse(atob(base64Payload))
+  } catch {
+    return undefined
+  }
+}
+
+export function isTokenExpired(userToken: string): boolean {
+  const claims = getTokenClaims(userToken)
+  if (!claims?.exp) {
     return true
   }
+  return nowInSeconds() >= claims.exp
+}
+
+export function isTokenRefreshRequired(userToken: string): boolean {
+  const claims = getTokenClaims(userToken)
+  if (!claims?.exp) {
+    return true
+  }
+  const remainingSeconds = claims.exp - nowInSeconds()
+  const refreshThreshold = claims.iat
+    ? (claims.exp - claims.iat) / 2
+    : SIX_HOURS_IN_SECONDS
+  return remainingSeconds <= refreshThreshold
 }
 
 export const refreshUserToken = async (
@@ -42,6 +69,8 @@ export const refreshUserToken = async (
   const { data } = await axios.get(`${apiUrl}/users/refresh`, {
     headers: {
       Authorization: `Bearer ${oldUserToken}`,
+      'internxt-client': DRIVE_API_CLIENT_NAME,
+      'internxt-version': browser.runtime.getManifest().version,
     },
   })
 
