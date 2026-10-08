@@ -1,6 +1,7 @@
 import {
   getAnonymousToken,
   isTokenExpired,
+  isTokenRefreshRequired,
   refreshUserToken,
 } from '../popup/users.service'
 import storageService, { getUserToken } from '../services/storage.service'
@@ -28,6 +29,10 @@ export const handleUserToken = async () => {
     } else {
       await refreshAnonymousToken()
     }
+    return
+  }
+
+  if (!isTokenRefreshRequired(userToken.token)) {
     return
   }
 

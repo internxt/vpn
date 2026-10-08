@@ -23,6 +23,7 @@ export default defineConfig({
   },
   permissions: [
     'storage',
+    'alarms',
     'proxy',
     'webRequest',
     ...(browser === 'firefox'

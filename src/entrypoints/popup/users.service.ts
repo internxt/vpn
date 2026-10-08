@@ -1,7 +1,13 @@
 import axios from 'axios'
+import {
+  isTokenExpired as hasExpirationPassed,
+  isTokenRefreshRequired as hasRefreshThresholdPassed,
+} from '@internxt/lib/dist/auth/checkTokenExpiration'
+import { browser } from 'wxt/browser'
 import { getDriveApiUrl, getVpnApiUrl } from '../utils/getUrl'
 
 const ENV_MODE = import.meta.env.MODE
+const DRIVE_API_CLIENT_NAME = 'internxt-vpn'
 
 export class UnauthorizedError extends Error {
   constructor(message = 'Unauthorized access') {
@@ -22,17 +28,32 @@ export const getAnonymousToken = async (): Promise<{
   return anonymousToken
 }
 
-export function isTokenExpired(userToken: string): boolean {
+function getTokenClaims(
+  userToken: string
+): { exp?: number; iat?: number } | undefined {
   try {
-    const arrayToken = userToken.split('.')
-    const tokenPayload = JSON.parse(atob(arrayToken[1]))
-    if (!tokenPayload.exp) {
-      return true
-    }
-    return Math.floor(new Date().getTime() / 1000) >= tokenPayload.exp
-  } catch (error) {
-    return true
+    const base64Payload = userToken
+      .split('.')[1]
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+    return JSON.parse(atob(base64Payload))
+  } catch {
+    return undefined
   }
+}
+
+export function isTokenExpired(userToken: string): boolean {
+  const claims = getTokenClaims(userToken)
+  return !claims?.exp || hasExpirationPassed(claims.exp)
+}
+
+export function isTokenRefreshRequired(userToken: string): boolean {
+  const claims = getTokenClaims(userToken)
+  return (
+    !claims?.exp ||
+    hasExpirationPassed(claims.exp) ||
+    hasRefreshThresholdPassed(claims.exp, claims.iat)
+  )
 }
 
 export const refreshUserToken = async (
@@ -42,6 +63,8 @@ export const refreshUserToken = async (
   const { data } = await axios.get(`${apiUrl}/users/refresh`, {
     headers: {
       Authorization: `Bearer ${oldUserToken}`,
+      'internxt-client': DRIVE_API_CLIENT_NAME,
+      'internxt-version': browser.runtime.getManifest().version,
     },
   })
 
