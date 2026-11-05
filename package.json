@@ -31,8 +31,7 @@
     "vite": "7.3.7"
   },
   "resolutions": {
-    "picomatch": "^4.0.3",
-    "minimatch": "^9.0.5"
+    "picomatch": "^4.0.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
