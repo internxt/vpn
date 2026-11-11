@@ -28,7 +28,7 @@ export default defineConfig({
       'webRequest',
       ...(browser === 'firefox'
         ? ['webRequestBlocking']
-        : ['webRequestAuthProvider']),
+        : ['webRequestAuthProvider', 'browsingData']),
     ],
     ...(browser === 'firefox'
       ? {

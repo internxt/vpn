@@ -5,6 +5,8 @@ const VPN_CONFIG = {
   PORT: Number(import.meta.env.VITE_VPN_SERVER_PORT),
 }
 
+const VPN_PROXY_ORIGIN = `http://${VPN_CONFIG.HOST}:${VPN_CONFIG.PORT}`
+
 const IS_FIREFOX = import.meta.env.BROWSER === 'firefox'
 
 export async function updateProxySettings() {
@@ -28,6 +30,12 @@ export async function updateProxySettings() {
     },
   }
 
+  // Chrome reuses cached proxy credentials, whose username is the previously
+  // selected location. Removing cookies for the proxy origin also clears them.
+  await browser.browsingData.remove(
+    { origins: [VPN_PROXY_ORIGIN] },
+    { cookies: true },
+  )
   await browser.proxy.settings.set({ value: proxyConfig, scope: 'regular' })
 }
 
