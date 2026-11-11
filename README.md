@@ -46,3 +46,12 @@ And that's it, you can now use the VPN as if it were a published one.
 2. This command will generate a ZIP in the `.output` folder. This is the ZIP you have to use to publish the VPN.
 
 You can follow [these steps](https://developer.chrome.com/docs/webstore/publish) if you are not familiar with how to publish Extensions in Chrome.
+
+### Versions per store
+
+The version in `package.json` and `wxt.config.ts` is shared by all browsers, but each store is published separately, so a release can skip a store:
+
+| Version | Chrome Web Store | Firefox Add-ons |
+| ------- | ---------------- | --------------- |
+| 1.5.1   | Published        | Not published (Chrome-only fix) |
+| 1.5.0   | Published        | Published       |
