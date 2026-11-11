@@ -11,7 +11,7 @@ export default defineConfig({
     name: 'Internxt VPN',
     short_name: 'Internxt VPN',
     default_locale: 'en',
-    version: '1.5.0',
+    version: '1.5.1',
     description:
       'Internxt free VPN: an encrypted, secure VPN built to protect your privacy.',
     icons: {
